@@ -1,0 +1,81 @@
+
+/*0c67a0*/
+html{
+  background-color: #0c67a0;
+  color: #F5F5F5;
+  font-family: "Calibri", Times, sans-serif;
+}
+
+body{
+
+}
+
+h1{
+  font-size: 500%;
+
+}
+
+/*  CSS PROFIL-------------------------------------------------------------*/
+.profil {
+  padding: 2.5%;
+
+}
+
+.profil img{
+  border: solid;
+  border-color: #0c67a0;
+}
+
+.profil a{
+  text-decoration: underline;
+  color: #F5F5F5;
+}
+
+.profil div p{
+  font-size: 200%;
+  border:solid;
+  border-color:
+  border-top-width: 4px;
+  border-bottom-width: 4px;
+  border-left-width: 0;
+  border-right-width: 0;
+  margin: -4px;
+  padding: 10%;
+}
+
+.profil p{
+  font-size: 150%;
+}
+
+.profil div{
+  border: solid;
+  border-radius: 10px;
+  background-color:#F5F5F5;
+  padding: 5%;
+}
+.profil .texte-illustration *{
+  color: #0c67a0;
+}
+
+.profil .texte-illustration {
+
+    overflow: hidden; /* empêche le dépassement des flottants */
+}
+.profil .texte-illustration .illus-gauche {
+    float: left;
+    margin: 5px 20px 5px 0;
+}
+.profil .texte-illustration .illus-droite {
+    float: right;
+    margin: 5px 0 5px 20px;
+}
+.profil .texte-illustration p:first-of-type {
+    padding-bottom: 200px;
+    text-align: right;
+    font-size: 500%;
+    margin-top: 0;
+    overflow: hidden; /* Contexte de formatage. Force le paragraphe à
+    adapter sa largeur aux flottants adjacents. */
+}
+
+/*------------------------------------------------------------------------------*/
