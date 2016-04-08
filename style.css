@@ -24,11 +24,11 @@ article h1{
   font-size: 500%;
 }
 
-img{
+.profil img{
 border: solid;
 border-color: #292929;
 }
-p{
+.profil p{
   font-size: 200%;
 }
 
