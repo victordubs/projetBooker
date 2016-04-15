@@ -1,0 +1,68 @@
+<html>
+<head>
+<title>Créer un Contact</title>
+<meta charset="UTF-8"/>
+<meta http-equiv="content-type" content="text/html;" />
+<meta name="author" content="Thomas Duverney" />
+<link rel="stylesheet" type="text/css" href="formulaire.css" />
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+</head>
+
+
+<body>
+
+  <div class="formulaire">
+  <h1>Créer un contact</h1>
+  <form action="#" method="post">
+      <div class="section"><span>1</span>Informations Principales</div>
+      <div class="inner-wrap">
+          <label>Nom <input type="text" name="champ1" /></label>
+          <label>Prénom<input type="text"  name="champ2"/></label>
+          <label>Adresse<input type="text"  name="champ3"/></label>
+          <label>Ville<input type="text"  name="champ4"/></label>
+          <label>Téléphone<input type="text"  name="champ5" maxlength="10"/></label>
+          <label>Adresse E-mail<input type="email" name="champ6" /></label>
+
+      </div>
+
+      <div class="section"><span>2</span>Information secondaires</div>
+      <div class="inner-wrap">
+
+      <label>Site web<input type="text" name="champ7" /></label>
+
+          <label>Fonction
+          <select name="Role" multiple size="3">
+              <!-- Modifier la liste avec Ajax-->
+              <option>Radio
+              <option>Télévision
+              <option>Technicien
+              <option>Photographe
+          </select>
+          </label>
+		 <div class="autreliste">
+         <label>Autre Rôle<input type="text" name="champ7" /></label>
+		<button type="button" class="myButton" name="add">+</button>
+		</div>
+
+<script>
+
+          $(document).ready(function() {
+
+            $("button[name='add']").click(function() {
+                var nouveauElement = $('<label><input type="text" name="champ8" /></label>');
+                $(this).after(nouveauElement);
+              });
+
+            });
+</script>
+
+      </div>
+
+      <div class="button-section">
+       <input type="submit" name="sent" value="Ajouter le contact" />
+      </div>
+  </form>
+  </div>
+</body>
+</html>
