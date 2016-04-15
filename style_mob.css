@@ -1,24 +1,26 @@
+
 /*0c67a0*/
 html{
-  background-color: white;
+  /*background-color: #0c67a0 white;*/
   color: #F5F5F5;
   font-family: "Calibri", Times, sans-serif;
-}
-
-body{
-  position: relative;
 }
 
 h1{
   font-size: 500%;
 
 }
+
+/* CSS COMMUN--------------------------------------------------------------*/
+
+/* ------------------------------------------------------------------------*/
+
 /* CSS INDEX---------------------------------------------------------------*/
 /*général*/
 .index h1 {
 	margin-top: 0px;
 	padding: 2%;
-	background-color: rgb(42,136,173);
+	background-color: #2A88AD;
 }
 
 .index article {
@@ -27,15 +29,15 @@ h1{
 	margin-bottom:4%;
 }
 .index article h2 {
-	color: rgb(42,139,188);
+	color: #2A8BBC);
 	font-size:300%;
 }
 
 .index article p {
-	border: 2px solid rgb(234,234,234);
-	background-color: rgb(242,242,242);
+	border: 2px solid #EAEAEA;
+	background-color: #F2F2F2;
 	border-radius: 15px;
-	color: rgb(136,136,136);
+	color: #888888;
 	padding: 4%;
 	font-size: 200%;
 }
@@ -47,7 +49,7 @@ h1{
 .evenement h1 {
 	margin-top: 0px;
 	padding: 2%;
-	background-color: rgb(42,136,173);
+	background-color: #2A88AD;
 }
 
 .evenement article {
@@ -56,81 +58,47 @@ h1{
 	margin-bottom:4%;
 }
 .evenement article h2 {
-	color: rgb(42,139,188);
+	color: #2A8BBC;
 	font-size:300%;
 }
 
 .evenement article p {
-	border: 2px solid rgb(234,234,234);
-	background-color: rgb(242,242,242);
+	border: 2px solid #EAEAEA;
+	background-color: #F2F2F2;
 	border-radius: 15px;
-	color: rgb(136,136,136);
+	color: #888888;
 	padding: 4%;
 	font-size: 200%;
 }
 
 .evenement article ul {
-	border: 2px solid rgb(234,234,234);
-	background-color: rgb(242,242,242);
+	border: 2px solid #EAEAEA;
+	background-color: #F2F2F2;
 	border-radius: 15px;
-	color: rgb(136,136,136);
-	padding: 4%;
+	color: #888888;
+	padding: 0%;
 	font-size: 200%;
 	list-style: none;
 }
 
 .evenement article ul li {
-	margin-bottom: 2%;
+
+	border-bottom: 1px solid grey;
+	padding: 2%;
 }
 
-.evenement article a {
+.evenement section article ul a {
 	text-decoration: none;
-	color: rgb(136,136,136);
-}
-/* -------------------------------------------------------------------------------- */
-
-/* CSS menu*/
-.menu{
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  background-color: #F5F5F5;
-  width: 100%;
-  height: 5%;
-  border-top: solid;
-  border-color:grey;
-  border-width:5px;
-}
-.menu * {
-  margin: 0;
-  padding: 0;
-
-}
-.menu * * li{
-  float: right;
-}
-.menu * *{
-  display: inline-block;
-  vertical-align: bottom;
-  font-size: 200%;
-  padding: 0;
-  width: 33%;
-  color: black;
-  text-align: center;
+	color: #888888;
 }
 
-.menu * * *{
-    width: 100%;
-    height: 100%;
-}
-.menu * * #courant{
-  padding-top: 5%;
-  background-color: grey;
-  color:#F5F5F5;
+.evenement li:active {
+	background-color: #C6C6C6;
 }
 
+/* ------------------------------------------------------------------------*/
 
-/*  CSS PROFIL-------------------------------------------------------------*/
+/* CSS PROFIL--------------------------------------------------------------*/
 .profil {
   padding: 2.5%;
 
