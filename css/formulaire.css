@@ -1,0 +1,207 @@
+
+.formulaire{
+    width:450px;
+    padding:30px;
+    margin:40px auto;
+    background: #FFF;
+    border-radius: 10px;
+    -webkit-border-radius:10px;
+    -moz-border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.13);
+    -moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.13);
+    -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.13);
+}
+.formulaire .inner-wrap{
+    padding: 40px;
+    background: #F8F8F8;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+.formulaire h1{
+    background: #2A88AD;
+    padding: 20px 30px 15px 30px;
+    margin: -30px -30px 30px -30px;
+    border-radius: 10px 10px 0 0;
+    -webkit-border-radius: 10px 10px 0 0;
+    -moz-border-radius: 10px 10px 0 0;
+    color: #fff;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.12);
+    font: normal 30px 'Bitter', serif;
+    -moz-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+    -webkit-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+    box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+    border: 1px solid #257C9E;
+}
+.formulaire h1 > span{
+    display: block;
+    margin-top: 2px;
+    font: 13px Arial, Helvetica, sans-serif;
+}
+label{
+    display: block;
+    font: 13px Arial, Helvetica, sans-serif;
+    color: #888;
+    margin-bottom: 15px;
+}
+.formulaire input[type="text"],
+.formulaire input[type="date"],
+.formulaire input[type="datetime"],
+.formulaire input[type="email"],
+.formulaire input[type="number"],
+.formulaire input[type="search"],
+.formulaire input[type="time"],
+.formulaire input[type="url"],
+.formulaire input[type="password"],
+.formulaire input[type="submit"]
+.formulaire textarea,
+.formulaire select {
+    display:inline-block;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    -webkit-border-radius:6px;
+    -moz-border-radius:6px;
+    border: 2px solid #fff;
+    box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.33);
+    -moz-box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.33);
+    -webkit-box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.33);
+}
+.formulaire input[type="text"]:focus,
+.formulaire input[type="password"]:focus{
+  padding: 5px,0px,5px,5px;
+  margin: 5px, 1px, 3px,0px;
+  box-shadow:0 1 1px rgba(81,203,238,1);
+  border:1px solid rgba(81,203,238,1);
+}
+.formulaire .section{
+    font: normal 20px 'Bitter', serif;
+    color: #2A88AD;
+    margin-bottom: 5px;
+
+}
+.formulaire .section span {
+    background: #2A88AD;
+    padding: 5px 10px 5px 10px;
+    position: absolute;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border: 4px solid #fff;
+    font-size: 14px;
+    margin-left: -45px;
+    color: #fff;
+    margin-top: -3px;
+}
+.formulaire input[type="button"],
+.formulaire input[type="submit"]{
+    background: #2A88AD;
+    padding: 8px 20px 8px 20px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    color: #fff;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.12);
+    font: normal 30px 'Bitter', serif;
+    -moz-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+    -webkit-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+    box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+    border: 1px solid #257C9E;
+    font-size: 15px;
+}
+.formulaire  input[type="button"]:hover,
+.formulaire input[type="submit"]:hover{
+    background: #2A6881;
+    -moz-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.28);
+    -webkit-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.28);
+    box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.28);
+}
+
+
+.formulaire .privacy-policy{
+    float: right;
+    width: 250px;
+    font: 12px Arial,Helvetica, sans-serif;
+    color: #4D4D4D;
+    margin-top: 10px;
+    text-align: right;
+}
+.autreliste *{
+	display:inline-block;
+}
+
+.formulaire .btnAjouterChamp {
+  width:40px;
+  height:40px;
+	background-color:#2A88AD;
+	border-radius:50%;
+  border: 1px solid #257C9E;
+	cursor:pointer;
+	color:#fff;
+	font-size:27px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #2f6627;
+ 	float:right;
+	margin-top:4%;
+}
+.formulaire .btnAjouterChamp:hover {
+	background: #2A6881;
+}
+.formulaire .btnAjouterChamp:active {}
+
+.listeBouton label{
+  width:50%;
+}
+.listeBouton{
+  display:inline-block;
+  vertical-align: top;
+}
+.listeBouton .btnAjouterChamp{
+  width:20%;
+}
+.connexion img{
+	width:40%;
+	margin:0% 30%;
+	padding:0;
+}
+.connexion a{
+	color:#2A88AD;
+	font: 12px Arial,Helvetica, sans-serif;
+	float:right;
+
+}
+
+.connexion a:hover{
+	color:#2f6627;
+}
+.connexion *{
+	display:inline-block;
+	vertical-align:top;
+}
+
+nav{
+  background-color:#2A88AD;
+      width:100%;
+      z-index:10;
+}
+
+nav input[type="button"]{
+    background: #2A88AD;
+    padding: 8px 20px 8px 20px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    color: #fff;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.12);
+    font: normal 30px 'Bitter', serif;
+    -moz-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+    -webkit-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+    box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+    border: 1px solid #257C9E;
+    font-size: 15px;
+
+}
+
+</style>
