@@ -200,3 +200,48 @@ h1{
   background-color: grey;
 }
 /*------------------------------------------------------------------------------*/
+
+/* CSS evenement---------------------------------------------------------------*/
+/*général*/
+.contacts h1 {
+	margin-top: 0px;
+	padding: 2%;
+	background-color: #2A88AD;
+}
+
+.contacts article {
+	padding-right: 3%;
+	padding-left: 3%;
+	margin-bottom:4%;
+}
+.contacts article h2 {
+	color: #2A8BBC;
+	font-size:300%;
+}
+
+
+.contacts article ul {
+	border: 2px solid #EAEAEA;
+	border-radius: 15px;
+	color: #888888;
+	padding: 0%;
+	font-size: 300%;
+	list-style: none;
+}
+
+.contacts article ul li {
+
+	border-bottom: 1px solid grey;
+	padding: 2%;
+}
+
+.contacts li:active {
+	background-color: #C6C6C6;
+}
+
+.contacts h1 img{
+	width: 7%;
+	display: inline-block;
+	float: right;
+}
+/* ------------------------------------------------------------------------*/
