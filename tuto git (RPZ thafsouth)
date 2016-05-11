@@ -33,3 +33,8 @@ la gestion des commit, push
 	==> git push origin master 
 
 	Et voilà c'est fait les modifications sont sur le git du master :) 
+
+
+Pour plus d'explication et d'autres commandes:
+
+http://rogerdudler.github.io/git-guide/index.fr.html
