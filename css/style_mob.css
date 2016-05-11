@@ -4,24 +4,47 @@ html{
   /*background-color: #0c67a0 white;*/
   color: #F5F5F5;
   font-family: "Calibri", Times, sans-serif;
+  width: 100%;
 }
+
 
 h1{
   font-size: 500%;
+  width: 110%;
+  margin-top: 3%;;
+  margin-left: -10px;
+  padding: 2%;
+  padding-top: 4%;
+  background-color: #2A88AD;
 
 }
-
+.formulaire h1{
+  margin-left: -20px;
+}
+#box {
+    display:none;
+    width:200px;
+    height:180px;
+    position:fixed;
+    right:1%; /* centrer */
+    top:58%; /* centrer */
+    margin:-160px 0 0 -100px; /* width et height / par 2 */
+    background-color:#F2F2F2;
+    z-index:100;
+}
+#box p {
+  border: 2px solid #EAEAEA;
+  	color: #888888;}
 /* CSS COMMUN--------------------------------------------------------------*/
-
+body{
+   /*à mettre à un peu plus de la taille du menu, top si en aut, bottom si en bas*/
+  padding-top: 100px;
+}
 /* ------------------------------------------------------------------------*/
 
 /* CSS INDEX---------------------------------------------------------------*/
 /*général*/
-.index h1 {
-	margin-top: 0px;
-	padding: 2%;
-	background-color: #2A88AD;
-}
+
 
 .index article {
 	padding-right: 3%;
@@ -41,7 +64,52 @@ h1{
 	padding: 4%;
 	font-size: 200%;
 }
+/* ---------------------------- Connexion ------------------------------------- */
+.connexion {
+	font-size:300%;
+}
+.connexion img {
+	width: 75%;
+	margin-left:12.5%;
+}
 
+.connexion form input {
+    color: grey;
+    width: 80%;
+    height: 10%;
+    font-size: 150%;
+	margin-top: 5%;
+	margin-left:10%;
+	margin-right:10%;
+	padding: 4%;
+
+    border: 1px solid #aaa;
+    border-radius: 4px;
+}
+
+.connexion .mdpOublie {
+	color:blue;
+	margin-left:10%;
+}
+
+.connexion p  {
+	color: black;
+	margin-left:10%;
+}
+
+
+.connexion .bouton {
+    background: #2A88AD;
+    border-radius: 5px;
+    color: #fff;
+    border: 1px solid #257C9E;
+    width: 80%;
+	font-size: 150%;
+	padding: 5%;
+	margin-top: 5%;
+	margin-left:10%;
+	margin-right:10%;
+}
 /* ------------------------------------------------------------------------*/
 
 /* CSS evenement---------------------------------------------------------------*/
@@ -61,8 +129,12 @@ h1{
 	color: #2A8BBC;
 	font-size:300%;
 }
+.inner-wrap h2{
+  color: #2A8BBC;
+  font-size:300%;
 
-.evenement article p {
+}
+.evenement article div {
 	border: 2px solid #EAEAEA;
 	background-color: #EFEFEF;
 	border-radius: 15px;
@@ -104,7 +176,14 @@ h1{
 	margin: 0px;
 	padding: 2%;
 	background-color: #2A88AD;
-	
+
+}
+
+.profil h1 img {
+  width: 7%;
+	display: inline-block;
+	float: right;
+  margin-right:15px;
 }
 
 .profil article {
@@ -113,7 +192,7 @@ h1{
 	margin-bottom:4%;
 }
 
-.profil article p {
+.profil article div{
 	border: 2px solid #EAEAEA;
 	background-color: #F2F2F2;
 	border-radius: 15px;
@@ -157,7 +236,7 @@ h1{
 
 .profil .en_tete {
 	height:23%;
-	background-color: /*#ABDCEF*/  #F2F2F2;
+	background-color:   #F2F2F2;
 	padding: 2%;
 }
 
@@ -165,49 +244,67 @@ h1{
 /* CSS menu*/
 .menu{
   position: fixed;
-  bottom: 0;
+  top: 0;
   left: 0;
-  background-color: #F5F5F5;
   width: 100%;
-  height: 6%;
-  border-top: solid;
-  border-color:black;
-}
-.menu * {
+  height: 150px;
   margin: 0;
   padding: 0;
+  background-color:#2A88AD;
+  border: none;
+}
 
-}
-.menu * * li{
-  float: right;
-}
-.menu * *{
-  padding-bottom: 50%;
+.menu  input{
   display: inline-block;
   vertical-align: middle;
   font-size: 200%;
-  width: 33%;
-  color: black;
+  width: 24%;
+  height: 80%;
+  margin: 0;
+  margin-top: 1%;
   text-align: center;
+  border: none;
+  background-color:#2A88AD;
 }
 
-.menu * * *{
-    width: 100%;
-    height: 100%;
-    background-color: #F2F2F2;
+.menuRep{
+  width: 100%;
+  height: 150px;
+  margin: 0;
+  padding: 0;
+  border: none;
 }
-.menu * * #courant{
-  background-color: grey;
+
+.menuRep  input{
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 200%;
+  width: 24%;
+  height: 80%;
+  margin: 0;
+  margin-top: 1%;
+  text-align: center;
+  border: none;
+  border-left: solid;
+  border-right: solid;
+  border-color: #888888;
+  border-width: 6px;
+  margin-left: -5px;
+  margin-right: -5px;
 }
+.menuRep input:first-of-type{
+border:solid #888888;
+}
+
+.menuRep #menuRepContact{
+  border-right: none;
+  border-left:none;
+}
+
 /*------------------------------------------------------------------------------*/
 
-/* CSS evenement---------------------------------------------------------------*/
+/* CSS Contact---------------------------------------------------------------*/
 /*général*/
-.contacts h1 {
-	margin-top: 0px;
-	padding: 2%;
-	background-color: #2A88AD;
-}
 
 .contacts article {
 	padding-right: 3%;
@@ -235,13 +332,235 @@ h1{
 	padding: 2%;
 }
 
+.contacts article ul li img {
+  width: 10%;
+  margin-top: 5%;
+  float: right;
+  margin-right:5%;
+  vertical-align: top;
+}
+
 .contacts li:active {
 	background-color: #C6C6C6;
 }
 
-.contacts h1 img{
-	width: 7%;
+.contacts ul li p{
+  width: 50%;
+  display: inline-block;
+}
+
+.contacts h1 img,.mail h1 img{
+	width: 10%;
 	display: inline-block;
 	float: right;
+  margin-right:15px;
 }
-/* ------------------------------------------------------------------------*/
+.contacts h1 img:active{
+	width: 10%;
+	display: inline-block;
+  margin-right:15px;
+  background: #2A6881;
+}
+/* barre de recherche*/
+#search{
+  color: grey;
+  width: 95%;
+  height: 75px;
+  font-size: 200%;
+  margin-left: 2.5%;
+  border: solid;
+  border-color: #2A88AD;
+  border-radius: 20px;
+}
+/* ---------------------------- LES FORMULAIRES-------------------------------------------*/
+.formulaire{
+    width:100%;
+    padding:10px;
+
+}
+.formulaire .inner-wrap{
+    background: #F8F8F8;
+    padding: 5%;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    display: inline-block;
+    width: 100%;
+}
+
+label{
+    display: block;
+    color: #888;
+    font-size: 200%;
+    margin-bottom: 15px;
+}
+label *{
+  display:inline-block;
+  vertical-align: middle;
+}
+.formulaire input[type="button"],
+.formulaire input[type="submit"]{
+    background: #2A88AD;
+    border-radius: 5px;
+    color: #fff;
+    border: 1px solid #257C9E;
+    font-size: 200%;
+    padding: 25px 50px;
+    margin-left: 5%;
+}
+.formulaire  input[type="button"]:hover,
+.formulaire input[type="submit"]:hover{
+    background: #2A6881;
+}
+.formulaire input[type="text"],
+.formulaire input[type="date"],
+.formulaire input[type="datetime"],
+.formulaire input[type="email"],
+.formulaire input[type="number"],
+.formulaire input[type="search"],
+.formulaire input[type="time"],
+.formulaire input[type="url"],
+.formulaire input[type="password"],
+.formulaire input[type="submit"]
+.formulaire textarea,
+.formulaire select {
+    color: #888888;
+    width: 100%;
+    background-color: white;
+    height: 120px;
+    margin: 10px;
+    font-size: 150%;
+    padding-left: 15px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+}
+/* appliquer une placeholder dans un champ date*/
+input[type="date"]:before,
+input[type="time"]:before  {
+  content: attr(placeholder);
+  color: #888888;
+}
+
+
+.formulaire label p{
+  width: 25%;
+  padding-right: 1%;
+  text-align:right;
+  margin: 0;
+}
+.formulaire .section{
+
+    color: #2A88AD;
+    font-size: 200%;
+    margin-bottom: 5px;
+
+}
+.formulaire .selection{
+	width: 100%;
+  float: right;
+  position: relative;
+}
+
+.formulaire .select2-container{
+  width: 50%;
+  float: right;
+}
+
+
+.formulaire .privacy-policy{
+    float: right;
+    width: 2  input[type="date"]:before {
+    content: attr(placeholder);
+    color: #888;
+    margin-right: 0.5em;
+  }4D4D4D;
+    margin-top: 10px;
+    text-align: right;
+}
+
+
+
+.formulaire .btnAjouterChamp {
+  height: 80px;
+  width: 80px;
+	background-color:#2A88AD;
+	border-radius:50%;
+  border: 1px solid #257C9E;
+	cursor:pointer;
+	color:#fff;
+	font-size:27px;
+	text-decoration:none;
+  display: inline-block;
+  margin-left: 5%;
+
+}
+.formulaire .btnAjouterChamp:hover {
+	background: #2A6881;
+}
+
+.champSpe{
+  width: 100%;
+  display: inline-block;
+  vertical-align: middle;
+  margin:3% 0;
+}
+.champSpe .listeSpe{
+  width: 50%;
+}
+
+.champSpe .listeSpe *{
+  height: 75px;
+}
+.champSpe p{
+  width: 10%;
+  margin-left:
+}
+#error{
+  width:100%;
+  display:inline-block;
+  vertical-align: bottom;
+}
+#error p{
+  width:70%;
+  height:100%;
+  color:red;
+  margin-left:5%;
+  font-size: 200%;
+  display:inline-block;
+  vertical-align: bottom;
+}
+#error img{
+width:15%;
+margin:0;
+margin-left:5%;
+display:inline-block;
+vertical-align: bottom;
+}
+.cal{
+  width:100%;
+  margin-top:8%;
+}
+/*------------OPTIONS-----------------*/
+.option{
+  font-size: 250%;
+  position: fixed;
+  top: 0;
+  width: 80%;
+  margin: 5% 10%;
+  background-color: #F5F5F5;
+  color: #888888;
+  border-radius: 5px;
+  box-shadow: 8px 8px 8px #888888;
+}
+
+.option * {
+  margin: 0;
+  padding: 0;
+}
+
+.option * *{
+  margin: 0 15px;
+  padding: 10% 5%;
+  list-style-type: none;
+  border-bottom: solid;
+  border-color: #888888;
+}
