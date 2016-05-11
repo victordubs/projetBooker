@@ -1,0 +1,31 @@
+Configuration de Git : 
+	 git config --global user.name "thafsouth96"
+	 git config --global user.email thafsuth.adli@gmail.com
+
+
+Pour cloner le dépôt du Projet Booker, il suffit de lancer la commande suivante :
+ 
+	 git clone https://github.com/thafsouth96/BookingMaster.git
+
+	 le répertoire du projet est chargé en local ( check it avec un ls ça doit marcher :) ) 
+
+
+la gestion des commit, push 
+
+	Maintenant vous pouvez modifier et ajouter des fichiers 
+	
+	avec la commande "git status" ==> vous pouvez check toutes les modif 
+
+	et là on vous suggère de faire un "git add nomFic" pour que git le reconnaisse 
+
+	une fois c'est fait refaite un "git status" là le nom du fichier devient vert youpi 
+
+	maintenant il suffit de commit et push here we go : 
+
+	==>  faite toujours un commit avant le push  
+	==> git commit -m "ceci est le message du commit" 
+	ps : le message pour commenter ce que vous commit 
+	
+	==> git push origin master 
+
+	Et voilà c'est fait les modifications sont sur le git du master :) 
