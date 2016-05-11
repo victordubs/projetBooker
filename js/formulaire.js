@@ -35,16 +35,7 @@ function activerOptionMenu($element) {
 	// Active l'option choisie et re�ue en param�tre (met l'attribut 'actif' � vrai)
 	$element.attr('actif', true);
 }
-function evenementContact(){
-	$('.option').hide();
-	$('#edit').on('click',function() {
-		$('.option').toggle();
-	});
 
-	$('#modifier').click(function(){
-		$('#content').load('pages/formulaireArtiste.html',modifierArtiste($('section').attr('idArtiste')))
-	});
-}
 //------------AFFICHER LE REPERTOIRE--------------------------------------------------------------------------------------------
 function afficherRep(){
 	var alphabet=["A","B","C","D","E","F","G","H","I","J"];
@@ -143,7 +134,7 @@ function afficherArtiste(idArtiste){
 							if (result.artiste.nom) $('#nom').append(result.artiste.nom);
 							if (result.artiste.adresse) $('#adresse').append(result.artiste.adresse);
 							if (result.artiste.ville) $('#adresse').append(result.artiste.ville);
-								evenementContact();
+								evenementArtiste();
 						}
 					}
 				},
@@ -158,7 +149,6 @@ function evenementRep(){
 
 	$('p').on('click',function() {
 		$('#content').load('pages/afficherArtiste.html',afficherArtiste($(this).attr('idArtiste')));
-			//$('#content').load('pages/contact.html');
 	});
 
 	$('#email').on('click',function() {
@@ -207,6 +197,17 @@ function evenementFormulaireEve() {
 			i=i+1;
 	});
 
+}
+//------------------------------Evenement sur l'artiste----------------------------------------------------
+function evenementArtiste(){
+	$('.option').hide();
+	$('#edit').on('click',function() {
+		$('.option').toggle();
+	});
+
+	$('#modifier').click(function(){
+		$('#content').load('pages/formulaireArtiste.html',modifierArtiste($('section').attr('idArtiste')))
+	});
 }
 //------------------------------Evenement sur le Formulaire creer Artiste------------------------------------
 function evenementFormulaireArt() {
