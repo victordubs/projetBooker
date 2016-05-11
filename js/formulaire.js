@@ -14,7 +14,7 @@ $(document).ready(function() {
   $('body nav #mnuOption').bind('click', function() { // Au clic sur le bouton "mnuPersonne" dans le menu
     activerOptionMenu($(this));
     // On charge la page voirPersonne.html dans la div content et on appelle la fonction d'initialisation de cette page
-    $('#content').load('pages/formulaireContact.html',evenementFormulaireArt());
+    $('#content').load('pages/formulaireContact.html');
 
   });
 
@@ -36,10 +36,14 @@ function activerOptionMenu($element) {
 	$element.attr('actif', true);
 }
 function evenementContact(){
-	$("#edit").click(function(){
-		$('#content').load('pages/formulaireArtiste.html',modifierArtiste($('section').attr('idArtiste')))
+	$('.option').hide();
+	$('#edit').on('click',function() {
+		$('.option').toggle();
 	});
 
+	$('#modifier').click(function(){
+		$('#content').load('pages/formulaireArtiste.html',modifierArtiste($('section').attr('idArtiste')))
+	});
 }
 //------------AFFICHER LE REPERTOIRE--------------------------------------------------------------------------------------------
 function afficherRep(){
@@ -211,13 +215,9 @@ function evenementFormulaireArt() {
 			$(this).after(nouveauChamp);
 		});
 
-	$('.option').hide();
-
-
 	$('.btnAjouterContact').on('click',function() {
 		enregistrerArtiste();
 		});
-
 }
 
 //------------------------------Afficher champ obligatoire------------------------------------
