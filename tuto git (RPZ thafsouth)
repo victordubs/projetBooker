@@ -1,7 +1,11 @@
+________________________________________________________________________________________________________________________________
+			A faire que sur votre machine personnelle chez vous
+_________________________________________________________________________________________________________________________________
 Configuration de Git : 
 	 git config --global user.name "thafsouth96"
 	 git config --global user.email thafsuth.adli@gmail.com
-
+________________________________________________________________________________________________________________________________
+	 
 
 Pour cloner le dépôt du Projet Booker, il suffit de lancer la commande suivante :
  
