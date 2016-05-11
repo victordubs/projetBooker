@@ -1,85 +1,58 @@
-<html>
-<head>
-<title>Créer un Evenement</title>
-<meta charset="UTF-8"/>
-<meta http-equiv="content-type" content="text/html;" />
-<meta name="author" content="Thomas Duverney" />
-<link rel="stylesheet" type="text/css" href="formulaire.css" />
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-</head>
+<div class="formulaire">
+<h1>Créer un Evenement</h1>
+<form>
+    <div class="section"><h2>Informations Principales</h2></div>
+    <div class="inner-wrap">
 
+      <!--  Champs de saisie sur les information principale-->
+        <label><input type="text" id="nom" placeholder="Nom" /></label>
+        <label><input type="text" id="adresse" placeholder="Adresse"/></label>
+        <label><input type="text"  id="ville" placeholder="Ville"/></label>
 
-<body>
+         <label><input type="date" id="dateDeb" placeholder="Date début"></label>
+         <label><input type="date" id="dateFin" placeholder="Date fin"></label>
+         <label><input type="time" id="heureDeb" placeholder="Heure début"></label>
+         <label><input type="time" id="heureFin" placeholder="Heure fin"></label>
 
-  <div class="formulaire">
-  <h1>Créer un Evénement</h1>
-  <form action="#" method="post">
-      <div class="section"><span>1</span>Informations Principales</div>
+    </div>
+
+      <!--  Champs de saisie sur les groupes de l'événement-->
+      <div class="section"><h2>Information sur les groupes</h2></div>
       <div class="inner-wrap">
-          <label>Nom <input type="text" name="champ1" /></label>
-          <label>Adresse<input type="text"  name="champ3"/></label>
-          <label>Ville<input type="text"  name="champ4"/></label>
-
-	  <label>Date début<input type="text" class="datepicker"></label>
-    <label>Date fin<input type="text" class="datepicker"></label>
-      </div>
-
-      <div class="section"><span>2</span>Information secondaires</div>
-      <div class="inner-wrap">
-
-          <label>Type de musicien
-          <select name="Role" multiple size="3">
-              <!-- Modifier la liste avec Ajax-->
-              <option>Guitariste
-              <option>Batteur
-              <option>Chanteur
-              <option>Harmoniciste
+        <div id="lesGroupes">
+          <h2 id="nomG1">Groupe 1</h2>
+          <div id="G1">
+            <select id='selectGroupe'>
+      <!-- Modifier la liste avec Ajax-->
+              <option>Ratata
+              <option>Fat Rat
+              <option>Dire Strait
+              <option>The wanton bishops
           </select>
-          </label>
-		 <div class="autreliste">
-         <label>Autre Rôle<input type="text" name="champ7" /></label>
-		<button type="button" class="myButton" name="add">+</button>
-		</div>
+          <label><input type="time"  placeholder="Heure passage"></label>
 
-
-
-<script>
-
-          $(document).ready(function() {
-
-            $("button[name='add']").click(function() {
-                var nouveauElement = $('<label><input type="text" name="champ8" /></label>');
-                $(this).after(nouveauElement);
-              });
-
-            });
-</script>
-          <label>Genre musicale
-          <select name="Genre" multiple size="3">
-            <!-- Modifier la liste avec le php-->
-            <option>Rock
-            <option>Jazz
-            <option>Classique
-            <option>Electro
-            <option>Blues
-          </select></label>
-		 <div class="autreliste">
-         <label>Autre Rôle<input type="text" name="champ7" /></label>
-		<button type="button" class="myButton" name="add">+</button>
-		</div>
-		  <script>
-  $(function() {
-    $( ".datepicker" ).datepicker();
-  });
-  </script>
-
-
+        </div>
       </div>
-<div class="button-section">
-       <input type="submit" name="sent" value="Ajouter l'artiste" />
+      <button type="button" class="btnAjouterChamp">+</button>
+
+    </div>
+
+<!-- Informations sur les organisateurs   - - - - - - - - - - - - - - - -->
+    <div class="section"><h2>Information sur les organisateurs</h2></div>
+      <div class="inner-wrap">
+          <select id='selectOrganisateur'>
+    <!-- Modifier la liste avec Ajax-->
+            <option>NRJ
+            <option>Fun Radio
+            <option>MEGA SALLE
+            <option>The wanton bishops
+        </select>
       </div>
+    </div>
+
+
+    <div class="button-section">
+       <input type="button" class='btnAjouterContact' value="Ajouter l'artiste" />
+    </div>
   </form>
   </div>
-</body>
-</html>
