@@ -5,16 +5,16 @@ $(document).ready(function() {
 		$('#content').load('pages/accueil.html',afficherAccueil()); // On charge la page accueil.html dans la div content
 	});
 
-	$('body nav #mnuContact').bind('click', function() { // Au clic sur le bouton "mnuPersonne" dans le menu
+	$('body nav #mnuRepertoire').bind('click', function() { // Au clic sur le bouton "mnuPersonne" dans le menu
 		activerOptionMenu($(this));
 		// On charge la page voirPersonne.html dans la div content et on appelle la fonction d'initialisation de cette page
 		$('#content').load('pages/afficherRep.html',afficherRep());
 	});
 
-  $('body nav #mnuArtiste').bind('click', function() { // Au clic sur le bouton "mnuPersonne" dans le menu
+  $('body nav #mnuOption').bind('click', function() { // Au clic sur le bouton "mnuPersonne" dans le menu
     activerOptionMenu($(this));
     // On charge la page voirPersonne.html dans la div content et on appelle la fonction d'initialisation de cette page
-    $('#content').load('pages/formulaireContact.html');
+    $('#content').load('pages/formulaireContact.html',evenementFormulaireArt());
 
   });
 
@@ -210,6 +210,9 @@ function evenementFormulaireArt() {
 			var nouveauChamp = $('<label><input type="text" placeholder="Nouveau rôle"/></label>');
 			$(this).after(nouveauChamp);
 		});
+
+	$('.option').hide();
+
 
 	$('.btnAjouterContact').on('click',function() {
 		enregistrerArtiste();
