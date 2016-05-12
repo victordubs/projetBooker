@@ -69,7 +69,7 @@ function afficherRep(){
 }
 function afficherAccueil(){
 
-	$.ajax({	type: "POST", // envoie une requ�te � getListePersonnes pour demander la liste des personnes
+	$.ajax({	type: "POST", // envoie une requ�te � getListeEvenement pour demander la liste des personnes
 				url: "ajax/getListeEvenement.php",
 				success: function(data, textStatus, jqXHR) {
 					var result=JSON.parse(data);
@@ -151,10 +151,6 @@ function evenementRep(){
 		$('#content').load('pages/afficherArtiste.html',afficherArtiste($(this).attr('idArtiste')));
 	});
 
-	$('#email').on('click',function() {
-		$('#content').load('pages/creerMail.html');
-	});
-
 	$('#add').on('click',function() {
 		$('#content').load('pages/formulaireArtiste.html',evenementFormulaireArt);
 	});
@@ -162,6 +158,7 @@ function evenementRep(){
 	$('#searchBtn').on('click',function() {
 		$("#search").toggle();
   });
+
 	$('#menuRepArtistes').on('click',function() {
 	$('#content').load('pages/formulaireEvenement.html',evenementFormulaireEve);
 	});
@@ -204,6 +201,10 @@ function evenementArtiste(){
 	$('#edit').on('click',function() {
 		$('.option').toggle();
 	});
+/*
+	$('[id!="option"]').on('click',function() {
+		$('.option').hide();
+	});*/
 
 	$('#modifier').click(function(){
 		$('#content').load('pages/formulaireArtiste.html',modifierArtiste($('section').attr('idArtiste')))
