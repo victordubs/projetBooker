@@ -14,7 +14,7 @@ $(document).ready(function() {
   $('body nav #mnuOption').bind('click', function() { // Au clic sur le bouton "mnuPersonne" dans le menu
     activerOptionMenu($(this));
     // On charge la page voirPersonne.html dans la div content et on appelle la fonction d'initialisation de cette page
-    $('#content').load('pages/formulaireContact.html');
+    $('#content').load('pages/formulaireGroupe.html',evenementFormulaireGroupe());
 
   });
 
@@ -221,6 +221,26 @@ function evenementFormulaireArt() {
 		enregistrerArtiste();
 		});
 }
+
+function evenementFormulaireGroupe() {
+
+	$.ajax({	type: "POST",
+						url: "ajax/getListeArtistes.php",
+						success: function(data, textStatus, jqXHR) {
+							var result = JSON.parse(data) ;
+							if (result.status == 'success') {
+								 for (var id=0; id < result.artistes.length; id++) {
+									 $('#listeArtiste').append('<option>'+result.artistes[id].nomArtiste+'</option>');
+								 }
+							} else {
+								alert('erreur lors de l\'enregistrement');
+							}
+						},
+						error: function() {
+							alert('Erreur dans la requ�te au serveur.');
+						}
+	});}
+
 
 //------------------------------Afficher champ obligatoire------------------------------------
 function afficherChampObligatoire(champ,nb){
