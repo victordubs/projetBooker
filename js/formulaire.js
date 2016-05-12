@@ -232,6 +232,9 @@ function evenementFormulaireGroupe() {
 								 for (var id=0; id < result.artistes.length; id++) {
 									 $('#listeArtiste').append('<option>'+result.artistes[id].nomArtiste+'</option>');
 								 }
+								 $('.btnAjouterContact').on('click',function() {
+									 enregistrerGroupe();
+									 });
 							} else {
 								alert('erreur lors de l\'enregistrement');
 							}
@@ -239,7 +242,10 @@ function evenementFormulaireGroupe() {
 						error: function() {
 							alert('Erreur dans la requ�te au serveur.');
 						}
-	});}
+
+	});
+
+}
 
 
 //------------------------------Afficher champ obligatoire------------------------------------
@@ -318,6 +324,35 @@ function enregistrerArtiste() {
 				'&roles=' + $('#listeRole').val()+
 				'&genres=' + $('#genre').val();
 
+	$.ajax({	type: "POST",
+				url: "ajax/saveArtiste.php",
+				data: data, // On passe les informations saisies � l'�cran
+				success: function(data, textStatus, jqXHR) {
+					var result = JSON.parse(data) ;
+					if (result.status == 'success') {
+						// A COMPLETER
+					} else {
+						alert('erreur lors de l\'enregistrement');
+					}
+				},
+				error: function() {
+					alert('Erreur dans la requ�te au serveur.');
+				}
+	});}
+}
+
+//-------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------ENREGISTRER UN GROUPE------------------------------------------------
+function enregistrerGroupe() {
+	// Ici normalement, les contr�les sur les champs requis, les formats, ....
+				if($('#nom').val()==""){
+					afficherChampObligatoire('#nom',nbErreur);nbErreur++;
+				}
+				else{
+	var data =	'nom=' + $('#nom').val() +
+				'&siteWeb=' + $('#siteWeb').val()+
+				'&listeArtiste=' + $('#listeArtiste').val();
+				alert(data);
 	$.ajax({	type: "POST",
 				url: "ajax/saveArtiste.php",
 				data: data, // On passe les informations saisies � l'�cran
