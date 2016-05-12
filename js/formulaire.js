@@ -21,7 +21,7 @@ $(document).ready(function() {
 	$('body nav #mnuCalendrier').bind('click', function() { // Au clic sur le bouton "mnuPersonne" dans le menu
 		activerOptionMenu($(this));
 		// On charge la page voirPersonne.html dans la div content et on appelle la fonction d'initialisation de cette page
-		$('#content').load('pages/calendrier.html');
+		$('#content').load('pages/formulaireOrganisateur.html');
 
 	});
   $('body nav #mnuAccueil').click();
