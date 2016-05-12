@@ -315,46 +315,47 @@ function enregistrerArtiste() {
 				if($('#mail').val()==""){
 						afficherChampObligatoire('#mail',nbErreur);nbErreur++}
 				else{
-	var data =	'nom=' + $('#nom').val() +
-				'&prenom=' + $('#prenom').val() +
-				'&tel=' + $('#tel').val() +
-				'&addresse=' + $('#adresse').val() +
-				'&ville=' + $('#ville').val()+
-				'&mail=' + $('#mail').val()+
-				'&roles=' + $('#listeRole').val()+
-				'&genres=' + $('#genre').val();
+					var data =	'nom=' + $('#nom').val() +
+								'&prenom=' + $('#prenom').val() +
+								'&tel=' + $('#tel').val() +
+								'&addresse=' + $('#adresse').val() +
+								'&ville=' + $('#ville').val()+
+								'&mail=' + $('#mail').val()+
+								'&roles=' + $('#listeRole').val()+
+								'&genres=' + $('#genre').val();
 
-	$.ajax({	type: "POST",
-				url: "ajax/saveArtiste.php",
-				data: data, // On passe les informations saisies � l'�cran
-				success: function(data, textStatus, jqXHR) {
-					var result = JSON.parse(data) ;
-					if (result.status == 'success') {
-						// A COMPLETER
-					} else {
-						alert('erreur lors de l\'enregistrement');
+				$.ajax({	type: "POST",
+						url: "ajax/saveArtiste.php",
+						data: data, // On passe les informations saisies � l'�cran
+						success: function(data, textStatus, jqXHR) {
+							var result = JSON.parse(data) ;
+							if (result.status == 'success') {
+						  		alert('L\'enregistrement de l\'artiste a été effectué');
+							}
+							else {
+								alert('erreur lors de l\'enregistrement');
+							}
+						},
+					error: function() {
+							alert('Erreur dans la requ�te au serveur.');
 					}
-				},
-				error: function() {
-					alert('Erreur dans la requ�te au serveur.');
-				}
-	});}
+			});}
 }
 
 //-------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------ENREGISTRER UN GROUPE------------------------------------------------
 function enregistrerGroupe() {
 	// Ici normalement, les contr�les sur les champs requis, les formats, ....
-				if($('#nom').val()==""){
+	if($('#nom').val()==""){
 					afficherChampObligatoire('#nom',nbErreur);nbErreur++;
-				}
-				else{
-	var data =	'nom=' + $('#nom').val() +
+	}
+	else{
+		var data =	'nom=' + $('#nom').val() +
 				'&siteWeb=' + $('#siteWeb').val()+
 				'&listeArtiste=' + $('#listeArtiste').val();
 				alert(data);
-	$.ajax({	type: "POST",
-				url: "ajax/saveArtiste.php",
+		$.ajax({	type: "POST",
+				url: "ajax/saveGroupe.php",
 				data: data, // On passe les informations saisies � l'�cran
 				success: function(data, textStatus, jqXHR) {
 					var result = JSON.parse(data) ;
@@ -367,7 +368,7 @@ function enregistrerGroupe() {
 				error: function() {
 					alert('Erreur dans la requ�te au serveur.');
 				}
-	});}
+		});}
 }
 //------------------------------------------------------------------------------------------------------
 //-----------------------------------MODIFIER UN CONTACT---------------------------------------------
