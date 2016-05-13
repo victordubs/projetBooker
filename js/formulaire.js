@@ -1,30 +1,29 @@
 var erreurs = {
 	erreurArtiste : 0,
 	erreurEvent : 0,
+	erreurGroupe : 0,
+	erreurContact : 0,
+	erreurOrganisateur : 0,
 }
 
 $(document).ready(function() {
 	// Comportement des boutons de menus
 	$('body nav #mnuAccueil').bind('click', function() { // Au clic sur le bouton "mnuAccueil" dans le menu
-		activerOptionMenu($(this));
 		$('#content').load('pages/accueil.html',afficherAccueil); // On charge la page accueil.html dans la div content
 	});
 
 	$('body nav #mnuRepertoire').bind('click', function() { // Au clic sur le bouton "mnuPersonne" dans le menu
-		activerOptionMenu($(this));
 		// On charge la page voirPersonne.html dans la div content et on appelle la fonction d'initialisation de cette page
 		$('#content').load('pages/afficherRep.html',afficherRep);
 	});
 
   $('body nav #mnuOption').bind('click', function() { // Au clic sur le bouton "mnuPersonne" dans le menu
-    activerOptionMenu($(this));
     // On charge la page voirPersonne.html dans la div content et on appelle la fonction d'initialisation de cette page
     $('#content').load('pages/formulaireGroupe.html',evenementFormulaireGroupe);
 
   });
 
 	$('body nav #mnuCalendrier').bind('click', function() { // Au clic sur le bouton "mnuPersonne" dans le menu
-		activerOptionMenu($(this));
 		// On charge la page voirPersonne.html dans la div content et on appelle la fonction d'initialisation de cette page
 		$('#content').load('pages/formulaireOrganisateur.html');
 
@@ -150,7 +149,8 @@ function afficherArtiste(idArtiste){
 function evenementRep(){
 
 	$('p').on('click',function() {
-		$('#content').load('pages/afficherArtiste.html',afficherArtiste($(this).attr('idArtiste')));
+		var param=$(this).attr('idArtiste');
+		$('#content').load('pages/afficherArtiste.html',function(){afficherArtiste(param)});
 	});
 
 	$('#add').on('click',function() {
@@ -167,7 +167,8 @@ function evenementRep(){
 }
 function evenementAccueil() {
 	$('article').on('click',function() {
-		$('#content').load('pages/afficherEvenement.html',afficherEvenement($(this).attr('idEvent')));
+		var param=$(this).attr('idEvent');
+		$('#content').load('pages/afficherEvenement.html',function(){afficherEvenement(param)});// ====================================================
 	});
 }
 //------------------------------Evenement sur le Formulaire creer Evenement----------------------------------------------
@@ -187,7 +188,7 @@ function evenementFormulaireEve() {
     $titreGroupe.attr('id', 'nomG'+i) ;
 		$titreGroupe.attr('numGroupe', i) ;
     $titreGroupe.html('Groupe '+i);
-    $titreGroupe.on('click',function() {alert('clic -> ' + $("#G"+$(this).attr('numGroupe')).length);$("#G"+$(this).attr('numGroupe')).toggle();});
+    $titreGroupe.on('click',function() {$("#G"+$(this).attr('numGroupe')).toggle();});
     $('#lesGroupes').append($titreGroupe);
 
 			$divGroupe = $(document.createElement('div'));
@@ -215,7 +216,8 @@ function evenementArtiste(){
 	});
 
 	$('#modifier').click(function(){
-		$('#content').load('pages/formulaireArtiste.html',modifierArtiste($('section').attr('idArtiste')))
+		var param=$('section').attr('idArtiste');
+		$('#content').load('pages/formulaireArtiste.html',function(){modifierArtiste(param)})
 	});
 }
 //------------------------------Evenement sur le Formulaire creer Artiste------------------------------------
@@ -266,7 +268,7 @@ function afficherChampObligatoire(champ,nb){
 
 }
 //-------------------------------------------------------------------------------------------------------
-var nbErreurEvent=0;
+
 function enregistrerEvenement() {
 	// Ici normalement, les contr�les sur les champs requis, les formats, ....
 				var dateDeb=$('#dateDeb').val().substr(0,4)+$('#dateDeb').val().substr(5,2)+$('#dateDeb').val().substr(8,2);
@@ -279,11 +281,11 @@ function enregistrerEvenement() {
 				}
 
 				if($('#nom').val()==""){
-					afficherChampObligatoire('#nom',nbErreurEvent);nbErreurEvent++;}
+					afficherChampObligatoire('#nom',erreurs.erreurEvent);erreurs.erreurEvent++;}
 				if($('#dateDeb').val()==""){
-					afficherChampObligatoire('#dateDeb',nbErreurEvent);nbErreurEvent++;}
+					afficherChampObligatoire('#dateDeb',erreurs.erreurEvent);erreurs.erreurEvent++;}
 				if($('#dateFin').val()==""){
-						afficherChampObligatoire('#dateFin',nbErreurEvent);nbErreurEvent++;}
+						afficherChampObligatoire('#dateFin',erreurs.erreurEvent);erreurs.erreurEvent++;}
 				else{
 	var data =	'nom=' + $('#nom').val() +
 				'&adresse=' + $('#adresse').val() +
@@ -311,17 +313,17 @@ function enregistrerEvenement() {
 }
 
 //-------------------------------------------------------------------------------------------------------
-var nbErreur=0;
+
 function enregistrerArtiste() {
 	// Ici normalement, les contr�les sur les champs requis, les formats, ....
 				if($('#nom').val()==""){
-					afficherChampObligatoire('#nom',nbErreur);nbErreur++;}
+					afficherChampObligatoire('#nom',erreurs.erreurArtiste);erreurs.erreurArtiste++;}
 				if($('#prenom').val()==""){
-					afficherChampObligatoire('#prenom',nbErreur);nbErreur++;}
+					afficherChampObligatoire('#prenom',erreurs.erreurArtiste);erreurs.erreurArtiste++;}
 				if($('#tel').val()==""){
-						afficherChampObligatoire('#tel',nbErreur);nbErreur++;}
+						afficherChampObligatoire('#tel',erreurs.erreurArtiste);erreurs.erreurArtiste++;}
 				if($('#mail').val()==""){
-						afficherChampObligatoire('#mail',nbErreur);nbErreur++}
+						afficherChampObligatoire('#mail',erreurs.erreurArtiste);erreurs.erreurArtiste++}
 				else{
 					var data =	'nom=' + $('#nom').val() +
 								'&prenom=' + $('#prenom').val() +
