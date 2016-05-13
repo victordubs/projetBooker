@@ -48,17 +48,26 @@ function afficherRep(){
 					var result=JSON.parse(data);
 					if (result.status == 'success') {
 						for (var id=0; id < result.artistes.length; id++) {
-//						for(var lettre=0; lettre <alphabet.length;lettre++){
-								// On place le contact dans le bon div en fonction de sa première lettre.
-//								if(result.artistes[id].nomArtiste.substr(0,1)==alphabet[lettre]){
+
+								if(document.getElementById(result.artistes[id].nomArtiste.substr(0,1))==null){
+											alert(document.getElementById(result.artistes[id].nomArtiste.substr(0,1)));
+													$article = $(document.createElement('article'));
+													$titre = $(document.createElement('h2'));
+													$titre.html(result.artistes[id].nomArtiste.substr(0,1).toUpperCase());
+													$article.append($titre);
+													$ul = $(document.createElement('ul'));
+													$ul.attr('id',result.artistes[id].nomArtiste.substr(0,1));
+													$article.append($ul);
+													$('#repertoire').append($article);
+								}
+
 										$liContact = $(document.createElement('li')); // On cr�e un li
 										$liContact.append('<p idArtiste="'+result.artistes[id].idArtiste+'">'+result.artistes[id].nomArtiste+'</p>');
 										$liContact.append('<img id=\'email\' src = "images/emailBtn.svg" />');
 										$liContact.append('<img id=\'sms\' src = "images/smsBtn.svg" />');
 										$liContact.append('<a href="tel:+337388388"><img id=\'call\' src = "images/callBtn.svg" /></a>');
-										$('#result'+result.artistes[id].nomArtiste.substr(0,1).toUpperCase()).append($liContact);
-//					  		}
-//						}
+										$('#'+result.artistes[id].nomArtiste.substr(0,1)).append($liContact);
+
 						}
 						evenementRep();
 					}
@@ -211,7 +220,8 @@ function evenementArtiste(){
 		$('.option').focus();
 	});
 
-	$('#option').focusout(function() {
+	$('.option').focusout(function() {
+		alert(pouet);
 		$('.option').hide();
 	});
 
@@ -276,8 +286,11 @@ function enregistrerEvenement() {
 				dateDebInt=parseInt(dateDeb,10);
 				dateFinInt=parseInt(dateFin,10);
 
-				if(dateDebInt>dateDebInt){
+				if(dateDebInt>dateFinInt){
 						alert("pouet");
+				}
+				else if (dateDebInt==dateFinInt) {
+					alert("les dates sont les même");
 				}
 
 				if($('#nom').val()==""){
