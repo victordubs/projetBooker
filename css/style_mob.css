@@ -433,6 +433,16 @@ label *{
     border: 1px solid #aaa;
     border-radius: 4px;
 }
+
+* .btnAjouterContact{
+    width:60%;
+    margin: 0 20%;
+}
+
+.btnAjouterContact{
+    width:100%;
+}
+
 /* appliquer une placeholder dans un champ date*/
 input[type="date"]:before,
 input[type="time"]:before  {
