@@ -1,20 +1,25 @@
+var erreurs = {
+	erreurArtiste : 0,
+	erreurEvent : 0,
+}
+
 $(document).ready(function() {
 	// Comportement des boutons de menus
 	$('body nav #mnuAccueil').bind('click', function() { // Au clic sur le bouton "mnuAccueil" dans le menu
 		activerOptionMenu($(this));
-		$('#content').load('pages/accueil.html',afficherAccueil()); // On charge la page accueil.html dans la div content
+		$('#content').load('pages/accueil.html',afficherAccueil); // On charge la page accueil.html dans la div content
 	});
 
 	$('body nav #mnuRepertoire').bind('click', function() { // Au clic sur le bouton "mnuPersonne" dans le menu
 		activerOptionMenu($(this));
 		// On charge la page voirPersonne.html dans la div content et on appelle la fonction d'initialisation de cette page
-		$('#content').load('pages/afficherRep.html',afficherRep());
+		$('#content').load('pages/afficherRep.html',afficherRep);
 	});
 
   $('body nav #mnuOption').bind('click', function() { // Au clic sur le bouton "mnuPersonne" dans le menu
     activerOptionMenu($(this));
     // On charge la page voirPersonne.html dans la div content et on appelle la fonction d'initialisation de cette page
-    $('#content').load('pages/formulaireGroupe.html',evenementFormulaireGroupe());
+    $('#content').load('pages/formulaireGroupe.html',evenementFormulaireGroupe);
 
   });
 
@@ -26,41 +31,38 @@ $(document).ready(function() {
 	});
   $('body nav #mnuAccueil').click();
 });
-
 // ---------------------------------------------------------------------------------------------------------------------------
 // Active une option du menu (l'�l�ment � activer est pass� en param�tre)
 function activerOptionMenu($element) {
 	// D�sactive toutes les options du menu (met l'attribut 'actif' � faux)
-	$('body nav input[type="button"]').attr('actif', false);
+	$('.menu input').attr('actif', false);
 	// Active l'option choisie et re�ue en param�tre (met l'attribut 'actif' � vrai)
 	$element.attr('actif', true);
 }
 
 //------------AFFICHER LE REPERTOIRE--------------------------------------------------------------------------------------------
 function afficherRep(){
-	var alphabet=["A","B","C","D","E","F","G","H","I","J"];
-
 
 	$.ajax({	type: "POST", // envoie une requ�te � getListePersonnes pour demander la liste des personnes
 				url: "ajax/getListeArtistes.php",
 				success: function(data, textStatus, jqXHR) {
 					var result=JSON.parse(data);
 					if (result.status == 'success') {
-					for (var id=0; id < result.artistes.length; id++) {
-						for(var lettre=0; lettre <alphabet.length;lettre++){
+						for (var id=0; id < result.artistes.length; id++) {
+//						for(var lettre=0; lettre <alphabet.length;lettre++){
 								// On place le contact dans le bon div en fonction de sa première lettre.
-								if(result.artistes[id].nomArtiste.substr(0,1)==alphabet[lettre]){
-
+//								if(result.artistes[id].nomArtiste.substr(0,1)==alphabet[lettre]){
 										$liContact = $(document.createElement('li')); // On cr�e un li
 										$liContact.append('<p idArtiste="'+result.artistes[id].idArtiste+'">'+result.artistes[id].nomArtiste+'</p>');
 										$liContact.append('<img id=\'email\' src = "images/emailBtn.svg" />');
 										$liContact.append('<img id=\'sms\' src = "images/smsBtn.svg" />');
 										$liContact.append('<a href="tel:+337388388"><img id=\'call\' src = "images/callBtn.svg" /></a>');
-										$div='#result'+alphabet[lettre];
-										$($div).append($liContact);
-					  		}
+										$('#result'+result.artistes[id].nomArtiste.substr(0,1).toUpperCase()).append($liContact);
+//					  		}
+//						}
 						}
-					}	evenementRep();}
+						evenementRep();
+					}
 				},
 				error: function() {
 					alert('Erreur dans la requ�te au serveur.');
@@ -181,8 +183,13 @@ function evenementFormulaireEve() {
 	var i=2;
 	$('.btnAjouterChamp').on('click',function() {
 
-			$('#lesGroupes').append('<h2 id="nomG'+i+'">Groupe '+i+'</h2>');
-			$('#nomG'+i).on('click',function() {$("#G"+i).toggle();});
+		$titreGroupe = $(document.createElement('h2'));
+    $titreGroupe.attr('id', 'nomG'+i) ;
+		$titreGroupe.attr('numGroupe', i) ;
+    $titreGroupe.html('Groupe '+i);
+    $titreGroupe.on('click',function() {alert('clic -> ' + $("#G"+$(this).attr('numGroupe')).length);$("#G"+$(this).attr('numGroupe')).toggle();});
+    $('#lesGroupes').append($titreGroupe);
+
 			$divGroupe = $(document.createElement('div'));
 			$($divGroupe).attr('id','G'+i);
 			$divGroupe.append('<select class="selectGroupe">');
@@ -199,12 +206,13 @@ function evenementFormulaireEve() {
 function evenementArtiste(){
 	$('.option').hide();
 	$('#edit').on('click',function() {
-		$('.option').toggle();
+		$('.option').show();
+		$('.option').focus();
 	});
-/*
-	$('[id!="option"]').on('click',function() {
+
+	$('#option').focusout(function() {
 		$('.option').hide();
-	});*/
+	});
 
 	$('#modifier').click(function(){
 		$('#content').load('pages/formulaireArtiste.html',modifierArtiste($('section').attr('idArtiste')))

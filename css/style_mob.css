@@ -574,3 +574,15 @@ vertical-align: bottom;
   border-bottom: solid;
   border-color: #888888;
 }
+
+/*.menu input[actif="true"] {
+  border : 1px solid orange;
+}*/
+
+#menuRepArtistes {
+  width : 15px;
+  height : 15px;
+  background-image : url("../images/artisteBtn.svg");
+  background-repeat: no-repeat;
+  background-size : 100%;
+}
