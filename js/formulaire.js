@@ -370,6 +370,33 @@ function enregistrerGroupe() {
 				}
 		});}
 }
+
+//------------------------------------------------------------------------------------------------------
+//-----------------------------------MODIFIER UN GROUPE---------------------------------------------
+function modifierGroupe(idGroupe){
+
+	$.ajax({	type: "POST",
+				url: "ajax/getGroupe.php",
+				data: "idGroupe=" + idGroupe, // On passe l'id de la personne que l'on veut voir
+				success: function(data, textStatus, jqXHR) {
+					var result = JSON.parse(data) ;
+					if (result.status == 'success') {
+						if (result.artiste) {
+							if (result.artiste.nom) $('#nom').val(result.artiste.nom) ;
+							if (result.artiste.prenom) $('#prenom').val(result.artiste.prenom) ;
+							if (result.artiste.mail) $('#mail').val(result.artiste.mail);
+							if (result.artiste.tel) $('#tel').val(result.artiste.tel);
+							if (result.artiste.ville) $('#ville').val(result.artiste.ville);
+							evenementFormulaireArt();
+						}
+					}
+				},
+				error: function() {
+					alert('Erreur dans la requ�te au serveur.');
+				}
+	});
+
+}
 //------------------------------------------------------------------------------------------------------
 //-----------------------------------MODIFIER UN CONTACT---------------------------------------------
 function modifierArtiste(idArtiste){
