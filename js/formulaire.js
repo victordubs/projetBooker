@@ -89,7 +89,7 @@ function afficherAccueil(){
 										$articleAcc = $(document.createElement('article')); // On cr�e un article
 										$articleAcc.attr('idEvent',result.evenements[id].idEvenement);
 										$articleAcc.append('<h2>'+result.evenements[id].nomEvenement+'</h2>');
-										$articleAcc.append('<p> Date :'+result.evenements[id].dateDeb+'<br/ >Lieu :'+result.evenements[id].lieu+'</p>');
+										$articleAcc.append('<p> Date :'+result.evenements[id].dateDeb+'<br/ >Lieu :'+result.evenements[id].ville+'</p>');
 										$('section').append($articleAcc);
 							  }
 							}evenementAccueil();
@@ -110,13 +110,13 @@ function afficherEvenement(idEvenement){
 					if (result.status == 'success') {
 
 						if (result.evenement) {
-
+							if (result.evenement.idEvenement)$('section').attr('idEvent',result.evenement.idEvenement);
 							if (result.evenement.nomEvenement){$("#nomEvent").prepend(result.evenement.nomEvenement);}
 							if (result.evenement.dateDeb) $("#dateDeb").append(result.evenement.dateDeb);
 							if (result.evenement.dateFin) $("#dateFin").append(result.evenement.dateFin);
-							if (result.evenement.lieu) $("#lieu").append(result.evenement.lieu);
+							if (result.evenement.lieu) $("#ville").append(result.evenement.ville);
 						}
-					}
+					}eventEvenement();
 				},
 				error: function() {
 					alert('Erreur dans la requ�te au serveur.');
@@ -208,7 +208,7 @@ function evenementAccueil() {
 	});
 }
 //------------------------------Evenement sur le Formulaire creer Evenement----------------------------------------------
-var i=1;
+
 function evenementFormulaireEve() {
 
 	$('.btnAjouterContact').on('click',function() {
@@ -238,6 +238,24 @@ function evenementFormulaireEve() {
 			i=i+1;
 	});
 
+}
+//------------------------------Evenement sur l'evenement----------------------------------------------------
+function eventEvenement(){
+	$('.option').hide();
+	$('#edit').on('click',function() {
+		$('.option').show();
+		$('.option').focus();
+	});
+
+	$('.option').focusout(function() {
+		alert(pouet);
+		$('.option').hide();
+	});
+
+	$('#modifier').click(function(){
+		var param=$('section').attr('idEvent');
+		$('#content').load('pages/formulaireEvenement.html',function(){modifierEvenement(param)})
+	});
 }
 //------------------------------Evenement sur l'artiste----------------------------------------------------
 function evenementArtiste(){
@@ -474,3 +492,27 @@ function modifierArtiste(idArtiste){
 
 }
 //------------------------------------------------------------------------------------------------------
+//-----------------------------------MODIFIER UN CONTACT---------------------------------------------
+function modifierEvenement(idEvent){
+
+	$.ajax({	type: "POST",
+				url: "ajax/getEvenement.php",
+				data: "idEvenement=" + idEvent, // On passe l'id de la personne que l'on veut voir
+				success: function(data, textStatus, jqXHR) {
+					var result = JSON.parse(data) ;
+					if (result.status == 'success') {
+						if (result.evenement) {
+							if (result.evenement.nomEvenement) $('#nom').val(result.evenement.nomEvenement) ;
+							if (result.evenement.dateDeb) $('#dateDeb').val(result.evenement.dateDeb) ;
+							if (result.evenement.dateFin) $('#dateFin').val(result.evenement.dateFin);
+							if (result.evenement.ville) $('#ville').val(result.evenement.ville);
+							evenementFormulaireEve();
+						}
+					}
+				},
+				error: function() {
+					alert('Erreur dans la requ�te au serveur.');
+				}
+	});
+
+}
