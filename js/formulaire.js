@@ -14,7 +14,7 @@ $(document).ready(function() {
 
 	$('body nav #mnuRepertoire').bind('click', function() { // Au clic sur le bouton "mnuPersonne" dans le menu
 		// On charge la page voirPersonne.html dans la div content et on appelle la fonction d'initialisation de cette page
-		$('#content').load('pages/afficherRep.html',afficherRep);
+		$('#content').load('pages/afficherRep.html',eventMenuRep);
 	});
 
   $('body nav #mnuOption').bind('click', function() { // Au clic sur le bouton "mnuPersonne" dans le menu
@@ -34,7 +34,7 @@ $(document).ready(function() {
 // Active une option du menu (l'�l�ment � activer est pass� en param�tre)
 function activerOptionMenu($element) {
 	// D�sactive toutes les options du menu (met l'attribut 'actif' � faux)
-	$('.menu input').attr('actif', false);
+	$('.menuRep input').attr('actif', false);
 	// Active l'option choisie et re�ue en param�tre (met l'attribut 'actif' � vrai)
 	$element.attr('actif', true);
 }
@@ -50,7 +50,7 @@ function afficherRep(){
 						for (var id=0; id < result.artistes.length; id++) {
 
 								if(document.getElementById(result.artistes[id].nomArtiste.substr(0,1))==null){
-											alert(document.getElementById(result.artistes[id].nomArtiste.substr(0,1)));
+
 													$article = $(document.createElement('article'));
 													$titre = $(document.createElement('h2'));
 													$titre.html(result.artistes[id].nomArtiste.substr(0,1).toUpperCase());
@@ -162,17 +162,44 @@ function evenementRep(){
 		$('#content').load('pages/afficherArtiste.html',function(){afficherArtiste(param)});
 	});
 
+}
+//------------------------------Evenement sur le Menu du Repertoire----------------------------------------------
+function eventMenuRep(){
+
 	$('#add').on('click',function() {
 		$('#content').load('pages/formulaireArtiste.html',evenementFormulaireArt);
 	});
+
 	$("#search").hide();
 	$('#searchBtn').on('click',function() {
 		$("#search").toggle();
-  });
+	});
 
 	$('#menuRepArtistes').on('click',function() {
-	$('#content').load('pages/formulaireEvenement.html',evenementFormulaireEve);
+	activerOptionMenu($(this));
+	$('#repertoire').empty();
+	afficherRep();
 	});
+
+	$('#menuRepGroupe').on('click',function() {
+	activerOptionMenu($(this));
+	$('#repertoire').empty();
+	afficherRep();
+	});
+
+	$('#menuRepOrganisateur').on('click',function() {
+	activerOptionMenu($(this));
+	$("#repertoire").empty();
+	afficherRep();
+	});
+
+	$('#menuRepContact').on('click',function() {
+	activerOptionMenu($(this));
+	$('#repertoire').empty();
+	afficherRep();
+	});
+
+	$('#menuRepContact').click();
 }
 function evenementAccueil() {
 	$('article').on('click',function() {
