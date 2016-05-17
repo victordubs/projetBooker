@@ -25,7 +25,7 @@ $(document).ready(function() {
 
 	$('body nav #mnuCalendrier').bind('click', function() { // Au clic sur le bouton "mnuPersonne" dans le menu
 		// On charge la page voirPersonne.html dans la div content et on appelle la fonction d'initialisation de cette page
-		$('#content').load('pages/formulaireOrganisateur.html');
+		$('#content').load('pages/formulaireEvenement.html');
 
 	});
   $('body nav #mnuAccueil').click();
@@ -40,7 +40,7 @@ function activerOptionMenu($element) {
 }
 
 //------------AFFICHER LE REPERTOIRE--------------------------------------------------------------------------------------------
-function afficherRep(){
+function afficherRep(personne){
 
 	$.ajax({	type: "POST", // envoie une requ�te � getListePersonnes pour demander la liste des personnes
 				url: "ajax/getListeArtistes.php",
@@ -69,7 +69,7 @@ function afficherRep(){
 										$('#'+result.artistes[id].nomArtiste.substr(0,1)).append($liContact);
 
 						}
-						evenementRep();
+						evenementRep(personne);
 					}
 				},
 				error: function() {
@@ -114,7 +114,7 @@ function afficherEvenement(idEvenement){
 							if (result.evenement.nomEvenement){$("#nomEvent").prepend(result.evenement.nomEvenement);}
 							if (result.evenement.dateDeb) $("#dateDeb").append(result.evenement.dateDeb);
 							if (result.evenement.dateFin) $("#dateFin").append(result.evenement.dateFin);
-							if (result.evenement.lieu) $("#ville").append(result.evenement.ville);
+							if (result.evenement.ville) $("#ville").append(result.evenement.ville);
 						}
 					}eventEvenement();
 				},
@@ -155,20 +155,51 @@ function afficherArtiste(idArtiste){
 }
 
 //------------------------------Evenement sur le Repertoire----------------------------------------------
-function evenementRep(){
+function evenementRep(personne){
 
-	$('p').on('click',function() {
-		var param=$(this).attr('idArtiste');
-		$('#content').load('pages/afficherArtiste.html',function(){afficherArtiste(param)});
-	});
+	if(personne=="artiste"){
+		$('p').on('click',function() {
+			var param=$(this).attr('idArtiste');
+			$('#content').load('pages/afficherArtiste.html',function(){afficherArtiste(param)});
+		});
 
+		$('#add').on('click',function() {
+			$('#content').load('pages/formulaireArtiste.html',evenementFormulaireArt);
+		});
+	}
+	else if(personne=="groupe"){
+		$('p').on('click',function() {
+			var param=$(this).attr('idGroupe');
+			$('#content').load('pages/afficherGroupe.html',function(){afficherGroupe(param)});
+		});
+
+		$('#add').on('click',function() {
+			$('#content').load('pages/formulaireGroupe.html',evenementFormulaireArt);
+		});
+	}
+	else if(personne=="organisateur"){
+		$('p').on('click',function() {
+			var param=$(this).attr('idOrganisateur');
+			$('#content').load('pages/afficherArtiste.html',function(){afficherArtiste(param)});
+		});
+
+		$('#add').on('click',function() {
+			$('#content').load('pages/formulaireOrganisateur.html',evenementFormulaireGroupe);
+		});
+	}
+	else if(personne=="contact"){
+		$('p').on('click',function() {
+			var param=$(this).attr('idContact');
+			$('#content').load('pages/afficherArtiste.html',function(){afficherArtiste(param)});
+		});
+
+		$('#add').on('click',function() {
+			$('#content').load('pages/formulaireContact.html');
+		});
+	}
 }
 //------------------------------Evenement sur le Menu du Repertoire----------------------------------------------
 function eventMenuRep(){
-
-	$('#add').on('click',function() {
-		$('#content').load('pages/formulaireArtiste.html',evenementFormulaireArt);
-	});
 
 	$("#search").hide();
 	$('#searchBtn').on('click',function() {
@@ -178,25 +209,25 @@ function eventMenuRep(){
 	$('#menuRepArtistes').on('click',function() {
 	activerOptionMenu($(this));
 	$('#repertoire').empty();
-	afficherRep();
+	afficherRep("artiste");
 	});
 
 	$('#menuRepGroupe').on('click',function() {
 	activerOptionMenu($(this));
 	$('#repertoire').empty();
-	afficherRep();
+	afficherRep("groupe");
 	});
 
 	$('#menuRepOrganisateur').on('click',function() {
 	activerOptionMenu($(this));
 	$("#repertoire").empty();
-	afficherRep();
+	afficherRep("organisateur");
 	});
 
 	$('#menuRepContact').on('click',function() {
 	activerOptionMenu($(this));
 	$('#repertoire').empty();
-	afficherRep();
+	afficherRep("contact");
 	});
 
 	$('#menuRepContact').click();
@@ -415,7 +446,7 @@ function enregistrerArtiste() {
 function enregistrerGroupe() {
 	// Ici normalement, les contr�les sur les champs requis, les formats, ....
 	if($('#nom').val()==""){
-					afficherChampObligatoire('#nom',nbErreur);nbErreur++;
+					afficherChampObligatoire('#nom',erreurs.erreurGroupe);erreurGroupe++;
 	}
 	else{
 		var data =	'nom=' + $('#nom').val() +
@@ -424,6 +455,44 @@ function enregistrerGroupe() {
 				alert(data);
 		$.ajax({	type: "POST",
 				url: "ajax/saveGroupe.php",
+				data: data, // On passe les informations saisies � l'�cran
+				success: function(data, textStatus, jqXHR) {
+					var result = JSON.parse(data) ;
+					if (result.status == 'success') {
+						// A COMPLETER
+					} else {
+						alert('erreur lors de l\'enregistrement');
+					}
+				},
+				error: function() {
+					alert('Erreur dans la requ�te au serveur.');
+				}
+		});}
+}
+
+//------------------------------------------------------------------------------------------------------
+//-----------------------------------ENREGISTRER UN ORGANISATEUR---------------------------------------------
+
+function enregistrerOrganisateur() {
+	// Ici normalement, les contr�les sur les champs requis, les formats, ....
+	if($('#nom').val()==""){
+					afficherChampObligatoire('#nom',erreurs.erreurOrganisateur);erreurs.erreurOrganisateur++;
+	}
+	if($('#tel').val()==""){
+					afficherChampObligatoire('#tel',erreurs.erreurOrganisateur);erreurs.erreurOrganisateur++;
+	}
+
+	else{
+		var data =	'nom=' + $('#nom').val() +
+				'&prenom=' + $('#prenom').val()+
+				'&tel=' + $('#tel').val()+
+				'&addresse=' + $('#adresse').val() +
+				'&ville=' + $('#ville').val()+
+				'&mail=' + $('#mail').val()+
+				'&siteWeb=' + $('#siteWeb').val();
+				alert(data);
+		$.ajax({	type: "POST",
+				url: "ajax/saveOrganisateur.php",
 				data: data, // On passe les informations saisies � l'�cran
 				success: function(data, textStatus, jqXHR) {
 					var result = JSON.parse(data) ;
@@ -450,12 +519,8 @@ function modifierGroupe(idGroupe){
 					var result = JSON.parse(data) ;
 					if (result.status == 'success') {
 						if (result.artiste) {
-							if (result.artiste.nom) $('#nom').val(result.artiste.nom) ;
-							if (result.artiste.prenom) $('#prenom').val(result.artiste.prenom) ;
-							if (result.artiste.mail) $('#mail').val(result.artiste.mail);
-							if (result.artiste.tel) $('#tel').val(result.artiste.tel);
-							if (result.artiste.ville) $('#ville').val(result.artiste.ville);
-							evenementFormulaireArt();
+							if (result.groupe.nom) $('#nom').val(result.artiste.nom) ;
+
 						}
 					}
 				},
