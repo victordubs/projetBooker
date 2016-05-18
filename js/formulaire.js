@@ -395,9 +395,13 @@ function eventEvenement(){
 
 function evenementArtiste(){
 	$('.option').hide();
-	$('#edit').on('click',function() {
+	/*$('#edit').on('click',function() {
 		$('.option').show();
 		$('.option').focus();
+	});*/
+
+	$('#edit').on('click',function() {
+		$('.option').toggle();
 	});
 
 	$('.option').focusout(function() {
@@ -502,9 +506,9 @@ function enregistrerEvenement() {
 					success: function(data, textStatus, jqXHR) {
 					var result = JSON.parse(data) ;
 						if (result.status == 'success') {
-						// A COMPLETER
+								alert("L'enregistrement de l'événement a été effectué");
 						} else {
-						alert('erreur lors de l\'enregistrement');
+								alert('erreur lors de l\'enregistrement');
 						}
 					},
 					error: function() {
