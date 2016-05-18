@@ -6,6 +6,8 @@ var erreurs = {
 	erreurOrganisateur : 0,
 }
 
+var nbGroupeEvenement=0;
+
 $(document).ready(function() {
 	// Comportement des boutons de menus
 	$('body nav #mnuAccueil').bind('click', function() { // Au clic sur le bouton "mnuAccueil" dans le menu
@@ -252,6 +254,7 @@ function evenementAccueil() {
 function evenementFormulaireEve() {
 
 	$('#info2').hide();
+	$('#info3').hide();
 
 	$('.btnAjouterContact').on('click',function() {
 			enregistrerEvenement();
@@ -260,19 +263,40 @@ function evenementFormulaireEve() {
 	var i=1;
 	$('#dateFin').bind('change', function() {
 				$('#info2').show();
-				getListeGroupe(i);
+				$('#info3').show();
+				getListeGroupes(i);
 				 i=i+1;
+				 getListeOrganisateurs();
 			});
 
 	$('.btnAjouterChamp').on('click',function() {
-		 getListeGroupe(i);
+		 getListeGroupes(i);
 		 i=i+1;
 	});
 }
+//---------------------------------------------------------------------------------------------------------------------
+//-----------------------------------GET LISTE ORGANISATEUR-----------------------------------------------------------------
+function getListeOrganisateurs(){
+				$.ajax({	type: "POST",
+						url: "ajax/getListeArtistes.php",
+						success: function(data, textStatus, jqXHR) {
+						var result = JSON.parse(data) ;
+						if (result.status == 'success') {
+					// Boucle pour remplir la liste des Artistes
+							 for (var id=0; id < result.artistes.length; id++) {
+								 $('#selectOrganisateur').append('<option>'+result.artistes[id].nomArtiste+'</option>');
+							 }
+					 }
+					},
+					error: function() {
+						alert('Erreur dans la requ�te au serveur.');
+					}
+			 });
 
+}
 //---------------------------------------------------------------------------------------------------------------------
 //-----------------------------------GET LISTE GROUPES-----------------------------------------------------------------
-function getListeGroupe(i) {
+function getListeGroupes(i) {
 
 		// On transforme la date de Début et la date de fin en entier
 		if(veriferDates()==false){
@@ -291,6 +315,7 @@ function getListeGroupe(i) {
 									$titreGroupe.html('Groupe '+i);
 									$titreGroupe.on('click',function() {$("#G"+$(this).attr('numGroupe')).toggle();});
 									$('#lesGroupes').append($titreGroupe);
+									nbGroupeEvenement++;
 
 									$divGroupe = $(document.createElement('div'));
 									$($divGroupe).attr('id','G'+i);
@@ -301,7 +326,7 @@ function getListeGroupe(i) {
 										 $('#selectGroupe'+i).append('<option>'+result.artistes[id].nomArtiste+'</option>');
 									}
 
-									 $divGroupe.append('</select></label><label>Heure passage<input type="time" placeholder="Heure de passage"></label>');
+									 $divGroupe.append('</select></label><input type="time" id="heureG'+i+'" placeholder="Heure de passage">');
 									 $('#lesGroupes').append($divGroupe);
 							 }
 							},
@@ -462,8 +487,15 @@ function enregistrerEvenement() {
 								'&dateDebut=' + $('#dateDeb').val() +
 								'&dateFin=' + $('#dateFin').val()+
 								'&heureDebut=' + $('#heureDeb').val()+
-								'&heureFin=' + $('#heureFin').val();
+								'&heureFin=' + $('#heureFin').val()+
+								'&organisateurs=' + $('#selectOrganisateur').val();
 
+					for(var i=1;i<=nbGroupeEvenement;i++){
+						data=data+'&nomG'+i+'='+$('#selectGroupe'+i).val()+
+						    			'&heureG'+i+'='+$('#heureG'+i).val();
+					}
+
+				alert(data);
 				$.ajax({	type: "POST",
 					url: "ajax/saveEvenement.php",
 					data: data, // On passe les informations saisies � l'�cran
