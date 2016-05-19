@@ -442,7 +442,6 @@ function evenementFormulaireContact() {
   getMetiers();
 
 	$('#btnAjouterMetier').on('click',function() {
-				alert("pouet");
 			   ajouterAutreChamp($(this),$(this).attr('new'),autreChamp.nbRole);
 			   autreChamp.nbMetier++;
 	});
