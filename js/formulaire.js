@@ -45,7 +45,8 @@ function activerOptionMenu($element) {
 	$element.attr('actif', true);
 }
 
-//------------AFFICHER LE REPERTOIRE--------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------
+//-----------------------------------AFFICHER LE REPERTOIRE--------------------------------------------------------------
 function afficherRep(personne){
 
 	$.ajax({	type: "POST", // envoie une requ�te � getListePersonnes pour demander la liste des personnes
@@ -105,7 +106,9 @@ function afficherAccueil(){
 				}
 	});
 }
-//-----------------------------------AFFICHER UN EVENEMENT------------------------------------------------
+
+//----------------------------------------------------------------------------------------------------------------------
+//-----------------------------------AFFICHER UN EVENEMENT--------------------------------------------------------------
 function afficherEvenement(idEvenement){
 
 	$.ajax({	type: "POST",
@@ -162,7 +165,8 @@ function afficherArtiste(idArtiste){
 	});
 }
 
-//------------------------------Evenement sur le Repertoire----------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------
+//-----------------------------------EVENEMENT REPERTOIRE--------------------------------------------------------
 function evenementRep(personne){
 
 // Evenement sur le répertoire des artistes
@@ -468,25 +472,31 @@ function getMetiers(){
 //-----------------------------------EVENEMENT FORMULAIRE ARTISTE---------------------------------------------------
 function evenementFormulaireArt() {
 
-	getRolesGenres();
-
+// Initialisation du nombre d'autre champ
+	autreChamp.nbRole=1;
+  autreChamp.nbGenre=1;
+// Initialisation de la liste des roles
+	getRoles();
+// Initialisation de la liste des genres
+  getGenres();
+// Action ajouter un autre champ Role
 	$('#btnAjouterRole').on('click',function() {
 			   ajouterAutreChamp($(this),$(this).attr('new'),autreChamp.nbRole);
 			   autreChamp.nbRole++;
 		});
-
+// Action ajouter un autre champ genre
 	$('#btnAjouterGenre').on('click',function() {
 				   ajouterAutreChamp($(this),$(this).attr('new'),autreChamp.nbGenre);
 				autreChamp.nbGenre++;
 			});
-
+// Action enregistrer un nouveau artiste
 	$('.btnAjouterContact').on('click',function() {
 		enregistrerArtiste();
 		});
 }
 //-----------------------------------------------------------------------------------------------------------------
-//-----------------------------------CREER LISTE GENRES ET ROLES---------------------------------------------------
-function getRolesGenres(){
+//-----------------------------------CREER LISTE GENRES------------------------------------------------------------
+function getRoles(){
 				$.ajax({	type: "POST",
 						url: "ajax/getListeArtistes.php",
 						success: function(data, textStatus, jqXHR) {
@@ -496,6 +506,22 @@ function getRolesGenres(){
 							 for (var id=0; id < result.artistes.length; id++) {
 								 $('#roles').append('<option>'+result.artistes[id].nomArtiste+'</option>');
 							 }
+					 }
+					},
+					error: function() {
+						alert('Erreur dans la requ�te au serveur.');
+					}
+			 });
+
+}
+//-----------------------------------------------------------------------------------------------------------------
+//-----------------------------------CREER LISTE GENRES---------------------------------------------------
+function getGenres(){
+				$.ajax({	type: "POST",
+						url: "ajax/getListeArtistes.php",
+						success: function(data, textStatus, jqXHR) {
+						var result = JSON.parse(data) ;
+						if (result.status == 'success') {
 				 	// Boucle pour remplir la liste des genres
 							 for (var id=0; id < result.artistes.length; id++) {
 								 $('#genres').append('<option>'+result.artistes[id].nomArtiste+'</option>');
@@ -521,35 +547,67 @@ function eventFormulaireOrganisateur() {
 //-----------------------------------EVENEMENT FORMULAIRE GROUPE---------------------------------------------------
 
 function evenementFormulaireGroupe() {
+// Initialisation du nombre d'autre champ
+  		autreChamp.nbGenre=1;
+// Initialisation de la liste des genres
+			  getGenres();
+// Initialisation de la liste des artistes
+			getListeArtistes();
+// Initialisation de la liste des contacts
+			getListeContacts();
 
-	$.ajax({	type: "POST",
-						url: "ajax/getListeArtistes.php",
-						success: function(data, textStatus, jqXHR) {
-							var result = JSON.parse(data) ;
-							if (result.status == 'success') {
-						// Boucle pour remplir la liste des Artistes
-								 for (var id=0; id < result.artistes.length; id++) {
-									 $('#listeArtiste').append('<option>'+result.artistes[id].nomArtiste+'</option>');
-								 }
-						 //-----------------------------------------------------------//
-						 //  Faire un autre for pour remplir la liste des contacts 	  //
-						 //----------------------------------------------------------	//
+			$('#btnAjouterGenre').on('click',function() {
+						ajouterAutreChamp($(this),$(this).attr('new'),autreChamp.nbGenre);
+					  autreChamp.nbGenre++;
+			});
 
-								 $('.btnAjouterContact').on('click',function() {
-									 enregistrerGroupe();
-									 });
-						 }
-						},
-						error: function() {
-							alert('Erreur dans la requ�te au serveur.');
-						}
+			$('.btnAjouterContact').on('click',function() {
+						enregistrerGroupe();
+			});
+}
+//-----------------------------------------------------------------------------------------------------------------
+//-----------------------------------CREER LISTE ARTISTES----------------------------------------------------------
+function getListeArtistes(){
+$.ajax({	type: "POST",
+					url: "ajax/getListeArtistes.php",
+					success: function(data, textStatus, jqXHR) {
+						var result = JSON.parse(data) ;
+						if (result.status == 'success') {
+					// Boucle pour remplir la liste des Artistes
+							 for (var id=0; id < result.artistes.length; id++) {
+								 $('#listeArtiste').append('<option>'+result.artistes[id].nomArtiste+'</option>');
+							 }
+					 }
+					},
+					error: function() {
+						alert('Erreur dans la requ�te au serveur.');
+					}
 
-	});
+});
+}
+//-----------------------------------------------------------------------------------------------------------------
+//-----------------------------------CREER LISTE CONTACT----------------------------------------------------------
+function getListeContacts(){
+$.ajax({	type: "POST",
+					url: "ajax/getListeArtistes.php",
+					success: function(data, textStatus, jqXHR) {
+						var result = JSON.parse(data) ;
+						if (result.status == 'success') {
+					// Boucle pour remplir la liste des Artistes
+							 for (var id=0; id < result.artistes.length; id++) {
+								 $('#listeContact').append('<option>'+result.artistes[id].nomArtiste+'</option>');
+							 }
+					 }
+					},
+					error: function() {
+						alert('Erreur dans la requ�te au serveur.');
+					}
 
+});
 }
 
-
-//------------------------------Afficher champ obligatoire------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------
+//-----------------------------------AFFICHER CHAMP OBLIGATOIRE----------------------------------------------------------
 function afficherChampObligatoire(champ,nb){
 			$(champ).css('border-color','red');
 			var finElement = $('<div id="error"><img src="./images/error.svg"><p>Attention certain champs sont obligatoire</p></div>');
@@ -558,14 +616,45 @@ function afficherChampObligatoire(champ,nb){
 		}
 
 }
-//--------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------VERIFIER CHAMP OBLIGATOIRE---------------------------------------------------
+function verifierChampObligatoire() {
+
+var erreur=false;
+
+	if($('#nom').val()==""){
+		afficherChampObligatoire('#nom',erreurs.erreurArtiste);erreurs.erreurArtiste++;erreur=true;}
+	if($('#prenom').val()==""){
+		afficherChampObligatoire('#prenom',erreurs.erreurArtiste);erreurs.erreurArtiste++;erreur=true;}
+	if($('#tel').val()==""){
+			afficherChampObligatoire('#tel',erreurs.erreurArtiste);erreurs.erreurArtiste++;erreur=true;}
+	if($('#mail').val()==""){
+			afficherChampObligatoire('#mail',erreurs.erreurArtiste);erreurs.erreurArtiste++;erreur=true;}
+
+return erreur;
+}
+//----------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------INITIALISER LA VARIABLE DATA---------------------------------------------------
+function InitialiserData() {
+
+	var data =	'nom=' + $('#nom').val() +
+							'&prenom=' + $('#prenom').val() +
+							'&tel=' + $('#tel').val() +
+							'&mail=' + $('#mail').val();
+
+	if($('#adresse').val()!=null) data=data+'&addresse=' + $('#adresse').val();
+	if($('#ville').val()!=null)   data=data+'&ville=' + $('#ville').val();
+	if($('#siteWeb').val()!=null) data=data+'&siteWeb=' + $('#siteWeb').val();
+
+	return data;
+}
+//----------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------ENREGISTRER UN EVENEMENT---------------------------------------------------
 
 function enregistrerEvenement() {
 
 				if($('#nom').val()==""){afficherChampObligatoire('#nom',erreurs.erreurEvent);erreurs.erreurEvent++;}
-				if(veriferDates()!=false);
-				else{
+				if(veriferDates()==false && $('#nom').val()!=""){
 					var data =	'nom=' + $('#nom').val() +
 								'&adresse=' + $('#adresse').val() +
 								'&ville=' + $('#ville').val() +
@@ -603,21 +692,8 @@ function enregistrerEvenement() {
 
 function enregistrerArtiste() {
 	// Ici normalement, les contr�les sur les champs requis, les formats, ....
-				if($('#nom').val()==""){
-					afficherChampObligatoire('#nom',erreurs.erreurArtiste);erreurs.erreurArtiste++;}
-				if($('#prenom').val()==""){
-					afficherChampObligatoire('#prenom',erreurs.erreurArtiste);erreurs.erreurArtiste++;}
-				if($('#tel').val()==""){
-						afficherChampObligatoire('#tel',erreurs.erreurArtiste);erreurs.erreurArtiste++;}
-				if($('#mail').val()==""){
-						afficherChampObligatoire('#mail',erreurs.erreurArtiste);erreurs.erreurArtiste++}
-				else{
-					var data =	'nom=' + $('#nom').val() +
-								'&prenom=' + $('#prenom').val() +
-								'&tel=' + $('#tel').val() +
-								'&addresse=' + $('#adresse').val() +
-								'&ville=' + $('#ville').val()+
-								'&mail=' + $('#mail').val()+
+				if(verifierChampObligatoire()==false){
+						var data=InitialiserData();
 								'&roles=' + $('#roles').val()+
 								'&genres=' + $('#genres').val();
 
@@ -638,7 +714,31 @@ function enregistrerArtiste() {
 					}
 			});}
 }
+//--------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------ENREGISTRER UN CONTACT---------------------------------------------------
+function enregistrerContact() {
+	// Ici normalement, les contr�les sur les champs requis, les formats, ....
+		if(verifierChampObligatoire()==false){
+				var data=InitialiserData();
 
+				$.ajax({	type: "POST",
+						url: "ajax/saveArtiste.php",
+						data: data, // On passe les informations saisies � l'�cran
+						success: function(data, textStatus, jqXHR) {
+							var result = JSON.parse(data) ;
+							if (result.status == 'success') {
+						  		alert('L\'enregistrement de l\'artiste a été effectué');
+							}
+							else {
+								alert('erreur lors de l\'enregistrement');
+							}
+						},
+					error: function() {
+							alert('Erreur dans la requ�te au serveur.');
+					}
+			});
+	}
+}
 //-------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------ENREGISTRER UN GROUPE---------------------------------------------------
 function enregistrerGroupe() {
@@ -670,27 +770,14 @@ function enregistrerGroupe() {
 	}
 }
 
-//----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
 //-----------------------------------ENREGISTRER UN ORGANISATEUR---------------------------------------------
 
 function enregistrerOrganisateur() {
 	// Ici normalement, les contr�les sur les champs requis, les formats, ....
-	if($('#nom').val()==""){
-					afficherChampObligatoire('#nom',erreurs.erreurOrganisateur);erreurs.erreurOrganisateur++;
-	}
-	if($('#tel').val()==""){
-					afficherChampObligatoire('#tel',erreurs.erreurOrganisateur);erreurs.erreurOrganisateur++;
-	}
+	if(verifierChampObligatoire()==false){
+		var data=InitialiserData();
 
-	else{
-		var data =	'nom=' + $('#nom').val() +
-				'&prenom=' + $('#prenom').val()+
-				'&tel=' + $('#tel').val()+
-				'&addresse=' + $('#adresse').val() +
-				'&ville=' + $('#ville').val()+
-				'&mail=' + $('#mail').val()+
-				'&siteWeb=' + $('#siteWeb').val();
-				alert(data);
 		$.ajax({	type: "POST",
 				url: "ajax/saveOrganisateur.php",
 				data: data, // On passe les informations saisies � l'�cran
@@ -709,7 +796,7 @@ function enregistrerOrganisateur() {
 }
 
 //------------------------------------------------------------------------------------------------------
-//-----------------------------------MODIFIER UN GROUPE---------------------------------------------
+//-----------------------------------MODIFIER UN GROUPE-------------------------------------------------
 function modifierGroupe(idGroupe){
 
 	$.ajax({	type: "POST",
@@ -731,7 +818,7 @@ function modifierGroupe(idGroupe){
 
 }
 //------------------------------------------------------------------------------------------------------
-//-----------------------------------MODIFIER UN CONTACT---------------------------------------------
+//-----------------------------------MODIFIER UN CONTACT------------------------------------------------
 function modifierArtiste(idArtiste){
 
 	$.ajax({	type: "POST",
@@ -757,7 +844,7 @@ function modifierArtiste(idArtiste){
 
 }
 //------------------------------------------------------------------------------------------------------
-//-----------------------------------MODIFIER UN CONTACT---------------------------------------------
+//-----------------------------------MODIFIER UN CONTACT------------------------------------------------
 function modifierEvenement(idEvent){
 
 	$.ajax({	type: "POST",
