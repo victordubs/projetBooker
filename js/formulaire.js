@@ -206,7 +206,7 @@ function evenementRep(personne){
 		});
 
 		$('#add').on('click',function() {
-		$('#content').load('pages/formulaireContact.html');
+		$('#content').load('pages/formulaireContact.html',evenementFormulaireContact);
 		});
 	}
 }
@@ -428,6 +428,42 @@ function ajouterAutreChamp(place,placeAttr,nbAutre){
 	$(place).after($nouveauChamp);
 }
 
+//------------------------------------------------------------------------------------------------------------------
+//-----------------------------------EVENEMENT FORMULAIRE CONTACT---------------------------------------------------
+
+
+function evenementFormulaireContact() {
+  getMetiers();
+
+	$('#btnAjouterMetier').on('click',function() {
+			   ajouterAutreChamp($(this),$(this).attr('new'),autreChamp.nbRole);
+			   autreChamp.nbRole++;
+		});
+
+	$('.btnAjouterContact').on('click',function() {
+		//enregistrerArtiste();
+		});
+}
+//-----------------------------------------------------------------------------------------------------------------
+//-----------------------------------CREER LISTE METIER---------------------------------------------------
+function getMetiers(){
+				$.ajax({	type: "POST",
+						url: "ajax/getListeArtistes.php",
+						success: function(data, textStatus, jqXHR) {
+						var result = JSON.parse(data) ;
+						if (result.status == 'success') {
+					// Boucle pour remplir la liste des métiers
+							 for (var id=0; id < result.artistes.length; id++) {
+								 $('#Metiers').append('<option>'+result.artistes[id].nomArtiste+'</option>');
+							 }
+					 }
+					},
+					error: function() {
+						alert('Erreur dans la requ�te au serveur.');
+					}
+			 });
+
+}
 //------------------------------------------------------------------------------------------------------------------
 //-----------------------------------EVENEMENT FORMULAIRE ARTISTE---------------------------------------------------
 function evenementFormulaireArt() {
