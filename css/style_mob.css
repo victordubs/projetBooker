@@ -438,10 +438,7 @@ label *{
     border: 1px solid #aaa;
     border-radius: 4px;
 }
-input:focus
-{
-border-color: blue;
-}
+
 
 * .btnAjouterContact{
     width:60%;

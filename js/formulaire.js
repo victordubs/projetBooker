@@ -249,7 +249,7 @@ function eventMenuRep(){
 	afficherRep("contact");
 	});
 
-	$('#menuRepContact').click();
+	$('#menuRepArtiste').click();
 }
 function evenementAccueil() {
 	$('article').on('click',function() {
@@ -441,6 +441,7 @@ function evenementFormulaireContact() {
   getMetiers();
 
 	$('#btnAjouterMetier').on('click',function() {
+				alert("pouet");
 			   ajouterAutreChamp($(this),$(this).attr('new'),autreChamp.nbRole);
 			   autreChamp.nbMetier++;
 	});
@@ -618,19 +619,27 @@ function afficherChampObligatoire(champ,nb){
 
 }
 //------------------------------------------------------------------------------------------------------------------------
-//-------------------------------------------VERIFIER CHAMP OBLIGATOIRE---------------------------------------------------
-function verifierChampObligatoire() {
+//-------------------------------------------VERIFIER CHAMP OBLIGATOIRE PERSONNE---------------------------------------------------
+function verifierChampObligatoirePersonne() {
 
 var erreur=false;
 
 	if($('#nom').val()==""){
 		afficherChampObligatoire('#nom',erreurs.erreurArtiste);erreurs.erreurArtiste++;erreur=true;}
-	if($('#prenom').val()==""){
-		afficherChampObligatoire('#prenom',erreurs.erreurArtiste);erreurs.erreurArtiste++;erreur=true;}
 	if($('#tel').val()==""){
 			afficherChampObligatoire('#tel',erreurs.erreurArtiste);erreurs.erreurArtiste++;erreur=true;}
 	if($('#mail').val()==""){
 			afficherChampObligatoire('#mail',erreurs.erreurArtiste);erreurs.erreurArtiste++;erreur=true;}
+
+return erreur;
+}
+//------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------VERIFIER CHAMP OBLIGATOIRE---------------------------------------------------
+function verifierChampObligatoire() {
+var erreur=verifierChampObligatoirePersonne();
+
+	if($('#prenom').val()==""){
+		afficherChampObligatoire('#prenom',erreurs.erreurArtiste);erreurs.erreurArtiste++;erreur=true;}
 
 return erreur;
 }
@@ -733,6 +742,7 @@ function enregistrerContact() {
 		if(verifierChampObligatoire()==false){
 				var data=InitialiserData();
 				if($('#metiers').val()!=null) data=data+'&metiers=' + $('#metiers').val();
+				if($('#type').val()!=null) data=data+'&type=' + $('#type').val();
 	//Ajoute valeur dans data des autres métier
 				for(var i=1;i<autreChamp.nbMetier;i++){
 					data=data+'&autreMetier'+i+'='+$('#autreMetier'+i).val();
@@ -744,7 +754,7 @@ function enregistrerContact() {
 						success: function(data, textStatus, jqXHR) {
 							var result = JSON.parse(data) ;
 							if (result.status == 'success') {
-						  		alert('L\'enregistrement de l\'artiste a été effectué');
+						  		alert('L\'enregistrement du contact a été effectué');
 							}
 							else {
 								alert('erreur lors de l\'enregistrement');
@@ -760,15 +770,24 @@ function enregistrerContact() {
 //-------------------------------------------ENREGISTRER UN GROUPE---------------------------------------------------
 function enregistrerGroupe() {
 	// Ici normalement, les contr�les sur les champs requis, les formats, ....
-	if($('#nom').val()==""){
-					afficherChampObligatoire('#nom',erreurs.erreurGroupe);erreurs.erreurGroupe++;
-	}
-	else{
-		var data =	'nom=' + $('#nom').val() +
-				'&siteWeb=' + $('#siteWeb').val()+
-				'&listeArtiste=' + $('#listeArtiste').val();
-				alert(data);
 
+	if(verifierChampObligatoirePersonne()==false){
+		var data =	'nom=' + $('#nom').val() +
+								'&tel=' + $('#tel').val() +
+								'&mail=' + $('#mail').val();
+
+		if($('#adresse').val()!="") data=data+'&addresse=' + $('#adresse').val();
+		if($('#ville').val()!="")   data=data+'&ville=' + $('#ville').val();
+		if($('#siteWeb').val()!="") data=data+'&siteWeb=' + $('#siteWeb').val();
+
+		if($('#genres').val()!=null) data=data+'&genres=' + $('#genres').val();
+		if($('#listeArtiste').val()!=null) data=data+'&listeArtiste=' + $('#listeArtiste').val();
+		if($('#listeContact').val()!=null) data=data+'&listeContact=' + $('#listeContact').val();
+
+		for(var i=1;i<autreChamp.nbGenre;i++){
+			data=data+'&autreGenre'+i+'='+$('#autreGenre'+i).val();
+		}
+		alert(data);
 		$.ajax({	type: "POST",
 				url: "ajax/saveGroupe.php",
 				data: data, // On passe les informations saisies � l'�cran
@@ -794,6 +813,7 @@ function enregistrerOrganisateur() {
 	// Ici normalement, les contr�les sur les champs requis, les formats, ....
 	if(verifierChampObligatoire()==false){
 		var data=InitialiserData();
+		if($('#nbPlace').val()!="") data=data+'&nbPlace=' + $('#nbPlace').val();
 
 		$.ajax({	type: "POST",
 				url: "ajax/saveOrganisateur.php",
