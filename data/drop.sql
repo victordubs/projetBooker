@@ -1,0 +1,18 @@
+drop function f_artiste_delete();
+drop trigger t_artiste_delete on artiste;
+drop table login;
+drop table plageHoraire;
+drop table liaisonEvenementOrganisateur;
+drop table liaisonGroupeAutresContact;
+drop table liaisonArtisteGroupe;
+drop table liaisonArtisteRole;
+drop table evenement;
+drop table role;
+drop table style;
+drop table type;
+drop table groupe;
+drop table autresContact;
+drop table organisateur;
+drop table artiste;
+drop table personne;
+drop table contacts;
