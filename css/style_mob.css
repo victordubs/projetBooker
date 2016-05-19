@@ -10,11 +10,11 @@ html{
 
 h1{
   font-size: 500%;
-  width: 110%;
-  margin-top: 3%;;
+  width: 100%;
+  margin-top: 0%;;
   margin-left: -10px;
   padding: 2%;
-  padding-top: 4%;
+  padding-top: 200px;
   background-color: #2A88AD;
 
 }
@@ -39,6 +39,10 @@ h1{
 body{
    /*à mettre à un peu plus de la taille du menu, top si en aut, bottom si en bas*/
   padding-top: 100px;
+}
+
+section{
+  width: 100%;
 }
 /* ------------------------------------------------------------------------*/
 
@@ -178,13 +182,13 @@ body{
 	background-color: #2A88AD;
 
 }
-
+/*
 .profil h1 img {
   width: 7%;
 	display: inline-block;
 	float: right;
   margin-right:15px;
-}
+}*/
 
 .profil article {
 	padding-right: 3%;
