@@ -65,6 +65,44 @@ section{
 	padding: 4%;
 	font-size: 200%;
 }
+
+.param ul{
+  font-size: 250%;
+  width: 90%;
+  margin: 5% 5%;
+  padding: 0;
+  background-color: #F5F5F5;
+  color: #888888;
+  border-radius: 5px;
+  box-shadow: 8px 8px 8px #888888;
+}
+
+.param ul *{
+  display: inline-block;
+  vertical-align: middle;
+}
+
+
+.param ul li{
+
+  margin: 0;
+  margin-left: 10%;
+  padding: 10% 5%;
+  width: 70%;
+  list-style-type: none;
+  border-bottom: solid;
+  border-color: #888888;
+  position: relative;
+}
+
+.param ul li:last-child{
+  border-bottom: none;
+}
+
+.param ul input{
+  width: 5%;
+  height: 5%;
+}
 /* ---------------------------- Connexion ------------------------------------- */
 .connexion {
 	font-size:300%;
@@ -489,7 +527,7 @@ input[type="time"]:before  {
 
 
 
-.formulaire .btnAjouterChamp {
+.btnAjouterChamp {
   height: 80px;
   width: 80px;
 	background-color:#2A88AD;
@@ -503,7 +541,7 @@ input[type="time"]:before  {
   margin-left: 5%;
 
 }
-.formulaire .btnAjouterChamp:hover {
+.btnAjouterChamp:hover {
 	background: #2A6881;
 }
 
@@ -552,12 +590,10 @@ vertical-align: bottom;
 /*------------OPTIONS-----------------*/
 .option{
   font-size: 250%;
-  position: fixed;
-  top: 0;
   width: 80%;
   margin: 5% 10%;
   background-color: #F5F5F5;
-  color: #888888;
+  color: green;
   border-radius: 5px;
   box-shadow: 8px 8px 8px #888888;
 }
