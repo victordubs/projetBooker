@@ -5,6 +5,10 @@ var erreurs = {
 	erreurContact : 0,
 	erreurOrganisateur : 0,
 }
+var autreChamp = {
+	nbRole : 1,
+	nbGenre : 1,
+}
 
 var nbGroupeEvenement=0;
 
@@ -414,18 +418,59 @@ function evenementArtiste(){
 		$('#content').load('pages/formulaireArtiste.html',function(){modifierArtiste(param)})
 	});
 }
+//------------------------------------------------------------------------------------------------------------------
+//-----------------------------------AJOUTER UN AUTRE CHAMP---------------------------------------------------
+function ajouterAutreChamp(place,placeAttr,nbAutre){
+	$nouveauChamp = $(document.createElement('input'));
+	$($nouveauChamp).attr('type','text');
+	$($nouveauChamp).attr('id','autre'+placeAttr+nbAutre);
+	$($nouveauChamp).attr('placeholder','Nouveau '+placeAttr);
+	$(place).after($nouveauChamp);
+}
 
 //------------------------------------------------------------------------------------------------------------------
 //-----------------------------------EVENEMENT FORMULAIRE ARTISTE---------------------------------------------------
 function evenementFormulaireArt() {
-	$('.btnAjouterChamp').on('click',function() {
-			var nouveauChamp = $('<label><input type="text" placeholder="Nouveau rôle"/></label>');
-			$(this).after(nouveauChamp);
+
+	getRolesGenres();
+
+	$('#btnAjouterRole').on('click',function() {
+			   ajouterAutreChamp($(this),$(this).attr('new'),autreChamp.nbRole);
+			   autreChamp.nbRole++;
 		});
+
+	$('#btnAjouterGenre').on('click',function() {
+				   ajouterAutreChamp($(this),$(this).attr('new'),autreChamp.nbGenre);
+				autreChamp.nbGenre++;
+			});
 
 	$('.btnAjouterContact').on('click',function() {
 		enregistrerArtiste();
 		});
+}
+//-----------------------------------------------------------------------------------------------------------------
+//-----------------------------------CREER LISTE GENRES ET ROLES---------------------------------------------------
+function getRolesGenres(){
+				$.ajax({	type: "POST",
+						url: "ajax/getListeArtistes.php",
+						success: function(data, textStatus, jqXHR) {
+						var result = JSON.parse(data) ;
+						if (result.status == 'success') {
+					// Boucle pour remplir la liste des roles
+							 for (var id=0; id < result.artistes.length; id++) {
+								 $('#roles').append('<option>'+result.artistes[id].nomArtiste+'</option>');
+							 }
+				 	// Boucle pour remplir la liste des genres
+							 for (var id=0; id < result.artistes.length; id++) {
+								 $('#genres').append('<option>'+result.artistes[id].nomArtiste+'</option>');
+							 }
+					 }
+					},
+					error: function() {
+						alert('Erreur dans la requ�te au serveur.');
+					}
+			 });
+
 }
 //-----------------------------------------------------------------------------------------------------------------
 //-----------------------------------EVENEMENT FORMULAIRE ORGANISATEUR---------------------------------------------
@@ -537,8 +582,8 @@ function enregistrerArtiste() {
 								'&addresse=' + $('#adresse').val() +
 								'&ville=' + $('#ville').val()+
 								'&mail=' + $('#mail').val()+
-								'&roles=' + $('#listeRole').val()+
-								'&genres=' + $('#genre').val();
+								'&roles=' + $('#roles').val()+
+								'&genres=' + $('#genres').val();
 
 				$.ajax({	type: "POST",
 						url: "ajax/saveArtiste.php",
