@@ -11,7 +11,7 @@
 			$evenement['idEvenement'] = $idEvenement;
 			$evenement['nomEvenement'] = $evenementBD["nomEvenement"];
       $evenement['dateDeb'] = $evenementBD["dateDeb"];
-      $evenement['lieu'] = $evenementBD["lieu"];
+      $evenement['ville'] = $evenementBD["ville"];
 			array_push($result["evenements"], $evenement) ;
 		}
 	}

@@ -4,17 +4,42 @@
       <div class="section"><h2>Informations Principales</h2></div>
       <div class="inner-wrap">
           <label><input type="text" id="nom" placeholder="Nom Groupe *"/></label>
-          <label><input type="url"  id="siteWeb" placeholder="site Web"></label>
-  
+          <label><input type="text" id="tel" placeholder="Téléphone  *"/></label>
+          <label><input type="email"  id="mail" placeholder="Adresse E-mail *"></label>
+          <label><input type="text"  id="adresse" placeholder="Adresse"></label>
+          <label><input type="text"  id="ville" placeholder="Ville"></label>
+          <label><input type="url"  id="siteWeb" placeholder="SiteWeb"></label>
+<!-- Liste des Genres-->
           <label class="champSpe">
-            <p>Artiste(s)</p>
+            <p>Genre musicale</p>
             <div class="listeSpe">
-              <select id="listeArtiste" multiple>
-                  <!-- Modifier la liste avec Ajax-->
-              </select>
-          </div>
+              <select id="genres" multiple></select>
+            </div>
+            <button type="button" new="Genre" id="btnAjouterGenre" class="btnAjouterChamp" >+</button>
         </label>
+
       </div>
+
+      <div class="section"><h2>Informations sur les membres</h2></div>
+      <div class="inner-wrap">
+<!-- Liste des Artistes-->
+          <label class="champSpe">
+              <p>Artiste(s)</p>
+              <div class="listeSpe">
+                  <select id="listeArtiste" multiple></select>
+              </div>
+          </label>
+
+<!-- Liste des contacts-->
+         <label class="champSpe">
+            <p>Contact(s)</p>
+            <div class="listeSpe">
+                <select id="listeContact" multiple></select>
+            </div>
+        </label>
+
+      </div>
+
       <div class="button-section">
       <input type="button" class="btnAjouterContact" value="Ajouter le groupe" />
       </div>

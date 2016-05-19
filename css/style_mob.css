@@ -296,13 +296,18 @@ section{
   margin-left: -5px;
   margin-right: -5px;
 }
+/*
 .menuRep input:first-of-type{
 border:solid #888888;
-}
+}*/
 
 .menuRep #menuRepContact{
   border-right: none;
   border-left:none;
+}
+
+.menuRep input[type="image"][actif="true"] {
+	border:solid #888888;
 }
 
 /*------------------------------------------------------------------------------*/
@@ -437,6 +442,7 @@ label *{
     border: 1px solid #aaa;
     border-radius: 4px;
 }
+
 
 * .btnAjouterContact{
     width:60%;

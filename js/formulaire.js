@@ -1,66 +1,84 @@
+var erreurs = {
+	erreurArtiste : 0,
+	erreurEvent : 0,
+	erreurGroupe : 0,
+	erreurContact : 0,
+	erreurOrganisateur : 0,
+}
+var autreChamp = {
+	nbRole : 1,
+	nbGenre : 1,
+	nbMetier : 1,
+}
+
+var nbGroupeEvenement=0;
+
 $(document).ready(function() {
 	// Comportement des boutons de menus
 	$('body nav #mnuAccueil').bind('click', function() { // Au clic sur le bouton "mnuAccueil" dans le menu
-		activerOptionMenu($(this));
-		$('#content').load('pages/accueil.html',afficherAccueil()); // On charge la page accueil.html dans la div content
+		$('#content').load('pages/accueil.html',afficherAccueil); // On charge la page accueil.html dans la div content
 	});
 
 	$('body nav #mnuRepertoire').bind('click', function() { // Au clic sur le bouton "mnuPersonne" dans le menu
-		activerOptionMenu($(this));
 		// On charge la page voirPersonne.html dans la div content et on appelle la fonction d'initialisation de cette page
-		$('#content').load('pages/afficherRep.html',afficherRep());
+		$('#content').load('pages/afficherRep.html',eventMenuRep);
 	});
 
   $('body nav #mnuOption').bind('click', function() { // Au clic sur le bouton "mnuPersonne" dans le menu
-    activerOptionMenu($(this));
     // On charge la page voirPersonne.html dans la div content et on appelle la fonction d'initialisation de cette page
-    $('#content').load('pages/formulaireGroupe.html',evenementFormulaireGroupe());
+    $('#content').load('pages/formulaireGroupe.html',evenementFormulaireGroupe);
 
   });
 
 	$('body nav #mnuCalendrier').bind('click', function() { // Au clic sur le bouton "mnuPersonne" dans le menu
-		activerOptionMenu($(this));
 		// On charge la page voirPersonne.html dans la div content et on appelle la fonction d'initialisation de cette page
-		$('#content').load('pages/formulaireOrganisateur.html');
-
+		$('#content').load('pages/formulaireEvenement.html',evenementFormulaireEve);
 	});
+
   $('body nav #mnuAccueil').click();
 });
-
 // ---------------------------------------------------------------------------------------------------------------------------
 // Active une option du menu (l'�l�ment � activer est pass� en param�tre)
 function activerOptionMenu($element) {
 	// D�sactive toutes les options du menu (met l'attribut 'actif' � faux)
-	$('body nav input[type="button"]').attr('actif', false);
+	$('.menuRep input').attr('actif', false);
 	// Active l'option choisie et re�ue en param�tre (met l'attribut 'actif' � vrai)
 	$element.attr('actif', true);
 }
 
-//------------AFFICHER LE REPERTOIRE--------------------------------------------------------------------------------------------
-function afficherRep(){
-	var alphabet=["A","B","C","D","E","F","G","H","I","J"];
-
+//-----------------------------------------------------------------------------------------------------------------------
+//-----------------------------------AFFICHER LE REPERTOIRE--------------------------------------------------------------
+function afficherRep(personne){
 
 	$.ajax({	type: "POST", // envoie une requ�te � getListePersonnes pour demander la liste des personnes
 				url: "ajax/getListeArtistes.php",
 				success: function(data, textStatus, jqXHR) {
 					var result=JSON.parse(data);
 					if (result.status == 'success') {
-					for (var id=0; id < result.artistes.length; id++) {
-						for(var lettre=0; lettre <alphabet.length;lettre++){
-								// On place le contact dans le bon div en fonction de sa première lettre.
-								if(result.artistes[id].nomArtiste.substr(0,1)==alphabet[lettre]){
+						for (var id=0; id < result.artistes.length; id++) {
+
+								if(document.getElementById(result.artistes[id].nomArtiste.substr(0,1))==null){
+
+													$article = $(document.createElement('article'));
+													$titre = $(document.createElement('h2'));
+													$titre.html(result.artistes[id].nomArtiste.substr(0,1).toUpperCase());
+													$article.append($titre);
+													$ul = $(document.createElement('ul'));
+													$ul.attr('id',result.artistes[id].nomArtiste.substr(0,1));
+													$article.append($ul);
+													$('#repertoire').append($article);
+								}
 
 										$liContact = $(document.createElement('li')); // On cr�e un li
 										$liContact.append('<p idArtiste="'+result.artistes[id].idArtiste+'">'+result.artistes[id].nomArtiste+'</p>');
 										$liContact.append('<img id=\'email\' src = "images/emailBtn.svg" />');
 										$liContact.append('<img id=\'sms\' src = "images/smsBtn.svg" />');
 										$liContact.append('<a href="tel:+337388388"><img id=\'call\' src = "images/callBtn.svg" /></a>');
-										$div='#result'+alphabet[lettre];
-										$($div).append($liContact);
-					  		}
+										$('#'+result.artistes[id].nomArtiste.substr(0,1)).append($liContact);
+
 						}
-					}	evenementRep();}
+						evenementRep(personne);
+					}
 				},
 				error: function() {
 					alert('Erreur dans la requ�te au serveur.');
@@ -79,7 +97,7 @@ function afficherAccueil(){
 										$articleAcc = $(document.createElement('article')); // On cr�e un article
 										$articleAcc.attr('idEvent',result.evenements[id].idEvenement);
 										$articleAcc.append('<h2>'+result.evenements[id].nomEvenement+'</h2>');
-										$articleAcc.append('<p> Date :'+result.evenements[id].dateDeb+'<br/ >Lieu :'+result.evenements[id].lieu+'</p>');
+										$articleAcc.append('<p> Date :'+result.evenements[id].dateDeb+'<br/ >Lieu :'+result.evenements[id].ville+'</p>');
 										$('section').append($articleAcc);
 							  }
 							}evenementAccueil();
@@ -89,7 +107,9 @@ function afficherAccueil(){
 				}
 	});
 }
-//-----------------------------------AFFICHER UN EVENEMENT------------------------------------------------
+
+//----------------------------------------------------------------------------------------------------------------------
+//-----------------------------------AFFICHER UN EVENEMENT--------------------------------------------------------------
 function afficherEvenement(idEvenement){
 
 	$.ajax({	type: "POST",
@@ -100,20 +120,22 @@ function afficherEvenement(idEvenement){
 					if (result.status == 'success') {
 
 						if (result.evenement) {
-
+							if (result.evenement.idEvenement)$('section').attr('idEvent',result.evenement.idEvenement);
 							if (result.evenement.nomEvenement){$("#nomEvent").prepend(result.evenement.nomEvenement);}
 							if (result.evenement.dateDeb) $("#dateDeb").append(result.evenement.dateDeb);
 							if (result.evenement.dateFin) $("#dateFin").append(result.evenement.dateFin);
-							if (result.evenement.lieu) $("#lieu").append(result.evenement.lieu);
+							if (result.evenement.ville) $("#ville").append(result.evenement.ville);
 						}
-					}
+					}eventEvenement();
 				},
 				error: function() {
 					alert('Erreur dans la requ�te au serveur.');
 				}
 	});
 }
-//-----------------------------------AFFICHER UN CONTACT---------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------
+//-----------------------------------AFFICHER UN CONTACT--------------------------------------------------------------
+
 function afficherArtiste(idArtiste){
 
 	$.ajax({	type: "POST",
@@ -144,111 +166,450 @@ function afficherArtiste(idArtiste){
 	});
 }
 
-//------------------------------Evenement sur le Repertoire----------------------------------------------
-function evenementRep(){
+//--------------------------------------------------------------------------------------------------------------------
+//-----------------------------------EVENEMENT REPERTOIRE--------------------------------------------------------
+function evenementRep(personne){
 
-	$('p').on('click',function() {
-		$('#content').load('pages/afficherArtiste.html',afficherArtiste($(this).attr('idArtiste')));
-	});
+// Evenement sur le répertoire des artistes
+	if(personne=="artiste"){
+		$('p').on('click',function() {
+			var param=$(this).attr('idArtiste');
+			$('#content').load('pages/afficherArtiste.html',function(){afficherArtiste(param)});
+		});
 
-	$('#add').on('click',function() {
-		$('#content').load('pages/formulaireArtiste.html',evenementFormulaireArt);
-	});
+		$('#add').on('click',function() {
+			$('#content').load('pages/formulaireArtiste.html',evenementFormulaireArt);
+		});
+	}
+// Evenement sur le répertoire des groupes
+	else if(personne=="groupe"){
+		$('p').on('click',function() {
+			var param=$(this).attr('idGroupe');
+			$('#content').load('pages/afficherGroupe.html',function(){afficherGroupe(param)});
+		});
+
+		$('#add').on('click',function() {
+			$('#content').load('pages/formulaireGroupe.html',evenementFormulaireGroupe);
+		});
+	}
+// Evenement sur le répertoire des organisateurs
+	else if(personne=="organisateur"){
+		$('p').on('click',function() {
+			var param=$(this).attr('idOrganisateur');
+			$('#content').load('pages/afficherArtiste.html',function(){afficherArtiste(param)});
+		});
+
+		$('#add').on('click',function() {
+			$('#content').load('pages/formulaireOrganisateur.html',eventFormulaireOrganisateur);
+		});
+	}
+// Evenement sur le répertoire des contacts
+	else if(personne=="contact"){
+		$('p').on('click',function() {
+			var param=$(this).attr('idContact');
+			$('#content').load('pages/afficherArtiste.html',function(){afficherArtiste(param)});
+		});
+
+		$('#add').on('click',function() {
+		$('#content').load('pages/formulaireContact.html',evenementFormulaireContact);
+		});
+	}
+}
+
+//--------------------------------------------------------------------------------------------------------------------
+//-----------------------------------EVENEMENT MENU REPERTOIRE--------------------------------------------------------
+function eventMenuRep(){
+
 	$("#search").hide();
 	$('#searchBtn').on('click',function() {
 		$("#search").toggle();
-  });
+	});
 
 	$('#menuRepArtistes').on('click',function() {
-	$('#content').load('pages/formulaireEvenement.html',evenementFormulaireEve);
+	activerOptionMenu($(this));
+	$('#repertoire').empty();
+	afficherRep("artiste");
 	});
+
+	$('#menuRepGroupe').on('click',function() {
+	activerOptionMenu($(this));
+	$('#repertoire').empty();
+	afficherRep("groupe");
+	});
+
+	$('#menuRepOrganisateur').on('click',function() {
+	activerOptionMenu($(this));
+	$("#repertoire").empty();
+	afficherRep("organisateur");
+	});
+
+	$('#menuRepContact').on('click',function() {
+	activerOptionMenu($(this));
+	$('#repertoire').empty();
+	afficherRep("contact");
+	});
+
+	$('#menuRepArtistes').click();
 }
 function evenementAccueil() {
 	$('article').on('click',function() {
-		$('#content').load('pages/afficherEvenement.html',afficherEvenement($(this).attr('idEvent')));
+		var param=$(this).attr('idEvent');
+		$('#content').load('pages/afficherEvenement.html',function(){afficherEvenement(param)});
 	});
 }
-//------------------------------Evenement sur le Formulaire creer Evenement----------------------------------------------
-var i=1;
+
+//--------------------------------------------------------------------------------------------------------------------
+//-----------------------------------EVENEMENT FORMULAIRE EVENEMENT---------------------------------------------------
 function evenementFormulaireEve() {
+
+	$('#info2').hide();
+	$('#info3').hide();
 
 	$('.btnAjouterContact').on('click',function() {
 			enregistrerEvenement();
-			});
-
-	$('#nomG1').on('click',function() {$("#G1").toggle();});
-
-	var i=2;
-	$('.btnAjouterChamp').on('click',function() {
-
-			$('#lesGroupes').append('<h2 id="nomG'+i+'">Groupe '+i+'</h2>');
-			$('#nomG'+i).on('click',function() {$("#G"+i).toggle();});
-			$divGroupe = $(document.createElement('div'));
-			$($divGroupe).attr('id','G'+i);
-			$divGroupe.append('<select class="selectGroupe">');
-			$divGroupe.append('<option>Ratata');
-			$divGroupe.append('<option>Fat Rat');
-			$divGroupe.append('</select></label><label>Heure passage<input type="time" placeholder="Heure de passage"></label>');
-			$('#lesGroupes').append($divGroupe);
-
-			i=i+1;
 	});
 
+	var i=1;
+	$('#dateFin').bind('change', function() {
+				$('#info2').show();
+				$('#info3').show();
+				getListeGroupes(i);
+				 i=i+1;
+				 getListeOrganisateurs();
+			});
+
+	$('.btnAjouterChamp').on('click',function() {
+		 getListeGroupes(i);
+		 i=i+1;
+	});
 }
-//------------------------------Evenement sur l'artiste----------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------
+//-----------------------------------GET LISTE ORGANISATEUR-----------------------------------------------------------------
+function getListeOrganisateurs(){
+				$.ajax({	type: "POST",
+						url: "ajax/getListeArtistes.php",
+						success: function(data, textStatus, jqXHR) {
+						var result = JSON.parse(data) ;
+						if (result.status == 'success') {
+					// Boucle pour remplir la liste des Artistes
+							 for (var id=0; id < result.artistes.length; id++) {
+								 $('#selectOrganisateur').append('<option>'+result.artistes[id].nomArtiste+'</option>');
+							 }
+					 }
+					},
+					error: function() {
+						alert('Erreur dans la requ�te au serveur.');
+					}
+			 });
+
+}
+//---------------------------------------------------------------------------------------------------------------------
+//-----------------------------------GET LISTE GROUPES-----------------------------------------------------------------
+function getListeGroupes(i) {
+
+		// On transforme la date de Début et la date de fin en entier
+		if(veriferDates()==false){
+					var data='dateDeb=' + $('#dateDeb').val() +
+								   '&dateFin=' + $('#dateFin').val();
+
+					$.ajax({	type: "POST",
+								url: "ajax/getListeArtistes.php",
+								success: function(data, textStatus, jqXHR) {
+								var result = JSON.parse(data) ;
+								if (result.status == 'success') {
+
+									$titreGroupe = $(document.createElement('h2'));
+									$titreGroupe.attr('id', 'nomG'+i) ;
+									$titreGroupe.attr('numGroupe', i) ;
+									$titreGroupe.html('Groupe '+i);
+									$titreGroupe.on('click',function() {$("#G"+$(this).attr('numGroupe')).toggle();});
+									$('#lesGroupes').append($titreGroupe);
+									nbGroupeEvenement++;
+
+									$divGroupe = $(document.createElement('div'));
+									$($divGroupe).attr('id','G'+i);
+									$divGroupe.append('<select id="selectGroupe'+i+'">');
+									$('#selectGroupe'+i).append('<option>Aucun</option>')
+									$('#lesGroupes').append($divGroupe);
+
+									for (var id=0; id < result.artistes.length; id++) {
+										 $('#selectGroupe'+i).append('<option>'+result.artistes[id].nomArtiste+'</option>');
+									}
+
+									 $divGroupe.append('</select></label><input type="time" id="heureG'+i+'" placeholder="Heure de passage">');
+									 $('#lesGroupes').append($divGroupe);
+							 }
+							},
+							error: function() {
+								alert('Erreur dans la requ�te au serveur.');
+							}
+
+						});
+			 }
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+//----------------------------------- FONCTION VERIFIER DATES----------------------------------------------------------
+
+function veriferDates(){
+
+	if($('#dateDeb').val()==""){
+			afficherChampObligatoire('#dateDeb',erreurs.erreurEvent);erreurs.erreurEvent++;}
+	if($('#dateFin').val()==""){
+		afficherChampObligatoire('#dateFin',erreurs.erreurEvent);erreurs.erreurEvent++;
+	}
+	if($('#dateFin').val()!="" && $('#dateDeb').val()!="") {
+
+			var dateDeb=$('#dateDeb').val().substr(0,4)+$('#dateDeb').val().substr(5,2)+$('#dateDeb').val().substr(8,2);
+			var dateFin=$('#dateFin').val().substr(0,4)+$('#dateFin').val().substr(5,2)+$('#dateFin').val().substr(8,2);
+			dateDebInt=parseInt(dateDeb,10);
+			dateFinInt=parseInt(dateFin,10);
+
+			if(dateDebInt>dateFinInt){
+					alert("Erreur la date de début est supérieur à la date de Fin");
+					return true;
+			}
+			else if (dateDebInt==dateFinInt){
+					alert("les dates sont les même"+dateDebInt+" "+dateFinInt);
+					return true;
+		  }
+	}
+	else{return true;}
+// SI IL Y'A PAS D'ERREUR ALORS ON RETOURNE FALSE
+	return false;
+}
+
+
+//------------------------------------------------------------------------------------------------------------------
+//-----------------------------------EVENEMENT SUR EVENEMENT----------------------------------------------------------
+
+function eventEvenement(){
+	$('.option').hide();
+	$('#edit').on('click',function() {
+		$('.option').show();
+		$('.option').focus();
+	});
+
+	$('.option').focusout(function() {
+		alert(pouet);
+		$('.option').hide();
+	});
+
+	$('#modifier').click(function(){
+		var param=$('section').attr('idEvent');
+		$('#content').load('pages/formulaireEvenement.html',function(){modifierEvenement(param)})
+	});
+}
+//------------------------------------------------------------------------------------------------------------------
+//-----------------------------------EVENEMENT SUR ARTISTE----------------------------------------------------------
+
 function evenementArtiste(){
 	$('.option').hide();
+	/*$('#edit').on('click',function() {
+		$('.option').show();
+		$('.option').focus();
+	});*/
+
 	$('#edit').on('click',function() {
 		$('.option').toggle();
 	});
-/*
-	$('[id!="option"]').on('click',function() {
+
+	$('.option').focusout(function() {
+		alert(pouet);
 		$('.option').hide();
-	});*/
+	});
 
 	$('#modifier').click(function(){
-		$('#content').load('pages/formulaireArtiste.html',modifierArtiste($('section').attr('idArtiste')))
+		var param=$('section').attr('idArtiste');
+		$('#content').load('pages/formulaireArtiste.html',function(){modifierArtiste(param)})
 	});
 }
-//------------------------------Evenement sur le Formulaire creer Artiste------------------------------------
-function evenementFormulaireArt() {
-	$('.btnAjouterChamp').on('click',function() {
-			var nouveauChamp = $('<label><input type="text" placeholder="Nouveau rôle"/></label>');
-			$(this).after(nouveauChamp);
-		});
+//------------------------------------------------------------------------------------------------------------------
+//-----------------------------------AJOUTER UN AUTRE CHAMP---------------------------------------------------
+function ajouterAutreChamp(place,placeAttr,nbAutre){
+	$nouveauChamp = $(document.createElement('input'));
+	$($nouveauChamp).attr('type','text');
+	$($nouveauChamp).attr('id','autre'+placeAttr+nbAutre);
+	$($nouveauChamp).attr('placeholder','Nouveau '+placeAttr);
+	$(place).after($nouveauChamp);
+}
 
+//------------------------------------------------------------------------------------------------------------------
+//-----------------------------------EVENEMENT FORMULAIRE CONTACT---------------------------------------------------
+
+
+function evenementFormulaireContact() {
+  getMetiers();
+
+	$('#btnAjouterMetier').on('click',function() {
+			   ajouterAutreChamp($(this),$(this).attr('new'),autreChamp.nbRole);
+			   autreChamp.nbMetier++;
+	});
+
+	$('.btnAjouterContact').on('click',function() {
+		enregistrerContact()
+		});
+}
+//-----------------------------------------------------------------------------------------------------------------
+//-----------------------------------CREER LISTE METIER---------------------------------------------------
+function getMetiers(){
+				$.ajax({	type: "POST",
+						url: "ajax/getListeArtistes.php",
+						success: function(data, textStatus, jqXHR) {
+						var result = JSON.parse(data) ;
+						if (result.status == 'success') {
+					// Boucle pour remplir la liste des métiers
+							 for (var id=0; id < result.artistes.length; id++) {
+								 $('#metiers').append('<option>'+result.artistes[id].nomArtiste+'</option>');
+							 }
+					 }
+					},
+					error: function() {
+						alert('Erreur dans la requ�te au serveur.');
+					}
+			 });
+
+}
+//------------------------------------------------------------------------------------------------------------------
+//-----------------------------------EVENEMENT FORMULAIRE ARTISTE---------------------------------------------------
+function evenementFormulaireArt() {
+
+// Initialisation du nombre d'autre champ
+	autreChamp.nbRole=1;
+  autreChamp.nbGenre=1;
+// Initialisation de la liste des roles
+	getRoles();
+// Initialisation de la liste des genres
+  getGenres();
+// Action ajouter un autre champ Role
+	$('#btnAjouterRole').on('click',function() {
+			   ajouterAutreChamp($(this),$(this).attr('new'),autreChamp.nbRole);
+			   autreChamp.nbRole++;
+		});
+// Action ajouter un autre champ genre
+	$('#btnAjouterGenre').on('click',function() {
+				   ajouterAutreChamp($(this),$(this).attr('new'),autreChamp.nbGenre);
+				autreChamp.nbGenre++;
+			});
+// Action enregistrer un nouveau artiste
 	$('.btnAjouterContact').on('click',function() {
 		enregistrerArtiste();
 		});
 }
-
-function evenementFormulaireGroupe() {
-
-	$.ajax({	type: "POST",
+//-----------------------------------------------------------------------------------------------------------------
+//-----------------------------------CREER LISTE GENRES------------------------------------------------------------
+function getRoles(){
+				$.ajax({	type: "POST",
 						url: "ajax/getListeArtistes.php",
 						success: function(data, textStatus, jqXHR) {
-							var result = JSON.parse(data) ;
-							if (result.status == 'success') {
-								 for (var id=0; id < result.artistes.length; id++) {
-									 $('#listeArtiste').append('<option>'+result.artistes[id].nomArtiste+'</option>');
-								 }
-								 $('.btnAjouterContact').on('click',function() {
-									 enregistrerGroupe();
-									 });
-							} else {
-								alert('erreur lors de l\'enregistrement');
-							}
-						},
-						error: function() {
-							alert('Erreur dans la requ�te au serveur.');
-						}
-
-	});
+						var result = JSON.parse(data) ;
+						if (result.status == 'success') {
+					// Boucle pour remplir la liste des roles
+							 for (var id=0; id < result.artistes.length; id++) {
+								 $('#roles').append('<option>'+result.artistes[id].nomArtiste+'</option>');
+							 }
+					 }
+					},
+					error: function() {
+						alert('Erreur dans la requ�te au serveur.');
+					}
+			 });
 
 }
+//-----------------------------------------------------------------------------------------------------------------
+//-----------------------------------CREER LISTE GENRES---------------------------------------------------
+function getGenres(){
+				$.ajax({	type: "POST",
+						url: "ajax/getListeArtistes.php",
+						success: function(data, textStatus, jqXHR) {
+						var result = JSON.parse(data) ;
+						if (result.status == 'success') {
+				 	// Boucle pour remplir la liste des genres
+							 for (var id=0; id < result.artistes.length; id++) {
+								 $('#genres').append('<option>'+result.artistes[id].nomArtiste+'</option>');
+							 }
+					 }
+					},
+					error: function() {
+						alert('Erreur dans la requ�te au serveur.');
+					}
+			 });
 
+}
+//-----------------------------------------------------------------------------------------------------------------
+//-----------------------------------EVENEMENT FORMULAIRE ORGANISATEUR---------------------------------------------
 
-//------------------------------Afficher champ obligatoire------------------------------------
+function eventFormulaireOrganisateur() {
+					$('.btnAjouterContact').on('click',function() {
+							enregistrerOrganisateur();
+ 					});
+}
+
+//-----------------------------------------------------------------------------------------------------------------
+//-----------------------------------EVENEMENT FORMULAIRE GROUPE---------------------------------------------------
+
+function evenementFormulaireGroupe() {
+// Initialisation du nombre d'autre champ
+  		autreChamp.nbGenre=1;
+// Initialisation de la liste des genres
+			  getGenres();
+// Initialisation de la liste des artistes
+			getListeArtistes();
+// Initialisation de la liste des contacts
+			getListeContacts();
+
+			$('#btnAjouterGenre').on('click',function() {
+						ajouterAutreChamp($(this),$(this).attr('new'),autreChamp.nbGenre);
+					  autreChamp.nbGenre++;
+			});
+
+			$('.btnAjouterContact').on('click',function() {
+						enregistrerGroupe();
+			});
+}
+//-----------------------------------------------------------------------------------------------------------------
+//-----------------------------------CREER LISTE ARTISTES----------------------------------------------------------
+function getListeArtistes(){
+$.ajax({	type: "POST",
+					url: "ajax/getListeArtistes.php",
+					success: function(data, textStatus, jqXHR) {
+						var result = JSON.parse(data) ;
+						if (result.status == 'success') {
+					// Boucle pour remplir la liste des Artistes
+							 for (var id=0; id < result.artistes.length; id++) {
+								 $('#listeArtiste').append('<option>'+result.artistes[id].nomArtiste+'</option>');
+							 }
+					 }
+					},
+					error: function() {
+						alert('Erreur dans la requ�te au serveur.');
+					}
+
+});
+}
+//-----------------------------------------------------------------------------------------------------------------
+//-----------------------------------CREER LISTE CONTACT----------------------------------------------------------
+function getListeContacts(){
+$.ajax({	type: "POST",
+					url: "ajax/getListeArtistes.php",
+					success: function(data, textStatus, jqXHR) {
+						var result = JSON.parse(data) ;
+						if (result.status == 'success') {
+					// Boucle pour remplir la liste des Artistes
+							 for (var id=0; id < result.artistes.length; id++) {
+								 $('#listeContact').append('<option>'+result.artistes[id].nomArtiste+'</option>');
+							 }
+					 }
+					},
+					error: function() {
+						alert('Erreur dans la requ�te au serveur.');
+					}
+
+});
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+//-----------------------------------AFFICHER CHAMP OBLIGATOIRE----------------------------------------------------------
 function afficherChampObligatoire(champ,nb){
 			$(champ).css('border-color','red');
 			var finElement = $('<div id="error"><img src="./images/error.svg"><p>Attention certain champs sont obligatoire</p></div>');
@@ -257,72 +618,106 @@ function afficherChampObligatoire(champ,nb){
 		}
 
 }
-//-------------------------------------------------------------------------------------------------------
-var nbErreurEvent=0;
-function enregistrerEvenement() {
-	// Ici normalement, les contr�les sur les champs requis, les formats, ....
-				var dateDeb=$('#dateDeb').val().substr(0,4)+$('#dateDeb').val().substr(5,2)+$('#dateDeb').val().substr(8,2);
-				var dateFin=$('#dateFin').val().substr(0,4)+$('#dateFin').val().substr(5,2)+$('#dateFin').val().substr(8,2);
-				dateDebInt=parseInt(dateDeb,10);
-				dateFinInt=parseInt(dateFin,10);
+//------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------VERIFIER CHAMP OBLIGATOIRE PERSONNE---------------------------------------------------
+function verifierChampObligatoirePersonne() {
 
-				if(dateDebInt>dateDebInt){
-						alert("pouet");
-				}
+var erreur=false;
 
-				if($('#nom').val()==""){
-					afficherChampObligatoire('#nom',nbErreurEvent);nbErreurEvent++;}
-				if($('#dateDeb').val()==""){
-					afficherChampObligatoire('#dateDeb',nbErreurEvent);nbErreurEvent++;}
-				if($('#dateFin').val()==""){
-						afficherChampObligatoire('#dateFin',nbErreurEvent);nbErreurEvent++;}
-				else{
+	if($('#nom').val()==""){
+		afficherChampObligatoire('#nom',erreurs.erreurArtiste);erreurs.erreurArtiste++;erreur=true;}
+	if($('#tel').val()==""){
+			afficherChampObligatoire('#tel',erreurs.erreurArtiste);erreurs.erreurArtiste++;erreur=true;}
+	if($('#mail').val()==""){
+			afficherChampObligatoire('#mail',erreurs.erreurArtiste);erreurs.erreurArtiste++;erreur=true;}
+
+return erreur;
+}
+//------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------VERIFIER CHAMP OBLIGATOIRE---------------------------------------------------
+function verifierChampObligatoire() {
+var erreur=verifierChampObligatoirePersonne();
+
+	if($('#prenom').val()==""){
+		afficherChampObligatoire('#prenom',erreurs.erreurArtiste);erreurs.erreurArtiste++;erreur=true;}
+
+return erreur;
+}
+//----------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------INITIALISER LA VARIABLE DATA---------------------------------------------------
+function InitialiserData() {
+
 	var data =	'nom=' + $('#nom').val() +
-				'&adresse=' + $('#adresse').val() +
-				'&ville=' + $('#ville').val() +
-				'&dateDebut=' + $('#dateDeb').val() +
-				'&dateFin=' + $('#dateFin').val()+
-				'&heureDebut=' + $('#heureDeb').val()+
-				'&heureFin=' + $('#heureFin').val();
+							'&prenom=' + $('#prenom').val() +
+							'&tel=' + $('#tel').val() +
+							'&mail=' + $('#mail').val();
 
-	$.ajax({	type: "POST",
-				url: "ajax/saveEvenement.php",
-				data: data, // On passe les informations saisies � l'�cran
-				success: function(data, textStatus, jqXHR) {
-					var result = JSON.parse(data) ;
-					if (result.status == 'success') {
-						// A COMPLETER
-					} else {
-						alert('erreur lors de l\'enregistrement');
+	if($('#adresse').val()!="") data=data+'&addresse=' + $('#adresse').val();
+	if($('#ville').val()!="")   data=data+'&ville=' + $('#ville').val();
+	if($('#siteWeb').val()!="") data=data+'&siteWeb=' + $('#siteWeb').val();
+
+	return data;
+}
+//----------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------ENREGISTRER UN EVENEMENT---------------------------------------------------
+
+function enregistrerEvenement() {
+
+				if($('#nom').val()==""){afficherChampObligatoire('#nom',erreurs.erreurEvent);erreurs.erreurEvent++;}
+				if(veriferDates()==false && $('#nom').val()!=""){
+					var data =	'nom=' + $('#nom').val();
+											'&dateDebut=' + $('#dateDeb').val() +
+											'&dateFin=' + $('#dateFin').val();
+
+					if($('#adresse').val()!="") data=data+'&adresse=' + $('#adresse').val();
+					if($('#ville').val()!="") data=data+'&ville=' + $('#ville').val();
+					if($('#heureDebut').val()!="") data=data+'&heureDebut=' + $('#heureDebut').val();
+					if($('#heureFin').val()!="") data=data+'&heureFin=' + $('#heureFin').val();
+					if($('#organisateurs').val()!=null) data=data+'&organisateurs=' + $('#organisateurs').val();
+
+					for(var i=1;i<=nbGroupeEvenement;i++){
+							if($('#selectGroupe'+i).val()!=null) data=data+'&nomG'+i+'='+$('#selectGroupe'+i).val();
+							if($('#heureG'+i).val()!=null) data=data+'&heureG'+i+'='+$('#heureG'+i).val();
 					}
-				},
-				error: function() {
-					alert('Erreur dans la requ�te au serveur.');
-				}
-	});}
+
+				alert(data);
+				$.ajax({	type: "POST",
+					url: "ajax/saveEvenement.php",
+					data: data, // On passe les informations saisies � l'�cran
+					success: function(data, textStatus, jqXHR) {
+					var result = JSON.parse(data) ;
+						if (result.status == 'success') {
+								alert("L'enregistrement de l'événement a été effectué");
+						} else {
+								alert('erreur lors de l\'enregistrement');
+						}
+					},
+					error: function() {
+						alert('Erreur dans la requ�te au serveur.');
+					}
+			 });}
 }
 
-//-------------------------------------------------------------------------------------------------------
-var nbErreur=0;
+//--------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------ENREGISTRER UN ARTISTE---------------------------------------------------
+
 function enregistrerArtiste() {
 	// Ici normalement, les contr�les sur les champs requis, les formats, ....
-				if($('#nom').val()==""){
-					afficherChampObligatoire('#nom',nbErreur);nbErreur++;}
-				if($('#prenom').val()==""){
-					afficherChampObligatoire('#prenom',nbErreur);nbErreur++;}
-				if($('#tel').val()==""){
-						afficherChampObligatoire('#tel',nbErreur);nbErreur++;}
-				if($('#mail').val()==""){
-						afficherChampObligatoire('#mail',nbErreur);nbErreur++}
-				else{
-					var data =	'nom=' + $('#nom').val() +
-								'&prenom=' + $('#prenom').val() +
-								'&tel=' + $('#tel').val() +
-								'&addresse=' + $('#adresse').val() +
-								'&ville=' + $('#ville').val()+
-								'&mail=' + $('#mail').val()+
-								'&roles=' + $('#listeRole').val()+
-								'&genres=' + $('#genre').val();
+				if(verifierChampObligatoire()==false){
+						var data=InitialiserData();
+      //Ajoute valeur dans data si Roles et Genres ont été séléctionnés
+						if($('#roles').val()!=null) data=data+'&roles=' + $('#roles').val();
+						if($('#genres').val()!=null) data=data+'&genres=' + $('#genres').val();
+			//Ajoute valeur dans data des autres Roles et Genres
+						for(var i=1;i<autreChamp.nbGenre;i++){
+							data=data+'&autreGenre'+i+'='+$('#autreGenre'+i).val();
+						}
+
+						for(var i=1;i<autreChamp.nbGenre;i++){
+							data=data+'&autreGenre'+i+'='+$('#autreGenre'+i).val();
+						}
+
+						alert(data);
 
 				$.ajax({	type: "POST",
 						url: "ajax/saveArtiste.php",
@@ -341,21 +736,88 @@ function enregistrerArtiste() {
 					}
 			});}
 }
+//--------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------ENREGISTRER UN CONTACT---------------------------------------------------
+function enregistrerContact() {
+	// Ici normalement, les contr�les sur les champs requis, les formats, ....
+		if(verifierChampObligatoire()==false){
+				var data=InitialiserData();
+				if($('#metiers').val()!=null) data=data+'&metiers=' + $('#metiers').val();
+				if($('#type').val()!=null) data=data+'&type=' + $('#type').val();
+	//Ajoute valeur dans data des autres métier
+				for(var i=1;i<autreChamp.nbMetier;i++){
+					data=data+'&autreMetier'+i+'='+$('#autreMetier'+i).val();
+				}
 
+				$.ajax({	type: "POST",
+						url: "ajax/saveArtiste.php",
+						data: data, // On passe les informations saisies � l'�cran
+						success: function(data, textStatus, jqXHR) {
+							var result = JSON.parse(data) ;
+							if (result.status == 'success') {
+						  		alert('L\'enregistrement du contact a été effectué');
+							}
+							else {
+								alert('erreur lors de l\'enregistrement');
+							}
+						},
+					error: function() {
+							alert('Erreur dans la requ�te au serveur.');
+					}
+			});
+	}
+}
 //-------------------------------------------------------------------------------------------------------------------
-//-------------------------------------------ENREGISTRER UN GROUPE------------------------------------------------
+//-------------------------------------------ENREGISTRER UN GROUPE---------------------------------------------------
 function enregistrerGroupe() {
 	// Ici normalement, les contr�les sur les champs requis, les formats, ....
-	if($('#nom').val()==""){
-					afficherChampObligatoire('#nom',nbErreur);nbErreur++;
-	}
-	else{
+
+	if(verifierChampObligatoirePersonne()==false){
 		var data =	'nom=' + $('#nom').val() +
-				'&siteWeb=' + $('#siteWeb').val()+
-				'&listeArtiste=' + $('#listeArtiste').val();
-				alert(data);
+								'&tel=' + $('#tel').val() +
+								'&mail=' + $('#mail').val();
+
+		if($('#adresse').val()!="") data=data+'&addresse=' + $('#adresse').val();
+		if($('#ville').val()!="")   data=data+'&ville=' + $('#ville').val();
+		if($('#siteWeb').val()!="") data=data+'&siteWeb=' + $('#siteWeb').val();
+
+		if($('#genres').val()!=null) data=data+'&genres=' + $('#genres').val();
+		if($('#listeArtiste').val()!=null) data=data+'&listeArtiste=' + $('#listeArtiste').val();
+		if($('#listeContact').val()!=null) data=data+'&listeContact=' + $('#listeContact').val();
+
+		for(var i=1;i<autreChamp.nbGenre;i++){
+			data=data+'&autreGenre'+i+'='+$('#autreGenre'+i).val();
+		}
+		alert(data);
 		$.ajax({	type: "POST",
 				url: "ajax/saveGroupe.php",
+				data: data, // On passe les informations saisies � l'�cran
+				success: function(data, textStatus, jqXHR) {
+					var result = JSON.parse(data) ;
+					if (result.status == 'success') {
+						  alert("Le groupe a été ajouté");
+					} else {
+						alert('erreur lors de l\'enregistrement');
+					}
+				},
+				error: function() {
+					alert('Erreur dans la requ�te au serveur.');
+				}
+		});
+	}
+}
+
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------ENREGISTRER UN ORGANISATEUR---------------------------------------------
+
+function enregistrerOrganisateur() {
+	// Ici normalement, les contr�les sur les champs requis, les formats, ....
+	if(verifierChampObligatoire()==false){
+		var data=InitialiserData();
+		if($('#nbPlace').val()!="") data=data+'&nbPlace=' + $('#nbPlace').val();
+
+		$.ajax({	type: "POST",
+				url: "ajax/saveOrganisateur.php",
 				data: data, // On passe les informations saisies � l'�cran
 				success: function(data, textStatus, jqXHR) {
 					var result = JSON.parse(data) ;
@@ -372,7 +834,7 @@ function enregistrerGroupe() {
 }
 
 //------------------------------------------------------------------------------------------------------
-//-----------------------------------MODIFIER UN GROUPE---------------------------------------------
+//-----------------------------------MODIFIER UN GROUPE-------------------------------------------------
 function modifierGroupe(idGroupe){
 
 	$.ajax({	type: "POST",
@@ -382,12 +844,8 @@ function modifierGroupe(idGroupe){
 					var result = JSON.parse(data) ;
 					if (result.status == 'success') {
 						if (result.artiste) {
-							if (result.artiste.nom) $('#nom').val(result.artiste.nom) ;
-							if (result.artiste.prenom) $('#prenom').val(result.artiste.prenom) ;
-							if (result.artiste.mail) $('#mail').val(result.artiste.mail);
-							if (result.artiste.tel) $('#tel').val(result.artiste.tel);
-							if (result.artiste.ville) $('#ville').val(result.artiste.ville);
-							evenementFormulaireArt();
+							if (result.groupe.nom) $('#nom').val(result.artiste.nom) ;
+
 						}
 					}
 				},
@@ -398,7 +856,7 @@ function modifierGroupe(idGroupe){
 
 }
 //------------------------------------------------------------------------------------------------------
-//-----------------------------------MODIFIER UN CONTACT---------------------------------------------
+//-----------------------------------MODIFIER UN ARTISTE------------------------------------------------
 function modifierArtiste(idArtiste){
 
 	$.ajax({	type: "POST",
@@ -424,3 +882,27 @@ function modifierArtiste(idArtiste){
 
 }
 //------------------------------------------------------------------------------------------------------
+//-----------------------------------MODIFIER UN CONTACT------------------------------------------------
+function modifierEvenement(idEvent){
+
+	$.ajax({	type: "POST",
+				url: "ajax/getEvenement.php",
+				data: "idEvenement=" + idEvent, // On passe l'id de la personne que l'on veut voir
+				success: function(data, textStatus, jqXHR) {
+					var result = JSON.parse(data) ;
+					if (result.status == 'success') {
+						if (result.evenement) {
+							if (result.evenement.nomEvenement) $('#nom').val(result.evenement.nomEvenement) ;
+							if (result.evenement.dateDeb) $('#dateDeb').val(result.evenement.dateDeb) ;
+							if (result.evenement.dateFin) $('#dateFin').val(result.evenement.dateFin);
+							if (result.evenement.ville) $('#ville').val(result.evenement.ville);
+							evenementFormulaireEve();
+						}
+					}
+				},
+				error: function() {
+					alert('Erreur dans la requ�te au serveur.');
+				}
+	});
+
+}

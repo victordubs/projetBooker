@@ -2,13 +2,6 @@
 
   <h1>Créer un Contact</h1>
 
-  <div class="option">
-		<ul>
-			<li> test</li>
-			<li> test2</li>
-      <li> test</li>
-		</ul>
-	</div>
   <form>
       <div class="section"><h2>Informations Principales</h2></div>
       <div class="inner-wrap">
@@ -18,7 +11,7 @@
           <label><input type="email" id="mail" placeholder="Adresse E-mail *"/></label>
           <label><input type="text"  id="adresse" placeholder="Adresse"/></label>
           <label><input type="text"  id="ville" placeholder="Ville"></label>
-          <label><input type="url"  id="siteWeb" placeholder="site Web"></label>
+          <label><input type="url"  id="siteWeb" placeholder="Site Web"></label>
       </div>
 
     <div class="section"><h2>Informations Secondaires</h2></div>
@@ -27,16 +20,12 @@
           <label class="champSpe">
             <p>Métier(s)</p>
             <div class="listeSpe">
-              <select id="listeMétier" multiple>
-                  <!-- Modifier la liste avec Ajax-->
-                  <option>Radio
-                  <option>Télévision
-                  <option>Technicien
-                  <option>Photographe
-              </select>
-          </div>
-          <button type="button" class="btnAjouterChamp" >+</button>
+              <select id="metiers" multiple></select>
+            </div>
+            <button type="button" new="Metier" id="btnAjouterMetier" class="btnAjouterChamp" >+</button>
         </label>
+
+        <label><input type="text"  id="type" placeholder="Type"></label>
 
       </div>
       <div class="button-section">
