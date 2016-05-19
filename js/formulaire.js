@@ -8,6 +8,7 @@ var erreurs = {
 var autreChamp = {
 	nbRole : 1,
 	nbGenre : 1,
+	nbMetier : 1,
 }
 
 var nbGroupeEvenement=0;
@@ -441,11 +442,11 @@ function evenementFormulaireContact() {
 
 	$('#btnAjouterMetier').on('click',function() {
 			   ajouterAutreChamp($(this),$(this).attr('new'),autreChamp.nbRole);
-			   autreChamp.nbRole++;
-		});
+			   autreChamp.nbMetier++;
+	});
 
 	$('.btnAjouterContact').on('click',function() {
-		//enregistrerArtiste();
+		enregistrerContact()
 		});
 }
 //-----------------------------------------------------------------------------------------------------------------
@@ -458,7 +459,7 @@ function getMetiers(){
 						if (result.status == 'success') {
 					// Boucle pour remplir la liste des métiers
 							 for (var id=0; id < result.artistes.length; id++) {
-								 $('#Metiers').append('<option>'+result.artistes[id].nomArtiste+'</option>');
+								 $('#metiers').append('<option>'+result.artistes[id].nomArtiste+'</option>');
 							 }
 					 }
 					},
@@ -642,9 +643,9 @@ function InitialiserData() {
 							'&tel=' + $('#tel').val() +
 							'&mail=' + $('#mail').val();
 
-	if($('#adresse').val()!=null) data=data+'&addresse=' + $('#adresse').val();
-	if($('#ville').val()!=null)   data=data+'&ville=' + $('#ville').val();
-	if($('#siteWeb').val()!=null) data=data+'&siteWeb=' + $('#siteWeb').val();
+	if($('#adresse').val()!="") data=data+'&addresse=' + $('#adresse').val();
+	if($('#ville').val()!="")   data=data+'&ville=' + $('#ville').val();
+	if($('#siteWeb').val()!="") data=data+'&siteWeb=' + $('#siteWeb').val();
 
 	return data;
 }
@@ -694,8 +695,19 @@ function enregistrerArtiste() {
 	// Ici normalement, les contr�les sur les champs requis, les formats, ....
 				if(verifierChampObligatoire()==false){
 						var data=InitialiserData();
-								'&roles=' + $('#roles').val()+
-								'&genres=' + $('#genres').val();
+      //Ajoute valeur dans data si Roles et Genres ont été séléctionnés
+						if($('#roles').val()!=null) data=data+'&roles=' + $('#roles').val();
+						if($('#genres').val()!=null) data=data+'&genres=' + $('#genres').val();
+			//Ajoute valeur dans data des autres Roles et Genres
+						for(var i=1;i<autreChamp.nbGenre;i++){
+							data=data+'&autreGenre'+i+'='+$('#autreGenre'+i).val();
+						}
+
+						for(var i=1;i<autreChamp.nbGenre;i++){
+							data=data+'&autreGenre'+i+'='+$('#autreGenre'+i).val();
+						}
+
+						alert(data);
 
 				$.ajax({	type: "POST",
 						url: "ajax/saveArtiste.php",
@@ -720,6 +732,11 @@ function enregistrerContact() {
 	// Ici normalement, les contr�les sur les champs requis, les formats, ....
 		if(verifierChampObligatoire()==false){
 				var data=InitialiserData();
+				if($('#metiers').val()!=null) data=data+'&metiers=' + $('#metiers').val();
+	//Ajoute valeur dans data des autres métier
+				for(var i=1;i<autreChamp.nbMetier;i++){
+					data=data+'&autreMetier'+i+'='+$('#autreMetier'+i).val();
+				}
 
 				$.ajax({	type: "POST",
 						url: "ajax/saveArtiste.php",
@@ -818,7 +835,7 @@ function modifierGroupe(idGroupe){
 
 }
 //------------------------------------------------------------------------------------------------------
-//-----------------------------------MODIFIER UN CONTACT------------------------------------------------
+//-----------------------------------MODIFIER UN ARTISTE------------------------------------------------
 function modifierArtiste(idArtiste){
 
 	$.ajax({	type: "POST",
