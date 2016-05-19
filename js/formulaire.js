@@ -249,7 +249,7 @@ function eventMenuRep(){
 	afficherRep("contact");
 	});
 
-	$('#menuRepArtiste').click();
+	$('#menuRepArtistes').click();
 }
 function evenementAccueil() {
 	$('article').on('click',function() {
@@ -329,6 +329,7 @@ function getListeGroupes(i) {
 									$divGroupe = $(document.createElement('div'));
 									$($divGroupe).attr('id','G'+i);
 									$divGroupe.append('<select id="selectGroupe'+i+'">');
+									$('#selectGroupe'+i).append('<option>Aucun</option>')
 									$('#lesGroupes').append($divGroupe);
 
 									for (var id=0; id < result.artistes.length; id++) {
@@ -665,18 +666,19 @@ function enregistrerEvenement() {
 
 				if($('#nom').val()==""){afficherChampObligatoire('#nom',erreurs.erreurEvent);erreurs.erreurEvent++;}
 				if(veriferDates()==false && $('#nom').val()!=""){
-					var data =	'nom=' + $('#nom').val() +
-								'&adresse=' + $('#adresse').val() +
-								'&ville=' + $('#ville').val() +
-								'&dateDebut=' + $('#dateDeb').val() +
-								'&dateFin=' + $('#dateFin').val()+
-								'&heureDebut=' + $('#heureDeb').val()+
-								'&heureFin=' + $('#heureFin').val()+
-								'&organisateurs=' + $('#selectOrganisateur').val();
+					var data =	'nom=' + $('#nom').val();
+											'&dateDebut=' + $('#dateDeb').val() +
+											'&dateFin=' + $('#dateFin').val();
+
+					if($('#adresse').val()!="") data=data+'&adresse=' + $('#adresse').val();
+					if($('#ville').val()!="") data=data+'&ville=' + $('#ville').val();
+					if($('#heureDebut').val()!="") data=data+'&heureDebut=' + $('#heureDebut').val();
+					if($('#heureFin').val()!="") data=data+'&heureFin=' + $('#heureFin').val();
+					if($('#organisateurs').val()!=null) data=data+'&organisateurs=' + $('#organisateurs').val();
 
 					for(var i=1;i<=nbGroupeEvenement;i++){
-						data=data+'&nomG'+i+'='+$('#selectGroupe'+i).val()+
-						    			'&heureG'+i+'='+$('#heureG'+i).val();
+							if($('#selectGroupe'+i).val()!=null) data=data+'&nomG'+i+'='+$('#selectGroupe'+i).val();
+							if($('#heureG'+i).val()!=null) data=data+'&heureG'+i+'='+$('#heureG'+i).val();
 					}
 
 				alert(data);
