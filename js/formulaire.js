@@ -883,6 +883,35 @@ function modifierArtiste(idArtiste){
 	});
 
 }
+
+//------------------------------------------------------------------------------------------------------
+//-----------------------------------MODIFIER UN CONTACT------------------------------------------------
+function modifierContact(idContact){
+
+	$.ajax({	type: "POST",
+				url: "ajax/getContact.php",
+				data: "idArtiste=" + idArtiste, // On passe l'id de la personne que l'on veut voir
+				success: function(data, textStatus, jqXHR) {
+					var result = JSON.parse(data) ;
+					if (result.status == 'success') {
+						if (result.artiste) {
+							if (result.artiste.nom) $('#nom').val(result.artiste.nom) ;
+							if (result.artiste.prenom) $('#prenom').val(result.artiste.prenom) ;
+							if (result.artiste.mail) $('#mail').val(result.artiste.mail);
+							if (result.artiste.tel) $('#tel').val(result.artiste.tel);
+							if (result.artiste.adresse) $('#adresse').val(result.artiste.adresse);
+							if (result.artiste.ville) $('#ville').val(result.artiste.ville);
+							if (result.artiste.ville) $('#siteWeb').val(result.artiste.siteWeb);
+							evenementFormulaireContact();
+						}
+					}
+				},
+				error: function() {
+					alert('Erreur dans la requ�te au serveur.');
+				}
+	});
+
+}
 //------------------------------------------------------------------------------------------------------
 //-----------------------------------MODIFIER UN CONTACT------------------------------------------------
 function modifierEvenement(idEvent){
