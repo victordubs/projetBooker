@@ -4,6 +4,7 @@ var erreurs = {
 	erreurGroupe : 0,
 	erreurContact : 0,
 	erreurOrganisateur : 0,
+	erreurConnexion:0;
 }
 var autreChamp = {
 	nbRole : 1,
@@ -13,7 +14,59 @@ var autreChamp = {
 
 var nbGroupeEvenement=0;
 
+
 $(document).ready(function() {
+
+	$.ajax({	type: "POST",
+				url: "ajax/verifConnecter.php",
+				success: function(data, textStatus, jqXHR) {
+					var result = JSON.parse(data) ;
+					if (result.status == 'success') {
+						if (result.reponse == 'true') {
+								$('#menu').load('pages/menu.html',chargeSite);
+						}else{
+								$('#content').load('pages/formulaireConnexion.html',connection);
+						}
+					}
+				},
+				error: function() {
+					alert('Erreur dans la requ�te au serveur.');
+				}
+	});
+
+});
+//--------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------CONNECTION AU SITE---------------------------------------------------------------------
+function connection(){
+
+	if($("#login").value()==""){
+		afficherChampObligatoire('#login',erreurs.erreurConnexion);
+	}
+	if($("#password").value()==""){
+		afficherChampObligatoire('#login',erreurs.erreurConnexion);
+	}
+	else if($("#password").value()=="" && $("#login").value()==""){
+
+				$.ajax({	type: "POST",
+						url: "ajax/connection.php",
+					success: function(data, textStatus, jqXHR) {
+							var result = JSON.parse(data) ;
+							if (result.status == 'success') {
+								if (result.reponse == 'true') {
+											$('#menu').load('pages/menu.html',chargeSite);
+								}else{
+											$('#content').load('pages/formulaireConnexion.html');
+								}
+					 	 }
+					},
+					error: function() {
+					alert('Erreur dans la requ�te au serveur.');
+				}
+			});
+}
+//--------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------CHARGE LE SITE ET LE MENU--------------------------------------------------------------
+function chargeSite(){
 	// Comportement des boutons de menus
 	$('body nav #mnuAccueil').bind('click', function() { // Au clic sur le bouton "mnuAccueil" dans le menu
 		$('#content').load('pages/accueil.html',afficherAccueil); // On charge la page accueil.html dans la div content
@@ -24,21 +77,23 @@ $(document).ready(function() {
 		$('#content').load('pages/afficherRep.html',eventMenuRep);
 	});
 
-  $('body nav #mnuOption').bind('click', function() { // Au clic sur le bouton "mnuPersonne" dans le menu
-    // On charge la page voirPersonne.html dans la div content et on appelle la fonction d'initialisation de cette page
-    $('#content').load('pages/afficherParametres.html');
+	$('body nav #mnuOption').bind('click', function() { // Au clic sur le bouton "mnuPersonne" dans le menu
+		// On charge la page voirPersonne.html dans la div content et on appelle la fonction d'initialisation de cette page
+		$('#content').load('pages/afficherParametres.html');
 
-  });
+	});
 
 	$('body nav #mnuCalendrier').bind('click', function() { // Au clic sur le bouton "mnuPersonne" dans le menu
 		// On charge la page voirPersonne.html dans la div content et on appelle la fonction d'initialisation de cette page
 		$('#content').load('pages/formulaireEvenement.html',evenementFormulaireEve);
 	});
 
-  $('body nav #mnuAccueil').click();
-});
-// ---------------------------------------------------------------------------------------------------------------------------
-// Active une option du menu (l'�l�ment � activer est pass� en param�tre)
+	$('body nav #mnuAccueil').click();
+}
+
+//--------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------ACTIVE UNE OPTION DU MENU--------------------------------------------------------------
+
 function activerOptionMenu($element) {
 	// D�sactive toutes les options du menu (met l'attribut 'actif' � faux)
 	$('.menuRep input').attr('actif', false);
@@ -686,7 +741,7 @@ function enregistrerEvenement() {
 					data: data, // On passe les informations saisies � l'�cran
 					success: function(data, textStatus, jqXHR) {
 					var result = JSON.parse(data) ;
-						if (result.status == 'success') {Mot de passe oublie ?
+						if (result.status == 'success') {
 								alert('erreur lors de l\'enregistrement');
 						}
 					},

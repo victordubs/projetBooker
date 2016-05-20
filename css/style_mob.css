@@ -3,22 +3,18 @@
 html{
   /*background-color: #0c67a0 white;*/
   color: #F5F5F5;
-  font-family: "Verdana", Geneva, sans-serif;
+  font-family: "Calibri", Times, sans-serif;
   width: 100%;
 }
 
 
 h1{
   font-size: 500%;
-  width: 95%;
-  margin-top: 0%;
-  padding-left: 5%;
+  width: 100%;
+  margin-top: 0%;;
   padding-top: 200px;
   background-color: #2A88AD;
-}
 
-h2{
-  margin-left: 5%;
 }
 
 #box {
@@ -70,14 +66,15 @@ section{
 	font-size: 200%;
 }
 
-
 .param ul{
   font-size: 250%;
-  width: 100%;
+  width: 90%;
+  margin: 5% 5%;
   padding: 0;
   background-color: #F5F5F5;
   color: #888888;
   border-radius: 5px;
+  box-shadow: 8px 8px 8px #888888;
 }
 
 .param ul *{
@@ -94,7 +91,6 @@ section{
   width: 70%;
   list-style-type: none;
   border-bottom: solid;
-  border-radius: 1px;
   border-color: #888888;
   position: relative;
 }
@@ -205,16 +201,29 @@ section{
 	background-color: #C6C6C6;
 }
 
-#edit{
+.evenement h1 img{
 	width: 7%;
 	display: inline-block;
 	float: right;
-  margin-right: 5%;
 }
 
 /* ------------------------------------------------------------------------*/
 
 /* CSS PROFIL--------------------------------------------------------------*/
+
+.profil h1 {
+	margin: 0px;
+	padding: 2%;
+	background-color: #2A88AD;
+
+}
+/*
+.profil h1 img {
+  width: 7%;
+	display: inline-block;
+	float: right;
+  margin-right:15px;
+}*/
 
 .profil article {
 	padding-right: 3%;
@@ -234,6 +243,7 @@ section{
 .profil article h2 {
 	color: #2A8BBC;
 	font-size:300%;
+	margin: 0%;
 }
 
 .profil article ul {
@@ -413,7 +423,7 @@ border:solid #888888;
 }
 .formulaire .inner-wrap{
     background: #F8F8F8;
-    padding: 4.5%;
+    padding: 5%;
     border-radius: 6px;
     margin-bottom: 15px;
     display: inline-block;
@@ -439,9 +449,6 @@ label *{
     font-size: 200%;
     padding: 25px 50px;
     margin-left: 5%;
-}
-.formulaire input[type="button"]{
-  margin-left: 0%;
 }
 .formulaire  input[type="button"]:hover,
 .formulaire input[type="submit"]:hover{
@@ -470,15 +477,11 @@ label *{
     border: 1px solid #aaa;
     border-radius: 4px;
 }
-.button-section{
-  margin: 0 10%;
-}
 
-.btnAjouterContact{
-    width:100%;
-    margin: 0;
-    margin-bottom: 25px;
 
+* .btnAjouterContact{
+    width:80%;
+    margin:0 20%;
 }
 
 /* appliquer une placeholder dans un champ date*/
@@ -516,7 +519,7 @@ input[type="time"]:before  {
 
 .formulaire .privacy-policy{
     float: right;
-    width: 2
+    width: 2  input[type="date"]:before {
     content: attr(placeholder);
     color: #888;
     margin-right: 0.5em;
@@ -587,13 +590,11 @@ vertical-align: bottom;
 /*------------OPTIONS-----------------*/
 .option{
   font-size: 250%;
-  width: 90%;
-  margin: 5% 5%;
-  padding: 0;
+  width: 80%;
+  margin: 5% 10%;
   background-color: #F5F5F5;
-  color: #888888;
+  color: green;
   border-radius: 5px;
-  position: fixed;
   box-shadow: 8px 8px 8px #888888;
 }
 
@@ -603,16 +604,9 @@ vertical-align: bottom;
 }
 
 .option * *{
-  margin: 0;
-  margin-left: 10%;
+  margin: 0 15px;
   padding: 10% 5%;
-  width: 70%;
   list-style-type: none;
   border-bottom: solid;
-  border-radius: 1px;
   border-color: #888888;
-  position: relative;
-}
-.option li:last-child{
-  border-bottom: none;
 }
