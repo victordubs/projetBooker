@@ -1,10 +1,8 @@
 <?php
-	require_once('Groupe.php');
-	require_once('Evenement.php');
     class PlageHoraire {
-        public $heueDebut;   // gregorian calendar. heure de début de passage
+        public $heueDebut;   // gregorian calendar. heure de dï¿½but de passage
         public $heureFin;  // gregorian calendar. heure de fin de passage
-	public $groupe; // groupe auquel est associé la plage horaire
-	public $evenement // evenement auquel est associé la plage horaire
+				public $groupe; // groupe auquel est associï¿½ la plage horaire
+				public $evenement; // evenement auquel est associï¿½ la plage horaire
     }
 ?>
