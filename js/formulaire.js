@@ -26,7 +26,7 @@ $(document).ready(function() {
 
   $('body nav #mnuOption').bind('click', function() { // Au clic sur le bouton "mnuPersonne" dans le menu
     // On charge la page voirPersonne.html dans la div content et on appelle la fonction d'initialisation de cette page
-    $('#content').load('pages/formulaireGroupe.html',evenementFormulaireGroupe);
+    $('#content').load('pages/afficherParametres.html');
 
   });
 
@@ -677,7 +677,7 @@ function enregistrerEvenement() {
 
 					for(var i=1;i<=nbGroupeEvenement;i++){
 							if($('#selectGroupe'+i).val()!=null) data=data+'&nomG'+i+'='+$('#selectGroupe'+i).val();
-							if($('#heureG'+i).val()!=null) data=data+'&heureG'+i+'='+$('#heureG'+i).val();
+							if($('#heureG'+i).val()!="") data=data+'&heureG'+i+'='+$('#heureG'+i).val();
 					}
 
 				alert(data);
