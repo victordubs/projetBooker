@@ -1,17 +1,18 @@
 <?php
-	include "artistes.php" ;
+include_once("DAO.class.php");
 
-	$result = array() ;
-	$result["status"] = "success" ;
-  if (count($artistes) > 0) {
-		$result["artistes"] = array();
+$result = array() ;
+$result["status"] = "success" ;
+$result["personnes"] = array();
+$listeArtistes=$dao->getListeArtistes();
 
-		foreach ($artistes as $idArtiste => $artisteBD) {
-			$artiste = array() ;
-			$artiste['idArtiste'] = $idArtiste ;
-			$artiste['nomArtiste'] = $artisteBD["nom"];
-			array_push($result["artistes"], $artiste) ;
-		}
+	foreach ($listeArtistes as $art) {
+		$artiste = array() ;
+		$artiste['nom'] = $art->nom;
+		$artiste['idp'] = $art->id ;
+
+		array_push($result["personnes"], $artiste) ;
 	}
+
 	echo json_encode($result);
   ?>

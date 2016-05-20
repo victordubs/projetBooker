@@ -4,7 +4,7 @@ var erreurs = {
 	erreurGroupe : 0,
 	erreurContact : 0,
 	erreurOrganisateur : 0,
-	erreurConnexion:0;
+	erreurConnexion:0,
 }
 var autreChamp = {
 	nbRole : 1,
@@ -24,8 +24,10 @@ $(document).ready(function() {
 					if (result.status == 'success') {
 						if (result.reponse == 'true') {
 								$('#menu').load('pages/menu.html',chargeSite);
+
 						}else{
-								$('#content').load('pages/formulaireConnexion.html',connection);
+								$('#content').load('pages/formulaireConnexion.html',eventConnexion);
+
 						}
 					}
 				},
@@ -36,19 +38,28 @@ $(document).ready(function() {
 
 });
 //--------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------EVEMENT FORMULAIRE CONNECTION---------------------------------------------------------------------
+function eventConnexion(){
+	$(".bouton").on('click',function(){
+		connection();
+	});
+}
+//--------------------------------------------------------------------------------------------------------------------------
 //-----------------------------------CONNECTION AU SITE---------------------------------------------------------------------
 function connection(){
 
-	if($("#login").value()==""){
+	if($("#login").val()==""){
 		afficherChampObligatoire('#login',erreurs.erreurConnexion);
 	}
-	if($("#password").value()==""){
+	if($("#password").val()==""){
 		afficherChampObligatoire('#login',erreurs.erreurConnexion);
 	}
-	else if($("#password").value()=="" && $("#login").value()==""){
-
+	else if($("#password").val()!="" && $("#login").val()!=""){
+				var data='login='+$("#login").val()+
+									'&password='+$("#password").val();
+alert(data);
 				$.ajax({	type: "POST",
-						url: "ajax/connection.php",
+						url: "ajax/connexion.php",
 						data:data,
 						success: function(data, textStatus, jqXHR) {
 							var result = JSON.parse(data) ;
@@ -62,6 +73,7 @@ function connection(){
 					alert('Erreur dans la requ�te au serveur.');
 				}
 			});
+	}
 }
 //--------------------------------------------------------------------------------------------------------------------------
 //-----------------------------------CHARGE LE SITE ET LE MENU--------------------------------------------------------------
@@ -105,30 +117,31 @@ function activerOptionMenu($element) {
 function afficherRep(personne){
 
 	$.ajax({	type: "POST", // envoie une requ�te � getListePersonnes pour demander la liste des personnes
-				url: "ajax/getListeArtistes.php",
+				url: "ajax/getListe"+personne+".php",
 				success: function(data, textStatus, jqXHR) {
 					var result=JSON.parse(data);
 					if (result.status == 'success') {
-						for (var id=0; id < result.artistes.length; id++) {
 
-								if(document.getElementById(result.artistes[id].nomArtiste.substr(0,1))==null){
+						for (var id=0; id < result.personnes.length; id++) {
+
+								if(document.getElementById(result.personnes[id].nom.substr(0,1))==null){
 
 													$article = $(document.createElement('article'));
 													$titre = $(document.createElement('h2'));
-													$titre.html(result.artistes[id].nomArtiste.substr(0,1).toUpperCase());
+													$titre.html(result.personnes[id].nom.substr(0,1).toUpperCase());
 													$article.append($titre);
 													$ul = $(document.createElement('ul'));
-													$ul.attr('id',result.artistes[id].nomArtiste.substr(0,1));
+													$ul.attr('id',result.personnes[id].nom.substr(0,1));
 													$article.append($ul);
 													$('#repertoire').append($article);
 								}
 
 										$liContact = $(document.createElement('li')); // On cr�e un li
-										$liContact.append('<p idArtiste="'+result.artistes[id].idArtiste+'">'+result.artistes[id].nomArtiste+'</p>');
+										$liContact.append('<p id="'+result.personnes[id].idp+'">'+result.personnes[id].nom+'</p>');
 										$liContact.append('<img id=\'email\' src = "images/emailBtn.svg" />');
 										$liContact.append('<img id=\'sms\' src = "images/smsBtn.svg" />');
 										$liContact.append('<a href="tel:+337388388"><img id=\'call\' src = "images/callBtn.svg" /></a>');
-										$('#'+result.artistes[id].nomArtiste.substr(0,1)).append($liContact);
+										$('#'+result.personnes[id].nom.substr(0,1)).append($liContact);
 
 						}
 						evenementRep(personne);
@@ -227,7 +240,7 @@ function evenementRep(personne){
 // Evenement sur le répertoire des artistes
 	if(personne=="artiste"){
 		$('p').on('click',function() {
-			var param=$(this).attr('idArtiste');
+			var param=$(this).attr('idp');
 			$('#content').load('pages/afficherArtiste.html',function(){afficherArtiste(param)});
 		});
 
@@ -238,7 +251,7 @@ function evenementRep(personne){
 // Evenement sur le répertoire des groupes
 	else if(personne=="groupe"){
 		$('p').on('click',function() {
-			var param=$(this).attr('idGroupe');
+			var param=$(this).attr('idp');
 			$('#content').load('pages/afficherGroupe.html',function(){afficherGroupe(param)});
 		});
 
@@ -249,7 +262,7 @@ function evenementRep(personne){
 // Evenement sur le répertoire des organisateurs
 	else if(personne=="organisateur"){
 		$('p').on('click',function() {
-			var param=$(this).attr('idOrganisateur');
+			var param=$(this).attr('idp');
 			$('#content').load('pages/afficherArtiste.html',function(){afficherArtiste(param)});
 		});
 
@@ -260,7 +273,7 @@ function evenementRep(personne){
 // Evenement sur le répertoire des contacts
 	else if(personne=="contact"){
 		$('p').on('click',function() {
-			var param=$(this).attr('idContact');
+			var param=$(this).attr('idp');
 			$('#content').load('pages/afficherArtiste.html',function(){afficherArtiste(param)});
 		});
 
@@ -282,25 +295,25 @@ function eventMenuRep(){
 	$('#menuRepArtistes').on('click',function() {
 	activerOptionMenu($(this));
 	$('#repertoire').empty();
-	afficherRep("artiste");
+	afficherRep("Artistes");
 	});
 
 	$('#menuRepGroupe').on('click',function() {
 	activerOptionMenu($(this));
 	$('#repertoire').empty();
-	afficherRep("groupe");
+	afficherRep("Groupes");
 	});
 
 	$('#menuRepOrganisateur').on('click',function() {
 	activerOptionMenu($(this));
 	$("#repertoire").empty();
-	afficherRep("organisateur");
+	afficherRep("Organisateurs");
 	});
 
 	$('#menuRepContact').on('click',function() {
 	activerOptionMenu($(this));
 	$('#repertoire').empty();
-	afficherRep("contact");
+	afficherRep("Contacts");
 	});
 
 	$('#menuRepArtistes').click();
@@ -347,7 +360,7 @@ function getListeOrganisateurs(){
 						if (result.status == 'success') {
 					// Boucle pour remplir la liste des Artistes
 							 for (var id=0; id < result.artistes.length; id++) {
-								 $('#selectOrganisateur').append('<option>'+result.artistes[id].nomArtiste+'</option>');
+								 $('#selectOrganisateur').append('<option>'+result.artistes[id].nom+'</option>');
 							 }
 					 }
 					},

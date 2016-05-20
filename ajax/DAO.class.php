@@ -11,18 +11,17 @@
         // L'objet local PDO de la base de donnée
         private $db;
         // Le type, le chemin et le nom de la base de donnée
-        private $database = 'sqlite:projetBooker/data/booker.db';
+        private $dbname="bases3da13";
+        private $host="postgres-info";
+        private $dbuser="users3da13";
+        private $dbpass="Liam1996";
 
        //$dbh = new PDO("pgsql:dbname=$dbname;host=$host", $dbuser, $dbpass);
         // Constructeur chargé d'ouvrir la BD
         function __construct() {
 			       try {
-                   $dbname="bases3da13";
-                   $host="postgres-info";
-                   $dbuser="users3da13";
-                   $dbpass="Liam1996";
-                   $port="port=5432";
-				           $this->db = new PDO("pgsql:dbname=$dbname;host=$host", $dbuser, $dbpass);
+
+				           $this->db = new PDO("pgsql:dbname=$this->dbname;host=$this->host", $this->dbuser, $this->dbpass);
 			       }
 			      catch (PDOException $e){
 				          die("erreur de connexion:   " .$e->getMessage());
@@ -62,7 +61,7 @@
         }
 
         function getListeArtistes() {
-            $req = "select * from artiste;";
+            $req = "select * from artiste order by nom;";
             $sth = $this->db->query($req);
             $result = $sth->fetchAll(PDO::FETCH_CLASS, 'Artiste');
             return $result;
@@ -76,14 +75,13 @@
         }
 
         function connexion($login,$password) {
-            $req = "select * from login where username=$login and password=$password;";
+            $req = "select * from login where username='$login' and password='$password';";
             $sth = $this->db->query($req);
-            $result = $sth->fetchAll(PDO::FETCH_CLASS, 'login');
-            return $result;
+            $result = $sth->fetchAll(PDO::FETCH_ASSOC);
+
+            return $result[0];
         }
 
 
-
-
-      }
+  }
 ?>
