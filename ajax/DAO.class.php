@@ -12,7 +12,7 @@
         private $db;
         // Le type, le chemin et le nom de la base de donnée
         private $database = 'sqlite:projetBooker/data/booker.db';
-
+      
         // Constructeur chargé d'ouvrir la BD
         function __construct() {
 			       try {

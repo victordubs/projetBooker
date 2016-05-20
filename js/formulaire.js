@@ -686,9 +686,7 @@ function enregistrerEvenement() {
 					data: data, // On passe les informations saisies � l'�cran
 					success: function(data, textStatus, jqXHR) {
 					var result = JSON.parse(data) ;
-						if (result.status == 'success') {
-								alert("L'enregistrement de l'événement a été effectué");
-						} else {
+						if (result.status == 'success') {Mot de passe oublie ?
 								alert('erreur lors de l\'enregistrement');
 						}
 					},
