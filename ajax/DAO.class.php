@@ -12,11 +12,17 @@
         private $db;
         // Le type, le chemin et le nom de la base de donnée
         private $database = 'sqlite:projetBooker/data/booker.db';
-      
+
+       //$dbh = new PDO("pgsql:dbname=$dbname;host=$host", $dbuser, $dbpass);
         // Constructeur chargé d'ouvrir la BD
         function __construct() {
 			       try {
-				           $this->db = new PDO($this->database);
+                   $dbname="bases3da13";
+                   $host="postgres-info";
+                   $dbuser="users3da13";
+                   $dbpass="Liam1996";
+                   $port="port=5432";
+				           $this->db = new PDO("pgsql:dbname=$dbname;host=$host", $dbuser, $dbpass);
 			       }
 			      catch (PDOException $e){
 				          die("erreur de connexion:   " .$e->getMessage());
@@ -66,6 +72,13 @@
             $req = "select * from evenement;";
             $sth = $this->db->query($req);
             $result = $sth->fetchAll(PDO::FETCH_CLASS, 'Evenement');
+            return $result;
+        }
+
+        function connexion($login,$password) {
+            $req = "select * from login where username=$login and password=$password;";
+            $sth = $this->db->query($req);
+            $result = $sth->fetchAll(PDO::FETCH_CLASS, 'login');
             return $result;
         }
 
