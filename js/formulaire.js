@@ -49,13 +49,12 @@ function connection(){
 
 				$.ajax({	type: "POST",
 						url: "ajax/connection.php",
-					success: function(data, textStatus, jqXHR) {
+						data:data,
+						success: function(data, textStatus, jqXHR) {
 							var result = JSON.parse(data) ;
 							if (result.status == 'success') {
 								if (result.reponse == 'true') {
-											$('#menu').load('pages/menu.html',chargeSite);
-								}else{
-											$('#content').load('pages/formulaireConnexion.html');
+										$('#menu').load('pages/menu.html',chargeSite);
 								}
 					 	 }
 					},
