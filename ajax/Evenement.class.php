@@ -1,16 +1,13 @@
  <?php
-	require_once('Organisateur.php');
-	require_once('Application');
-	require_once('PlageHoraire');
     class Evenement {
-        public $nom;   // string. Le nom de l'évènement
-        public $dateDebut;  // GregorianCalendar. date du début de l'évènement
-        public $dateFin; // GregorianCalendar. date de fin de l'évènement   
-        public $libelle;   // string. description de l'évvènement
-        public $heureDebut;  // GregorianCalendar. heure de début de l'évènement   
-        public $heureFin; //GregorianCalendar. heure de fin de l'évènement
-	public $organisateurs; //tableau. Listes des différents organisateurs de l'évènement 
-	public $application; //application. Utilisateur auquel est lié cet évènement.
-	public $plages; // tableau. Contient les différentes plages horaires de l'évènement. Permet d'obtenir la liste des artiste lié a l'évènement
+        public $nom;   // string. Le nom de l'ï¿½vï¿½nement
+        public $dateDebut;  // GregorianCalendar. date du dï¿½but de l'ï¿½vï¿½nement
+        public $dateFin; // GregorianCalendar. date de fin de l'ï¿½vï¿½nement
+        public $libelle;   // string. description de l'ï¿½vvï¿½nement
+        public $heureDebut;  // GregorianCalendar. heure de dï¿½but de l'ï¿½vï¿½nement
+        public $heureFin; //GregorianCalendar. heure de fin de l'ï¿½vï¿½nement
+	       public $organisateurs; //tableau. Listes des diffï¿½rents organisateurs de l'ï¿½vï¿½nement
+	        public $application; //application. Utilisateur auquel est liï¿½ cet ï¿½vï¿½nement.
+	         public $plages; // tableau. Contient les diffï¿½rentes plages horaires de l'ï¿½vï¿½nement. Permet d'obtenir la liste des artiste liï¿½ a l'ï¿½vï¿½nement
     }
 ?>
