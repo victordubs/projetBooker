@@ -35,10 +35,10 @@
 
 
         function getArtiste($id) {
-            $req = "select * from artiste where id = $id;";
+            $req = "select * from artistes where id = $id;";
             $sth = $this->db->query($req);
             $result = $sth->fetchAll(PDO::FETCH_CLASS, 'Artiste');
-            return $result;
+            return $result[0];
           }
 
           function getArtistev2($id) {
