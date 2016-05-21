@@ -117,7 +117,8 @@ function activerOptionMenu($element) {
 function afficherRep(personne){
 
 	$.ajax({	type: "POST", // envoie une requ�te � getListePersonnes pour demander la liste des personnes
-				url: "ajax/getListe"+personne+".php",
+				url: "ajax/getRepertoire.php",
+				data:"personne="+personne,
 				success: function(data, textStatus, jqXHR) {
 					var result=JSON.parse(data);
 					if (result.status == 'success') {

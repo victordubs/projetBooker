@@ -1,7 +1,7 @@
  <?php
 	require_once('Contact.class.php');
     class Groupe extends Contact {
-        public $nomGroupe;   // string. Le nom du groupe
+        public $nom;   // string. Le nom du groupe
         public $disponibilite;  // tableau. Disponibilit�s des artistes
         public $genre; // type enumerer ? tableau ? .genre du groupe,
 	      public $autresContacts; //tableau. Les autres contacts du groupe

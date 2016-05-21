@@ -2,6 +2,10 @@
     require_once('Artiste.class.php');
     require_once('AutresContacts.class.php');
     require_once('Evenement.class.php');
+    require_once('Groupe.class.php');
+    require_once('Organisateur.class.php');
+    //require_once('Organisateur.class.php');
+
     // Definition de l'unique objet de DAO
     $dao = new DAO();
 
@@ -66,6 +70,16 @@
             $result = $sth->fetchAll(PDO::FETCH_CLASS, 'Artiste');
             return $result;
         }
+
+        function getListePersonnes($personne) {
+            $req = "select * from $personne order by nom;";
+            $sth = $this->db->query($req);
+            // pour pouvoir acceder à la class "artiste" car avant $personnes vaut "artistes"
+            $personne=substr($personne,0,-1);
+            $result = $sth->fetchAll(PDO::FETCH_CLASS,'groupe');
+            return $result;
+        }
+
 
         function getListeEvenements() {
             $req = "select * from evenement;";
