@@ -145,6 +145,7 @@ function afficherRep(personne){
 										$('#'+result.personnes[id].nom.substr(0,1)).append($liContact);
 
 						}
+
 						evenementRep(personne);
 					}
 				},
@@ -208,7 +209,7 @@ function afficherArtiste(idArtiste){
 
 	$.ajax({	type: "POST",
 				url: "ajax/getArtiste.php",
-				data: "idArtiste=" + idArtiste, // On passe l'id de la personne que l'on veut voir
+				data: "idArtiste=" + idArtiste,// On passe l'id de la personne que l'on veut voir
 				success: function(data, textStatus, jqXHR) {
 					var result = JSON.parse(data) ;
 					if (result.status == 'success') {
@@ -239,9 +240,9 @@ function afficherArtiste(idArtiste){
 function evenementRep(personne){
 
 // Evenement sur le répertoire des artistes
-	if(personne=="artiste"){
+	if(personne=="Artistes"){
 		$('p').on('click',function() {
-			var param=$(this).attr('idp');
+			var param=$(this).attr('id');
 			$('#content').load('pages/afficherArtiste.html',function(){afficherArtiste(param)});
 		});
 

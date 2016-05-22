@@ -2,23 +2,25 @@
 	include_once("DAO.class.php");
 	$result = array() ;
 	$result["status"] = "success" ;
-	$result["artiste"] = array();
+
 
 	if (isset($_REQUEST['idArtiste'])) {
-			$reponse=$dao->getArtiste($id);
+			$reponse=$dao->getArtiste($_REQUEST['idArtiste']);
 		if (isset($reponse)) {
 
 			$artiste = array() ;
 			$artiste['nom'] = $reponse->nom;
+			$artiste['prenom'] = $reponse->prenom;
 			$artiste['ville'] = $reponse->ville;
 			$artiste['adresse'] = $reponse->adresse;
 			$artiste['tel'] = $reponse->tel;
 			$artiste['mail'] = $reponse->mail;
-			$artiste['idp'] = $reponse->id ;
+			$artiste['idArtiste'] = $reponse->id ;
+			$result["artiste"]=$artiste;
 
 		} else {
 			$result["status"] = "error" ;
-			$result["errMessage"] = "Artiste {$_REQUEST['idArtiste']} inconnue" ;
+			//$result["errMessage"] = "Artiste {$_REQUEST['idArtiste']} inconnue" ;
 		}
 	} else {
 		$result["status"] = "error" ;

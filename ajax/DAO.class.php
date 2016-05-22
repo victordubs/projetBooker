@@ -35,9 +35,15 @@
 
 
         function getArtiste($id) {
-            $req = "select * from artistes where id = $id;";
+            $req = "select distinct * from artistes A, liaisonartisterole L where L.idartiste=A.id and id=$id; ";
             $sth = $this->db->query($req);
             $result = $sth->fetchAll(PDO::FETCH_CLASS, 'Artiste');
+
+            $req ="select  G.nom,G.id from  artistes A,groupes G,liaisonartistegroupe AG where A.id=$id and AG.idartiste=A.id and AG.idgroupe=G.id;";
+            $sth = $this->db->query($req);
+            $result1 = $sth->fetchAll(PDO::FETCH_ASSOC);
+            $result[0]->groupes=$result1;
+
             return $result[0];
           }
 
