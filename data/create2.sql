@@ -1,68 +1,36 @@
 create table contacts(
-	id numeric(4) primary key,
 	mail varchar(30),
 	tel varchar(10),
 	siteWeb varchar(30),
+	id numeric(4) primary key,
 	ville varchar(15),
 	adresse varchar(30)
 );
 
 create table personne(
-	id numeric(4) primary key,
-	mail varchar(30),
-	tel varchar(10),
-	siteWeb varchar(30),
-	ville varchar(15),
-	adresse varchar(30),
 	nom varchar(10),
 	prenom varchar(10)
-) ;
+) INHERITS (contacts);
 
-create table artiste(
-	id numeric(4) primary key,
-	mail varchar(30),
-	tel varchar(10),
-	siteWeb varchar(30),
-	ville varchar(15),
-	adresse varchar(30),
-	nom varchar(10),
-	prenom varchar(10)
-) ;
+create table artistes(
+	primary key(id)
+) INHERITS(personne);
 
-create table organisateur(
-	id numeric(4) primary key,
-	mail varchar(30),
-	tel varchar(10),
-	siteWeb varchar(30),
-	ville varchar(15),
-	adresse varchar(30),
-	nom varchar(10),
-	prenom varchar(10),
-	nombrePlaces numeric(5)
-) ;
+create table organisateurs(
+	nombrePlaces numeric(5),
+	primary key(id)
+) INHERITS (personne);
 
 create table autresContact(
-	id numeric(4) primary key,
-	mail varchar(30),
-	tel varchar(10),
-	siteWeb varchar(30),
-	ville varchar(15),
-	adresse varchar(30),
-	nom varchar(10),
-	prenom varchar(10),
-	metier varchar(50)
-);
+	metier varchar(50),
+	primary key(id)
+)INHERITS (personne);
 
-create table groupe(
-	id numeric(4) primary key,
+create table groupes(
 	nom varchar(15),
-	mail varchar(30),
-	tel varchar(10),
-	siteWeb varchar(30),
-	ville varchar(15),
-	adresse varchar(30),
-	genre varchar(10)
-) ;
+	genre varchar(10),
+	primary key(id)
+) INHERITS (contacts);
 
 /* Role de l'artiste : guitariste, batteur, etc. */
 create table role(
@@ -83,31 +51,31 @@ create table type(
 create table evenement(
 	id numeric(4) primary key,
 	nom varchar(30),
-	dateDebut varchar(10),
-	dateFin varchar(10),
+	dateDebut date,
+	dateFin date,
 	libelle varchar(50),
-	heureDebut varchar(5),
-	heureFin varchar(5)
+	heureDebut time,
+	heureFin time
 );
 
 create table liaisonArtisteRole(
 	idArtiste numeric(4),
 	nomRole varchar (10),
-	foreign key (idArtiste) references artiste(id),
+	foreign key (idArtiste) references artistes(id),
 	foreign key (nomRole) references role(nomRole)
 );
 
 create table liaisonArtisteGroupe(
 	idArtiste numeric(4),
 	idGroupe numeric(4),
-	foreign key (idArtiste) references artiste(id),
-	foreign key (idGroupe) references groupe(id)
+	foreign key (idArtiste) references artistes(id),
+	foreign key (idGroupe) references groupes(id)
 );
 
 create table liaisonGroupeAutresContact(
 	idGroupe numeric(4),
 	idAutresContact numeric(4),
-	foreign key (idGroupe) references groupe(id),
+	foreign key (idGroupe) references groupes(id),
 	foreign key (idAutresContact) references autresContact(id)
 );
 
@@ -121,31 +89,31 @@ create table liaisonAutresContactType(
 create table liaisonGroupeStyle(
 	idGroupe numeric(4),
 	nomStyle varchar(30),
-	foreign key(idGroupe) references groupe(id),
+	foreign key(idGroupe) references groupes(id),
 	foreign key (nomStyle) references style(nomStyle)
 );
 
 create table liaisonEvenementOrganisateur(
 	idOrganisateur numeric(4),
 	idEvenement numeric(4),
-	foreign key (idOrganisateur) references organisateur(id),
+	foreign key (idOrganisateur) references organisateurs(id),
 	foreign key (idEvenement) references evenement(id)
 );
 
 create table liaisonGroupeEvenement(
 	idGroupe numeric(4),
 	idEvenement numeric(4),
-	foreign key (idGroupe) references groupe(id),
+	foreign key (idGroupe) references groupes(id),
 	foreign key (idEvenement) references evenement(id)
 );
 
 create table plageHoraire(
-	heureDebut varchar(5),
-	heureFin varchar(5),
+	heureDebut time,
+	heureFin time,
 	idEvenement numeric(4),
 	idGroupe numeric(4),
 	foreign key (idEvenement) references evenement(id),
-	foreign key (idGroupe) references groupe(id)
+	foreign key (idGroupe) references groupes(id)
 );
 
 create table login (
@@ -153,4 +121,5 @@ create table login (
 	username varchar(30) not null,
 	password char(128) not null
 );	
+
 

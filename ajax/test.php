@@ -9,10 +9,10 @@ $result = array() ;
 
 
 //test pour getArtiste
-	/*$result = $dao->getArtiste(1);
+/*	$result = $dao->getArtiste(1);
 	var_dump($result);*/
-/*
-	$reponse=$dao->getArtiste(1);
+
+/*	$reponse=$dao->getArtiste(1);
 	if (isset($reponse)) {
 
 		$artiste = array() ;
@@ -34,14 +34,14 @@ $result = array() ;
 	}
 
 	var_dump($result["artiste"]);
+
 */
 
-
 //test pour autre contact
-/*
-	$result = $dao->getContact(3);
-	var_dump($result);*/
 
+/*	$result = $dao->getContact(3);
+	var_dump($result);*/
+/*
 		$reponse=$dao->getContact(3);
 		if (isset($reponse)) {
 
@@ -66,13 +66,40 @@ $result = array() ;
 	  
 
 	var_dump($result["artiste"]);
-
+*/
 
 //test pour organisateur
-/*
-	$result = $dao->getOrganisateur(2);
+
+/*	$result = $dao->getOrganisateur(2);
 	var_dump($result);*/
 
 
+/*		$reponse=$dao->getOrganisateur(2);
+		if (isset($reponse)) {
+
+			$artiste = array() ;
+			$artiste['nom'] = $reponse->nom;
+			$artiste['prenom'] = $reponse->prenom;
+			$artiste['ville'] = $reponse->ville;
+			$artiste['adresse'] = $reponse->adresse;
+			$artiste['tel'] = $reponse->tel;
+			$artiste['mail'] = $reponse->mail;
+			$artiste['siteWeb'] = $reponse->siteweb;
+			$artiste['idp'] = $reponse->id;
+			$artiste['evenements'] = $reponse->lesEvenements;
+			$artiste['nombrePlaces'] = $reponse->nombreplaces;
+			$result["artiste"]=$artiste;
+
+		} else {
+			$result["status"] = "error" ;
+			//$result["errMessage"] = "Artiste {$_REQUEST['idArtiste']} inconnue" ;
+		}
+	
+	var_dump($result["artiste"]);
+*/
+
+//test des groupes
+/*	$result = $dao->getGroupe(4);
+	var_dump($result);*/
 
   ?>
