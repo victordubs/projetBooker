@@ -94,8 +94,8 @@
             $req = "select * from $personne order by nom;";
             $sth = $this->db->query($req);
             // pour pouvoir acceder à la class "artiste" car avant $personnes vaut "artistes"
-
-            if($personne!='AutresContact'){
+			var_dump($personne);
+            if($personne!=='AutresContact'){
               $personne=substr($personne,0,-1);
             }
 
