@@ -177,6 +177,18 @@
             return $result[0];
           }
 
+      function recherchePersonnes($nompersonne) {
+              $req = "select id,nom,tel from artistes where nom='$nompersonne'
+                      union
+                      select id,nom,tel from groupes where nom='$nompersonne'
+                      union
+                      select id,nom,tel from organisateurs where nom='$nompersonne'
+                      union
+                      select id,nom,tel from autresContact where nom='$nompersonne';";
 
+              $sth = $this->db->query($req);
+              $result = $sth->fetchAll(PDO::FETCH_ASSOC);
+              return $result;
+      }
   }
 ?>

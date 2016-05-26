@@ -3,10 +3,10 @@ include_once("DAO.class.php");
 
 $result = array() ;
 $result["status"] = "success" ;
-$result["personnes"] = array();
+
 
 if (isset($_REQUEST['personne'])) {
-
+	$result["personnes"] = array();
 	$listePersonnes=$dao->getListePersonnes($_REQUEST['personne']);
 
 	foreach ($listePersonnes as $pers) {

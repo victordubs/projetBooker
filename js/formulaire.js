@@ -338,7 +338,7 @@ function afficherGroupe(idGroupe){
 	$.ajax({	type: "POST",
 				url: "ajax/getGroupe.php",
 				data: "idp=" + idGroupe,// On passe l'id de la personne que l'on veut voir
-				success: function(data, textStatus, jqXHR) {
+			  success: function(data, textStatus, jqXHR) {
 					var result = JSON.parse(data) ;
 					if (result.status == 'success') {
 						if (result.groupe) {
@@ -451,7 +451,42 @@ function evenementRep(personne){
 		});
 	}
 }
+//--------------------------------------------------------------------------------------------------------------------
+//-----------------------------------RECHERCHER UNE PERSONNE-------------------------------------------------------
+function rechercherPersonnes(nomPersonne){
 
+	$.ajax({	type: "POST",
+			url: "ajax/rechercherPersonne.php",
+			data:'nomPersonne='+nomPersonne,
+			success: function(data, textStatus, jqXHR) {
+			var result = JSON.parse(data) ;
+			  if (result.status == 'success') {
+
+					if(result.personnes){
+						$article = $(document.createElement('article'));
+						$titre = $(document.createElement('h2'));
+						$titre.html('Résultat personnes trouvée: '+result.personnes.length);
+						$article.append($titre);
+						$ul = $(document.createElement('ul'));
+						for (var id=0; id < result.personnes.length; id++) {
+							$liContact = $(document.createElement('li')); // On cr�e un li
+							$liContact.append('<p id="'+result.personnes[id].idp+'">'+result.personnes[id].nom+'</p>');
+							$liContact.append('<img id=\'email\' src = "images/emailBtn.svg" />');
+							$liContact.append('<img id=\'sms\' src = "images/smsBtn.svg" />');
+							$liContact.append('<a href="tel:+337388388"><img id=\'call\' src = "images/callBtn.svg" /></a>');
+							$ul.append($liContact);
+					  }
+						$article.append($ul);
+						$('#repertoire').append($article);
+
+				 }
+			 }
+		},
+		error: function() {
+			alert('Erreur dans la requ�te au serveur.');
+		}
+ });
+}
 //--------------------------------------------------------------------------------------------------------------------
 //-----------------------------------EVENEMENT MENU REPERTOIRE--------------------------------------------------------
 function eventMenuRep(){
@@ -460,6 +495,14 @@ function eventMenuRep(){
 	$('#searchBtn').on('click',function() {
 		$("#search").toggle();
 	});
+
+	$('#search').keyup(function(e) {
+   if(e.keyCode == 13) { // KeyCode de la touche entrée
+		 	$('#repertoire').empty();
+			var param=$("#search").val();
+			rechercherPersonnes(param);
+   }
+  });
 
 	$('#menuRepArtistes').on('click',function() {
 	activerOptionMenu($(this));

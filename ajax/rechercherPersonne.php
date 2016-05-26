@@ -3,7 +3,6 @@ include_once("DAO.class.php");
 
 $result = array() ;
 $result["status"] = "success" ;
-$_REQUEST['nomPersonne']="Artiste";
 
 if (isset($_REQUEST['nomPersonne'])) {
 	$result["personnes"] = array();
@@ -15,12 +14,14 @@ if (isset($_REQUEST['nomPersonne'])) {
 					$personne['nom'] = $pers['nom'];
 					$personne['idp'] = $pers['id'];
 					array_push($result["personnes"], $personne) ;
-		}
-}else{
+    }
+  }else{
    $result["msg"] = "non Trouvé" ;
  }
 }else{
 	$result["status"] = "error" ;
 }
+
+	echo json_encode($result);
 
 ?>
