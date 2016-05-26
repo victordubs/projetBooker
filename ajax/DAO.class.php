@@ -94,8 +94,12 @@
             $req = "select * from $personne order by nom;";
             $sth = $this->db->query($req);
             // pour pouvoir acceder à la class "artiste" car avant $personnes vaut "artistes"
-            $personne=substr($personne,0,-1);
-            $result = $sth->fetchAll(PDO::FETCH_CLASS,'groupe');
+
+            if($personnes!='AutresContacts'){
+              $personne=substr($personne,0,-1);
+            }
+            
+            $result = $sth->fetchAll(PDO::FETCH_CLASS,$personne);
             return $result;
         }
 

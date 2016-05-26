@@ -14,5 +14,6 @@ $listeArtistes=$dao->getListePersonnes('artistes');
 		array_push($result["artistes"], $artiste) ;
 	}
 
+
 	echo json_encode($result);
   ?>
