@@ -52,6 +52,8 @@ section{
   color: #888888;
   border-radius: 5px;
   box-shadow: 8px 8px 8px #888888;
+  position: fixed;
+  top: 200px;
 }
 
 .option * {
@@ -497,10 +499,15 @@ label *{
     border-radius: 4px;
 }
 
-
-* .btnAjouterContact{
+.button-section{
     width:80%;
-    margin:0 20%;
+    margin-bottom: 50px;
+    margin: 0;
+    padding: 10%;
+}
+
+.btnAjouterContact{
+  width: 90%;
 }
 
 /* appliquer une placeholder dans un champ date*/
