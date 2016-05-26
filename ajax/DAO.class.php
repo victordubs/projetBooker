@@ -57,7 +57,7 @@
         function getContact($id) { //attention renvoie les autres contacts
             $req = "select * from autresContact where id = $id ;";
             $sth = $this->db->query($req);
-            $result = $sth->fetchAll(PDO::FETCH_CLASS, 'AutresContacts');
+            $result = $sth->fetchAll(PDO::FETCH_CLASS, 'AutresContact');
 
             $req ="select  G.nom,G.id 
 		   		  from  autrescontact A,groupes G,liaisongroupeautrescontact AG 
@@ -94,7 +94,6 @@
             $req = "select * from $personne order by nom;";
             $sth = $this->db->query($req);
             // pour pouvoir acceder à la class "artiste" car avant $personnes vaut "artistes"
-			var_dump($personne);
             if($personne!=='AutresContact'){
               $personne=substr($personne,0,-1);
             }

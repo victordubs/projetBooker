@@ -38,10 +38,10 @@ $result = array() ;
 
 
 //test pour autre contact
-
-/*	$result = $dao->getContact(3);
-	var_dump($result);*/
 /*
+	$result = $dao->getContact(3);
+	var_dump($result);*/
+
 		$reponse=$dao->getContact(3);
 		if (isset($reponse)) {
 
@@ -66,7 +66,6 @@ $result = array() ;
 	  
 
 	var_dump($result["artiste"]);
-*/
 
 
 //test pour organisateur
