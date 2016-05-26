@@ -206,17 +206,17 @@ function afficherEvenement(idEvenement){
 //-----------------------------------AFFICHER UN CONTACT--------------------------------------------------------------
 
 function afficherArtiste(idArtiste){
-
+		alert(idArtiste);;
 	$.ajax({	type: "POST",
 				url: "ajax/getArtiste.php",
-				data: "idArtiste=" + idArtiste,// On passe l'id de la personne que l'on veut voir
+				data: "idp=" + idArtiste,// On passe l'id de la personne que l'on veut voir
 				success: function(data, textStatus, jqXHR) {
 					var result = JSON.parse(data) ;
 					if (result.status == 'success') {
 						if (result.artiste) {
-
+				alert(result.artiste.prenom);
 							if (result.artiste.prenom){ $('.nomPrenom').prepend(result.artiste.prenom);$('.nomPrenom').prepend(" ");}
-							if (result.artiste.idArtiste)$('section').attr('idArtiste',result.artiste.idArtiste);
+							if (result.artiste.idp)$('section').attr('idArtiste',result.artiste.idArtiste);
 							if (result.artiste.nom) $('.nomPrenom').prepend(result.artiste.nom);
 							if (result.artiste.mail) $('#mail').append('<a href="mailto:'+result.artiste.mail+'">'+result.artiste.mail+'</a>');
 							if (result.artiste.tel) $('#tel').append('<a href="tel:'+result.artiste.tel+'">'+result.artiste.tel+'</a>');
@@ -243,6 +243,7 @@ function evenementRep(personne){
 	if(personne=="Artistes"){
 		$('p').on('click',function() {
 			var param=$(this).attr('id');
+			alert(param);
 			$('#content').load('pages/afficherArtiste.html',function(){afficherArtiste(param)});
 		});
 
@@ -402,7 +403,7 @@ function getListeGroupes(i) {
 									$('#lesGroupes').append($divGroupe);
 
 									for (var id=0; id < result.artistes.length; id++) {
-										 $('#selectGroupe'+i).append('<option>'+result.artistes[id].nomArtiste+'</option>');
+										 $('#selectGroupe'+i).append('<option>'+result.artistes[id].nom+'</option>');
 									}
 
 									 $divGroupe.append('</select></label><input type="time" id="heureG'+i+'" placeholder="Heure de passage">');
@@ -721,6 +722,7 @@ function InitialiserData() {
 							'&tel=' + $('#tel').val() +
 							'&mail=' + $('#mail').val();
 
+	if(document.getElementById('idp')!="") data=data+'&idp=' + document.getElementById('idp');
 	if($('#adresse').val()!="") data=data+'&addresse=' + $('#adresse').val();
 	if($('#ville').val()!="")   data=data+'&ville=' + $('#ville').val();
 	if($('#siteWeb').val()!="") data=data+'&siteWeb=' + $('#siteWeb').val();
@@ -842,7 +844,8 @@ function enregistrerGroupe() {
 	if(verifierChampObligatoirePersonne()==false){
 		var data =	'nom=' + $('#nom').val() +
 								'&tel=' + $('#tel').val() +
-								'&mail=' + $('#mail').val();
+								'&mail=' + $('#mail').val()+
+								'&id=' + $('#mail').val();
 
 		if($('#adresse').val()!="") data=data+'&addresse=' + $('#adresse').val();
 		if($('#ville').val()!="")   data=data+'&ville=' + $('#ville').val();
@@ -940,6 +943,8 @@ function modifierArtiste(idArtiste){
 							if (result.artiste.adresse) $('#adresse').val(result.artiste.adresse);
 							if (result.artiste.ville) $('#ville').val(result.artiste.ville);
 							if (result.artiste.ville) $('#siteWeb').val(result.artiste.siteWeb);
+							if (result.artiste.ville) $('#siteWeb').val(result.artiste.siteWeb);
+							if (result.artiste.idp) $('section').attr('idp',result.artiste.idp);
 							evenementFormulaireArt();
 						}
 					}

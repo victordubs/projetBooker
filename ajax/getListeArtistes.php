@@ -3,7 +3,7 @@ include_once("DAO.class.php");
 
 $result = array() ;
 $result["status"] = "success" ;
-$result["personnes"] = array();
+$result["artistes"] = array();
 $listeArtistes=$dao->getListeArtistes();
 
 	foreach ($listeArtistes as $art) {
@@ -11,7 +11,7 @@ $listeArtistes=$dao->getListeArtistes();
 		$artiste['nom'] = $art->nom;
 		$artiste['idp'] = $art->id ;
 
-		array_push($result["personnes"], $artiste) ;
+		array_push($result["artistes"], $artiste) ;
 	}
 
 	echo json_encode($result);
