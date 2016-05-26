@@ -206,17 +206,17 @@ function afficherEvenement(idEvenement){
 //-----------------------------------AFFICHER UN CONTACT--------------------------------------------------------------
 
 function afficherArtiste(idArtiste){
-
+		alert(idArtiste);;
 	$.ajax({	type: "POST",
 				url: "ajax/getArtiste.php",
-				data: "idArtiste=" + idArtiste,// On passe l'id de la personne que l'on veut voir
+				data: "idp=" + idArtiste,// On passe l'id de la personne que l'on veut voir
 				success: function(data, textStatus, jqXHR) {
 					var result = JSON.parse(data) ;
 					if (result.status == 'success') {
 						if (result.artiste) {
-
+				alert(result.artiste.prenom);
 							if (result.artiste.prenom){ $('.nomPrenom').prepend(result.artiste.prenom);$('.nomPrenom').prepend(" ");}
-							if (result.artiste.idArtiste)$('section').attr('idArtiste',result.artiste.idArtiste);
+							if (result.artiste.idp)$('section').attr('idArtiste',result.artiste.idArtiste);
 							if (result.artiste.nom) $('.nomPrenom').prepend(result.artiste.nom);
 							if (result.artiste.mail) $('#mail').append('<a href="mailto:'+result.artiste.mail+'">'+result.artiste.mail+'</a>');
 							if (result.artiste.tel) $('#tel').append('<a href="tel:'+result.artiste.tel+'">'+result.artiste.tel+'</a>');
@@ -243,6 +243,7 @@ function evenementRep(personne){
 	if(personne=="Artistes"){
 		$('p').on('click',function() {
 			var param=$(this).attr('id');
+			alert(param);
 			$('#content').load('pages/afficherArtiste.html',function(){afficherArtiste(param)});
 		});
 
