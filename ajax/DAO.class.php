@@ -76,7 +76,7 @@
         }
 
         function getListeArtistes() {
-            $req = "select * from artiste order by nom;";
+            $req = "select * from artistes order by nom;";
             $sth = $this->db->query($req);
             $result = $sth->fetchAll(PDO::FETCH_CLASS, 'Artiste');
             return $result;
@@ -106,6 +106,8 @@
 
             return $result[0];
         }
+        
+
 
 
   }
