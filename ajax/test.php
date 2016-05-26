@@ -4,8 +4,16 @@ $id="1";
 include_once("DAO.class.php");
 include_once("getArtiste.php");
 $result = array() ;
-$result["status"] = "success" ;
-$_REQUEST['idArtiste']=1;
+//$result["status"] = "success" ;
+//$_REQUEST['idArtiste']=1;
+
+
+/*$reponse = $dao->getContact(3);
+var_dump($reponse);
+var_dump($reponse->type);*/
+
+
+
 
 //if (isset($_REQUEST['idArtiste'])) {
 
@@ -33,7 +41,7 @@ $_REQUEST['idArtiste']=1;
 }
 var_dump(artiste);*/
 
-
+/*
 	include_once("DAO.class.php");
 	$result = array() ;
 	$result["status"] = "success" ;
@@ -62,6 +70,39 @@ var_dump(artiste);*/
 		}
 	
 		//echo json_encode($result) ;
-		var_dump($result["artiste"]);
+		var_dump($result["artiste"]);*/
+
+
+		$reponse=$dao->getContact(3);
+		if (isset($reponse)) {
+
+			$artiste = array() ;
+			$artiste['nom'] = $reponse->nom;
+			$artiste['prenom'] = $reponse->prenom;
+			$artiste['ville'] = $reponse->ville;
+			$artiste['adresse'] = $reponse->adresse;
+			$artiste['tel'] = $reponse->tel;
+			$artiste['mail'] = $reponse->mail;
+			$artiste['siteWeb'] = $reponse->siteweb;
+			$artiste['idp'] = $reponse->id;
+			$artiste['types'] = $reponse->type;
+			$artiste['groupes'] = $reponse->groupes;
+			$result["artiste"]=$artiste;
+
+		} else {
+			$result["status"] = "error" ;
+			//$result["errMessage"] = "Artiste {$_REQUEST['idArtiste']} inconnue" ;
+		}
+
+	var_dump($result);
+	
+
+		
+//echo json_encode($result) ;
+
+
+
+
+
 
   ?>

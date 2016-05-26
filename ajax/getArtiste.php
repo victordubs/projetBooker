@@ -4,8 +4,8 @@
 	$result["status"] = "success" ;
 
 
-	if (isset($_REQUEST['idArtiste'])) {
-			$reponse=$dao->getArtiste($_REQUEST['idArtiste']);
+	if (isset($_REQUEST['idp'])) {
+		$reponse=$dao->getArtiste($_REQUEST['idp']);
 		if (isset($reponse)) {
 
 			$artiste = array() ;
@@ -16,7 +16,7 @@
 			$artiste['tel'] = $reponse->tel;
 			$artiste['mail'] = $reponse->mail;
 			$artiste['siteWeb'] = $reponse->siteweb;
-			$artiste['id'] = $reponse->id;
+			$artiste['idp'] = $reponse->id;
 			$artiste['roles'] = $reponse->role;
 			$artiste['groupes'] = $reponse->groupes;
 			$result["artiste"]=$artiste;
