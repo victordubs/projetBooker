@@ -66,9 +66,10 @@
             $result1 = $sth->fetchAll(PDO::FETCH_ASSOC);
             $result[0]->groupes=$result1;
 
-	    	$req ="select  R.nomtype 
-				   from  artistes A,type R,liaisonautrescontacttype Ar 
-				   where A.id=$id and Ar.idautrescontact=A.id and Ar.nomtype = R.nomtype;";
+	    	$req ="select  nomtype 
+				   from liaisonautrescontacttype
+				   where idautrescontact=$id;";
+			var_dump($req);
             $sth = $this->db->query($req);
             $result2 = $sth->fetchAll(PDO::FETCH_ASSOC);
             $result[0]->type=$result2;
@@ -161,10 +162,16 @@
             $req ="select  s.nomstyle
 		   from  style s,groupes g,liaisongroupestyle Ast
 		   where g.id=$id and Ast.idgroupe=g.id and Ast.nomstyle=s.nomstyle;";
-			var_dump($req);
-	    	$sth = $this->db->query($req);
+	   		$sth = $this->db->query($req);
             $result3 = $sth->fetchAll(PDO::FETCH_ASSOC);
             $result[0]->styles=$result3;
+
+            $req ="select  e.id, e.nom, e.datedebut
+		    from  evenement e,groupes g, plagehoraire ph
+		    where g.id=$id and ph.idgroupe=g.id and ph.idevenement=e.id;";
+	    	$sth = $this->db->query($req);
+            $result3 = $sth->fetchAll(PDO::FETCH_ASSOC);
+            $result[0]->evenements=$result3;
 
 
 
