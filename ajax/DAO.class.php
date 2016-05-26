@@ -53,14 +53,6 @@
             return $result[0];
           }
 
-          function getArtistev2($id) {
-              $req = "select g.nom, a.nom, a.prenom, a.mail, a.tel, a.siteWeb, a.id, a.ville, a.adresse
-                      from artiste a, liaisonArtisteGroupe l, groupe g
-                      where a.id = $id and a.id = idArtiste  and idGroupe = g.id;";
-              $sth = $this->db->query($req);
-              $result = $sth->fetchAll(PDO::FETCH_CLASS, 'Artiste');
-              return $result;
-            }
 
         function getContact($id) { //attention renvoie les autres contacts
             $req = "select * from autresContact where id = $id ;";
@@ -127,14 +119,12 @@
             $req = "select *
 		    from organisateurs
 		    where id=$id; ";
-		var_dump($req);
             $sth = $this->db->query($req);
             $result = $sth->fetchAll(PDO::FETCH_CLASS, 'Organisateur');
 
             $req ="select  e.nom,e.id
 		   from  organisateurs o,evenement e,liaisonevenementorganisateur AG
 		   where o.id=$id and AG.idorganisateur=o.id and AG.idevenement=e.id;";
-           var_dump($req);
 	    $sth = $this->db->query($req);
             $result1 = $sth->fetchAll(PDO::FETCH_ASSOC);
             $result[0]->lesEvenements=$result1;

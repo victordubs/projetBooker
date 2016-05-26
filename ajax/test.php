@@ -8,10 +8,31 @@ $result = array() ;
 //$_REQUEST['idArtiste']=1;
 
 
-$reponse = $dao->getOrganisateur(2);
-var_dump($reponse);
+/*$reponse = $dao->getOrganisateur(2);
+var_dump($reponse);*/
+		$reponse=$dao->getOrganisateur(2);
+		if (isset($reponse)) {
 
+			$artiste = array() ;
+			$artiste['nom'] = $reponse->nom;
+			$artiste['prenom'] = $reponse->prenom;
+			$artiste['ville'] = $reponse->ville;
+			$artiste['adresse'] = $reponse->adresse;
+			$artiste['tel'] = $reponse->tel;
+			$artiste['mail'] = $reponse->mail;
+			$artiste['siteWeb'] = $reponse->siteweb;
+			$artiste['idp'] = $reponse->id;
+			$artiste['evenements'] = $reponse->lesEvenements;
+			$artiste['nombrePlaces'] = $reponse->nombreplaces;
+			$result["artiste"]=$artiste;
 
+		} else {
+			$result["status"] = "error" ;
+			//$result["errMessage"] = "Artiste {$_REQUEST['idArtiste']} inconnue" ;
+		}
+	
+
+	var_dump($result["artiste"]);
 
 
 
