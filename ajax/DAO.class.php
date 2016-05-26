@@ -69,7 +69,6 @@
 	    	$req ="select  nomtype 
 				   from liaisonautrescontacttype
 				   where idautrescontact=$id;";
-			var_dump($req);
             $sth = $this->db->query($req);
             $result2 = $sth->fetchAll(PDO::FETCH_ASSOC);
             $result[0]->type=$result2;

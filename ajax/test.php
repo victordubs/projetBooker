@@ -100,6 +100,32 @@ $result = array() ;
 
 //test des groupes
 /*	$result = $dao->getGroupe(4);
-	var_dump($result);*/
+	var_dump($result);
+*/
 
+
+		$reponse=$dao->getGroupe(4);
+		if (isset($reponse)) {
+
+			$groupe = array() ;
+			$groupe['nom'] = $reponse->nom;
+			$groupe['styles'] = $reponse->styles;
+			$groupe['ville'] = $reponse->ville;
+			$groupe['adresse'] = $reponse->adresse;
+			$groupe['tel'] = $reponse->tel;
+			$groupe['mail'] = $reponse->mail;
+			$groupe['siteWeb'] = $reponse->siteweb;
+			$groupe['idp'] = $reponse->id;
+			$groupe['evenements'] = $reponse->evenements;
+			$groupe['autresContact'] = $reponse->autresContacts;
+			$groupe['artistes']= $reponse->artistes;
+			$result["groupe"]=$groupe;
+
+		} else {
+			$result["status"] = "error" ;
+			//$result["errMessage"] = "Artiste {$_REQUEST['idArtiste']} inconnue" ;
+		}
+
+
+		var_dump($result["groupe"]);
   ?>
