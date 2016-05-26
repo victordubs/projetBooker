@@ -8,9 +8,16 @@ $result = array() ;
 //$_REQUEST['idArtiste']=1;
 
 
-/*$reponse = $dao->getContact(3);
-var_dump($reponse);
-var_dump($reponse->type);*/
+/*$reponse = $dao->getOrganisateur(2);
+var_dump($reponse);*/
+
+
+
+
+
+/*$reponse = $dao->getArtiste(3);
+var_dump($reponse);*/
+
 
 
 
@@ -72,7 +79,7 @@ var_dump(artiste);*/
 		//echo json_encode($result) ;
 		var_dump($result["artiste"]);*/
 
-
+/*
 		$reponse=$dao->getContact(3);
 		if (isset($reponse)) {
 
@@ -96,7 +103,7 @@ var_dump(artiste);*/
 
 	var_dump($result);
 	
-
+*/
 		
 //echo json_encode($result) ;
 
