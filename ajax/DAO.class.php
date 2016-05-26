@@ -35,7 +35,7 @@
 
 
         function getArtiste($id) {
-            $req = "select distinct * from artistes A, liaisonartisterole L where L.idartiste=A.id and id=$id; ";
+            $req = "select distinct a.nom, a.prenom, a.mail, a.tel, a.id, a.ville, a.adresse, a.siteweb from artistes A, liaisonartisterole L where L.idartiste=A.id and id=$id; ";
             $sth = $this->db->query($req);
             $result = $sth->fetchAll(PDO::FETCH_CLASS, 'Artiste');
 
@@ -43,6 +43,11 @@
             $sth = $this->db->query($req);
             $result1 = $sth->fetchAll(PDO::FETCH_ASSOC);
             $result[0]->groupes=$result1;
+
+			$req ="select  R.nomRole from  artistes A,role R,liaisonartisterole Ar where A.id=$id and Ar.idartiste=A.id and Ar.nomrole = r.nomrole;";
+            $sth = $this->db->query($req);
+            $result2 = $sth->fetchAll(PDO::FETCH_ASSOC);
+            $result[0]->role=$result2;
 
             return $result[0];
           }
