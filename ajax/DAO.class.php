@@ -38,8 +38,8 @@
             $req = "select * from artistes  where id=$id; ";
 	    var_dump($req);
             $sth = $this->db->query($req);
-		var_dump($sth);
             $result = $sth->fetchAll(PDO::FETCH_CLASS, 'Artiste');
+		
 
             $req ="select  G.nom,G.id from  artistes A,groupes G,liaisonartistegroupe AG where A.id=$id and AG.idartiste=A.id and AG.idgroupe=G.id;";
             $sth = $this->db->query($req);
@@ -133,12 +133,12 @@
             $result = $sth->fetchAll(PDO::FETCH_CLASS, 'Organisateur');
 
             $req ="select  e.nom,e.id 
-		   from  organisateur o,evenement e,liaisonevenementorganisateur AG 
+		   from  organisateurs o,evenement e,liaisonevenementorganisateur AG 
 		   where o.id=$id and AG.idorganisateur=o.id and AG.idevenement=e.id;";
            var_dump($req);
 	    $sth = $this->db->query($req);
             $result1 = $sth->fetchAll(PDO::FETCH_ASSOC);
-            $result[0]->groupes=$result1;
+            $result[0]->lesEvenements=$result1;
 
 
 

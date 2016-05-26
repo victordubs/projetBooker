@@ -8,8 +8,8 @@ $result = array() ;
 //$_REQUEST['idArtiste']=1;
 
 
-/*$reponse = $dao->getOrganisateur(2);
-var_dump($reponse);*/
+$reponse = $dao->getOrganisateur(2);
+var_dump($reponse);
 
 
 
