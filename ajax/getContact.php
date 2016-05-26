@@ -3,13 +3,26 @@
 	$result = array() ;
 	$result["status"] = "success" ;
 
-	if (isset($_REQUEST['idArtiste'])) {
-		if (isset($artistes[$_REQUEST['idArtiste']])) {
-			// On a re�u idPersonne en POST OU GET, on a une personne avec cet id
-			$result["artiste"] = $artistes[$_REQUEST['idArtiste']];
+	if (isset($_REQUEST['idp'])) {
+		$reponse=$dao->getContact($_REQUEST['idp']);
+		if (isset($reponse)) {
+
+			$artiste = array() ;
+			$artiste['nom'] = $reponse->nom;
+			$artiste['prenom'] = $reponse->prenom;
+			$artiste['ville'] = $reponse->ville;
+			$artiste['adresse'] = $reponse->adresse;
+			$artiste['tel'] = $reponse->tel;
+			$artiste['mail'] = $reponse->mail;
+			$artiste['siteWeb'] = $reponse->siteweb;
+			$artiste['idp'] = $reponse->id;
+			$artiste['types'] = $reponse->type;
+			$artiste['groupes'] = $reponse->groupes;
+			$result["artiste"]=$artiste;
+
 		} else {
 			$result["status"] = "error" ;
-			$result["errMessage"] = "Artiste {$_REQUEST['idArtiste']} inconnue" ;
+			//$result["errMessage"] = "Artiste {$_REQUEST['idArtiste']} inconnue" ;
 		}
 	} else {
 		$result["status"] = "error" ;
