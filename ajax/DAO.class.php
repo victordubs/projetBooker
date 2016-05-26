@@ -162,7 +162,7 @@
 		   from  style s,groupes g,liaisongroupestyle Ast
 		   where g.id=$id and Ast.idgroupe=g.id and Ast.nomstyle=s.nomstyle;";
 	   		$sth = $this->db->query($req);
-            $result3 = $sth->fetchAll(PDO::FETCH_ASSOC);
+            $result3 = $sth->fetchAll(PDO::FETCH_COLUMN);
             $result[0]->styles=$result3;
 
             $req ="select  e.id, e.nom, e.datedebut

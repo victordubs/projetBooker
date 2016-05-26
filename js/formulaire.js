@@ -201,7 +201,51 @@ function afficherEvenement(idEvenement){
 				}
 	});
 }
+//--------------------------------------------------------------------------------------------------------------------
+//-----------------------------------AFFICHER UN ORGANISATEUR--------------------------------------------------------------
 
+function afficherOrganisateur(idOrganisateur){
+
+	$.ajax({	type: "POST",
+				url: "ajax/getOrganisateur.php",
+				data: "idp=" + idOrganisateur,// On passe l'id de la personne que l'on veut voir
+				success: function(data, textStatus, jqXHR) {
+					var result = JSON.parse(data) ;
+					if (result.status == 'success') {
+						if (result.organisateur) {
+
+							if (result.organisateur.prenom){ $('.nomPrenom').prepend(result.organisateur.prenom);$('.nomPrenom').prepend(" ");}
+							if (result.organisateur.idp)$('section').attr('id',result.organisateur.idp);
+							if (result.organisateur.nom) $('.nomPrenom').prepend(result.organisateur.nom);
+							if (result.organisateur.mail) $('#mail').append('<a href="mailto:'+result.organisateur.mail+'">'+result.organisateur.mail+'</a>');
+							if (result.organisateur.tel) $('#tel').append('<a href="tel:'+result.organisateur.tel+'">'+result.organisateur.tel+'</a>');
+
+							if (result.organisateur.prenom) $('#prenom').append(result.organisateur.prenom);
+							if (result.organisateur.nom) $('#nom').append(result.organisateur.nom);
+							if (result.organisateur.adresse) $('#adresse').append(result.organisateur.adresse);
+							if (result.organisateur.ville) $('#ville').append(result.organisateur.ville);
+
+							if (result.organisateur.evenements){
+								$ulevent = $(document.createElement('ul'));
+								for(var i=0;i<result.organisateur.evenements.length;i++){
+
+									$lievent = $(document.createElement('li'));
+									$lievent .append(result.organisateur.evenements[i]["nom"]);
+									$lievent.attr("idEvent",result.organisateur.evenements[i]["id"]);
+									$ulevent.append($lievent);
+
+								}
+								$('#infoEvents').append($ulevent);
+							}
+
+						}
+					}evenementOrganisateur();
+				},
+				error: function() {
+					alert('Erreur dans la requ�te au serveur.');
+				}
+	});
+}
 //--------------------------------------------------------------------------------------------------------------------
 //-----------------------------------AFFICHER UN CONTACT--------------------------------------------------------------
 
@@ -215,7 +259,7 @@ function afficherContact(idContact){
 					if (result.status == 'success') {
 						if (result.contact) {
 							if (result.contact.prenom){ $('.nomPrenom').prepend(result.contact.prenom);$('.nomPrenom').prepend(" ");}
-							if (result.contact.idp)$('section').attr('idContact',result.contact.idp);
+							if (result.contact.idp)$('section').attr('id',result.contact.idp);
 							if (result.contact.nom) $('.nomPrenom').prepend(result.contact.nom);
 							if (result.contact.mail) $('#mail').append('<a href="mailto:'+result.contact.mail+'">'+result.contact.mail+'</a>');
 							if (result.contact.tel) $('#tel').append('<a href="tel:'+result.contact.tel+'">'+result.contact.tel+'</a>');
@@ -233,12 +277,16 @@ function afficherContact(idContact){
 								}
 							}
 							if (result.contact.groupes){
+								$ulevent = $(document.createElement('ul'));
 								for(var i=0;i<result.contact.groupes.length;i++){
-									$groupe = $(document.createElement('p'));
-									$groupe.append(result.contact.groupes[i]["nom"]);
-									$groupe.attr("idGroupe",result.contact.groupes[i]["id"]);
-									$('#infoGroupes').append($groupe);
+
+									$lievent = $(document.createElement('li'));
+									$lievent .append(result.contact.groupes[i]["nom"]);
+									$lievent.attr("idEvent",result.contact.groupes[i]["id"]);
+									$ulevent.append($lievent);
+
 								}
+								$('#infoGroupes').append($ulevent);
 							}
 								evenementContact();
 						}
@@ -263,7 +311,7 @@ function afficherArtiste(idArtiste){
 					if (result.status == 'success') {
 						if (result.artiste) {
 							if (result.artiste.prenom){ $('.nomPrenom').prepend(result.artiste.prenom);$('.nomPrenom').prepend(" ");}
-							if (result.artiste.idp)$('section').attr('idArtiste',result.artiste.idArtiste);
+							if (result.artiste.idp)$('section').attr('id',result.artiste.idArtiste);
 							if (result.artiste.nom) $('.nomPrenom').prepend(result.artiste.nom);
 							if (result.artiste.mail) $('#mail').append('<a href="mailto:'+result.artiste.mail+'">'+result.artiste.mail+'</a>');
 							if (result.artiste.tel) $('#tel').append('<a href="tel:'+result.artiste.tel+'">'+result.artiste.tel+'</a>');
@@ -276,6 +324,77 @@ function afficherArtiste(idArtiste){
 								evenementArtiste();
 						}
 					}
+				},
+				error: function() {
+					alert('Erreur dans la requ�te au serveur.');
+				}
+	});
+}
+//--------------------------------------------------------------------------------------------------------------------
+//-----------------------------------AFFICHER UN GROUPE--------------------------------------------------------------
+
+function afficherGroupe(idGroupe){
+
+	$.ajax({	type: "POST",
+				url: "ajax/getGroupe.php",
+				data: "idp=" + idGroupe,// On passe l'id de la personne que l'on veut voir
+				success: function(data, textStatus, jqXHR) {
+					var result = JSON.parse(data) ;
+					if (result.status == 'success') {
+						if (result.groupe) {
+
+							if (result.groupe.prenom){ $('.nomPrenom').prepend(result.groupe.prenom);$('.nomPrenom').prepend(" ");}
+							if (result.groupe.idp)$('section').attr('idContact',result.groupe.idp);
+							if (result.groupe.nom) $('.nomPrenom').prepend(result.groupe.nom);
+							if (result.groupe.mail) $('#mail').append('<a href="mailto:'+result.groupe.mail+'">'+result.groupe.mail+'</a>');
+							if (result.groupe.tel) $('#tel').append('<a href="tel:'+result.groupe.tel+'">'+result.groupe.tel+'</a>');
+
+							if (result.groupe.prenom) $('#prenom').append(result.groupe.prenom);
+							if (result.groupe.nom) $('#nom').append(result.groupe.nom);
+							if (result.groupe.adresse) $('#adresse').append(result.groupe.adresse);
+							if (result.groupe.ville) $('#ville').append(result.groupe.ville);
+
+							if (result.groupe.evenements){
+								$ulevent = $(document.createElement('ul'));
+								for(var i=0;i<result.groupe.evenements.length;i++){
+
+									$lievent = $(document.createElement('li'));
+									$lievent .append(result.groupe.evenements[i]["nom"]);
+									$lievent.attr("idEvent",result.groupe.evenements[i]["id"]);
+									$ulevent.append($lievent);
+
+								}
+								$('#infoEvents').append($ulevent);
+							}
+
+							if (result.groupe.artistes){
+								$ulevent = $(document.createElement('ul'));
+								for(var i=0;i<result.groupe.artistes.length;i++){
+
+									$lievent = $(document.createElement('li'));
+									$lievent .append(result.groupe.artistes[i]["nom"]);
+									$lievent.attr("idArtiste",result.groupe.artistes[i]["id"]);
+									$ulevent.append($lievent);
+
+								}
+								$('#infoArtistes').append($ulevent);
+							}
+
+							if (result.groupe.autresContact){
+								$ulevent = $(document.createElement('ul'));
+								for(var i=0;i<result.groupe.autresContact.length;i++){
+
+									$lievent = $(document.createElement('li'));
+									$lievent .append(result.groupe.autresContact[i]["nom"]);
+									$lievent.attr("idContacts",result.groupe.autresContact[i]["id"]);
+									$ulevent.append($lievent);
+
+								}
+								$('#infoContacts').append($ulevent);
+							}
+
+						}
+					}evenementOrganisateur();
 				},
 				error: function() {
 					alert('Erreur dans la requ�te au serveur.');
@@ -313,7 +432,7 @@ function evenementRep(personne){
 	else if(personne=="Organisateurs"){
 		$('p').on('click',function() {
 			var param=$(this).attr('id');
-			$('#content').load('pages/afficherArtiste.html',function(){afficherArtiste(param)});
+			$('#content').load('pages/afficherOrganisateur.html',function(){afficherOrganisateur(param)});
 		});
 
 		$('#add').on('click',function() {
@@ -545,6 +664,31 @@ function 	evenementContact(){
 		$('#content').load('pages/formulaireContact.html',function(){modifierContact(param)})
 	});
 }
+
+//------------------------------------------------------------------------------------------------------------------
+//-----------------------------------EVENEMENT SUR CONTACT----------------------------------------------------------
+
+function 	evenementOrganisateur(){
+	$('.option').hide();
+	/*$('#edit').on('click',function() {
+		$('.option').show();
+		$('.option').focus();
+	});*/
+
+	$('#edit').on('click',function() {
+		$('.option').toggle();
+	});
+
+	$('.option').focusout(function() {
+
+		$('.option').hide();
+	});
+
+	$('#modifier').click(function(){
+		var param=$('section').attr('id');
+		$('#content').load('pages/formulaireOrganisateur.html',function(){modifierOrganisateur(param)})
+	});
+}
 //------------------------------------------------------------------------------------------------------------------
 //-----------------------------------EVENEMENT SUR ARTISTE----------------------------------------------------------
 
@@ -565,7 +709,7 @@ function evenementArtiste(){
 	});
 
 	$('#modifier').click(function(){
-		var param=$('section').attr('idArtiste');
+		var param=$('section').attr('id');
 		$('#content').load('pages/formulaireArtiste.html',function(){modifierArtiste(param)})
 	});
 }
@@ -1011,8 +1155,8 @@ function modifierGroupe(idGroupe){
 function modifierArtiste(idArtiste){
 
 	$.ajax({	type: "POST",
-				url: "ajax/getContact.php",
-				data: "idArtiste=" + idArtiste, // On passe l'id de la personne que l'on veut voir
+				url: "ajax/getArtiste.php",
+				data: "idp=" + idArtiste, // On passe l'id de la personne que l'on veut voir
 				success: function(data, textStatus, jqXHR) {
 					var result = JSON.parse(data) ;
 					if (result.status == 'success') {
@@ -1043,7 +1187,7 @@ function modifierContact(idContact){
 
 	$.ajax({	type: "POST",
 				url: "ajax/getContact.php",
-				data: "idArtiste=" + idArtiste, // On passe l'id de la personne que l'on veut voir
+				data: "idp=" + idContact, // On passe l'id de la personne que l'on veut voir
 				success: function(data, textStatus, jqXHR) {
 					var result = JSON.parse(data) ;
 					if (result.status == 'success') {
@@ -1066,7 +1210,36 @@ function modifierContact(idContact){
 
 }
 //------------------------------------------------------------------------------------------------------
-//-----------------------------------MODIFIER UN CONTACT------------------------------------------------
+//-----------------------------------MODIFIER UN ORGANISATEUR------------------------------------------------
+function modifierOrganisateur(idOrganisateur){
+
+	$.ajax({	type: "POST",
+				url: "ajax/getOrganisateur.php",
+				data: "idp=" + idOrganisateur, // On passe l'id de la personne que l'on veut voir
+				success: function(data, textStatus, jqXHR) {
+					var result = JSON.parse(data) ;
+					if (result.status == 'success') {
+						if (result.organisateur) {
+							if (result.organisateur.nom) $('#nom').val(result.organisateur.nom) ;
+							if (result.organisateur.prenom) $('#prenom').val(result.organisateur.prenom) ;
+							if (result.organisateur.mail) $('#mail').val(result.organisateur.mail);
+							if (result.organisateur.tel) $('#tel').val(result.organisateur.tel);
+							if (result.organisateur.adresse) $('#adresse').val(result.organisateur.adresse);
+							if (result.organisateur.ville) $('#ville').val(result.organisateur.ville);
+							if (result.organisateur.siteWeb) $('#siteWeb').val(result.organisateur.siteWeb);
+							evenementFormulaireContact();
+						}
+					}
+				},
+				error: function() {
+					alert('Erreur dans la requ�te au serveur.');
+				}
+	});
+
+}
+
+//------------------------------------------------------------------------------------------------------
+//-----------------------------------MODIFIER UN EVENEMENT------------------------------------------------
 function modifierEvenement(idEvent){
 
 	$.ajax({	type: "POST",
@@ -1082,6 +1255,26 @@ function modifierEvenement(idEvent){
 							if (result.evenement.ville) $('#ville').val(result.evenement.ville);
 							evenementFormulaireEve();
 						}
+					}
+				},
+				error: function() {
+					alert('Erreur dans la requ�te au serveur.');
+				}
+	});
+
+}
+
+//------------------------------------------------------------------------------------------------------
+//-----------------------------------SUPPRIMER UN ORGANISATEUR------------------------------------------------
+function supprimerOrganisateur(idOrganisateur){
+
+	$.ajax({	type: "POST",
+				url: "ajax/supprimerOrganisateur.php",
+				data: "idp=" + idOrganisateur, // On passe l'id de la personne que l'on veut voir
+				success: function(data, textStatus, jqXHR) {
+					var result = JSON.parse(data) ;
+					if (result.status == 'success') {
+							alert("L'organisateur a été supprimé");
 					}
 				},
 				error: function() {

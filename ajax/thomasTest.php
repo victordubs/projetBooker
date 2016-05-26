@@ -1,26 +1,28 @@
 <?php
 include_once("DAO.class.php");
+
 $result = array() ;
 $result["status"] = "success" ;
-$result["contact"]=array();
-$_REQUEST['idp']="3";
+$_REQUEST['idp']="4";
+
+
 if (isset($_REQUEST['idp'])) {
-	$reponse=$dao->getContact($_REQUEST['idp']);
-	var_dump($reponse);
+	$reponse=$dao->getGroupe($_REQUEST['idp']);
 	if (isset($reponse)) {
 
-		$contact = array() ;
-		$contact['nom'] = $reponse->nom;
-		$contact['prenom'] = $reponse->prenom;
-		$contact['ville'] = $reponse->ville;
-		$contact['adresse'] = $reponse->adresse;
-		$contact['tel'] = $reponse->tel;
-		$contact['mail'] = $reponse->mail;
-		$contact['siteWeb'] = $reponse->siteweb;
-		$contact['idp'] = $reponse->id;
-		$contact['types'] = $reponse->type;
-		$contact['groupes'] = $reponse->groupes;
-		$result["contact"]=$contact;
+		$groupe = array() ;
+		$groupe['nom'] = $reponse->nom;
+		$groupe['styles'] = $reponse->styles;
+		$groupe['ville'] = $reponse->ville;
+		$groupe['adresse'] = $reponse->adresse;
+		$groupe['tel'] = $reponse->tel;
+		$groupe['mail'] = $reponse->mail;
+		$groupe['siteWeb'] = $reponse->siteweb;
+		$groupe['idp'] = $reponse->id;
+		$groupe['evenements'] = $reponse->evenements;
+		$groupe['autresContact'] = $reponse->autresContacts;
+		$groupe['artistes']= $reponse->artistes;
+		$result["groupe"]=$groupe;
 
 	} else {
 		$result["status"] = "error" ;
@@ -31,5 +33,5 @@ if (isset($_REQUEST['idp'])) {
 	$result["errMessage"] = "Param�tre idPersonne manquant" ;
 }
 
-var_dump($result["contact"]);
+var_dump($result["groupe"]);
 ?>

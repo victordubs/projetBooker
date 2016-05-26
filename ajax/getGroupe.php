@@ -1,5 +1,5 @@
 <?php
-	include "artistes.php" ;
+	include_once("DAO.class.php");
 	$result = array() ;
 	$result["status"] = "success" ;
 
