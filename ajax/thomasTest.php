@@ -1,35 +1,24 @@
 <?php
 include_once("DAO.class.php");
+
 $result = array() ;
 $result["status"] = "success" ;
-$result["artiste"]=array();
-$_REQUEST['idp']="3";
+$result["personnes"] = array();
+$_REQUEST['personne']='autresContacts';
 
-if (isset($_REQUEST['idp'])) {
-  $reponse=$dao->getArtiste($_REQUEST['idp']);
-  if (isset($reponse)) {
+if (isset($_REQUEST['personne'])) {
 
-    $artiste = array() ;
-    $artiste['nom'] = $reponse->nom;
-    $artiste['prenom'] = $reponse->prenom;
-    $artiste['ville'] = $reponse->ville;
-    $artiste['adresse'] = $reponse->adresse;
-    $artiste['tel'] = $reponse->tel;
-    $artiste['mail'] = $reponse->mail;
-    $artiste['siteWeb'] = $reponse->siteweb;
-    $artiste['idp'] = $reponse->id;
-    $artiste['roles'] = $reponse->role;
-    $artiste['groupes'] = $reponse->groupes;
-    $result["artiste"]=$artiste;
+	$listePersonnes=$dao->getListePersonnes($_REQUEST['personne']);
 
-  } else {
-    $result["status"] = "error" ;
-    //$result["errMessage"] = "Artiste {$_REQUEST['idArtiste']} inconnue" ;
-  }
-} else {
-  $result["status"] = "error" ;
-  $result["errMessage"] = "Param�tre idPersonne manquant" ;
+	foreach ($listePersonnes as $pers) {
+					$personne = array() ;
+					$personne['nom'] = $pers->nom;
+					$personne['idp'] = $pers->id ;
+
+					array_push($result["personnes"], $personne) ;
+	 }
+}else{
+	$result["status"] = "error" ;
 }
-
-var_dump($result["artiste"]);
+var_dump($result["personnes"]);
 ?>

@@ -4,7 +4,7 @@ include_once("DAO.class.php");
 $result = array() ;
 $result["status"] = "success" ;
 $result["artistes"] = array();
-$listeArtistes=$dao->getListeArtistes();
+$listeArtistes=$dao->getListePersonnes('artistes');
 
 	foreach ($listeArtistes as $art) {
 		$artiste = array() ;

@@ -145,7 +145,6 @@ function afficherRep(personne){
 										$('#'+result.personnes[id].nom.substr(0,1)).append($liContact);
 
 						}
-
 						evenementRep(personne);
 					}
 				},
@@ -250,7 +249,7 @@ function evenementRep(personne){
 		});
 	}
 // Evenement sur le répertoire des groupes
-	else if(personne=="groupe"){
+	else if(personne=="Groupes"){
 		$('p').on('click',function() {
 			var param=$(this).attr('idp');
 			$('#content').load('pages/afficherGroupe.html',function(){afficherGroupe(param)});
@@ -261,7 +260,7 @@ function evenementRep(personne){
 		});
 	}
 // Evenement sur le répertoire des organisateurs
-	else if(personne=="organisateur"){
+	else if(personne=="Organisateurs"){
 		$('p').on('click',function() {
 			var param=$(this).attr('idp');
 			$('#content').load('pages/afficherArtiste.html',function(){afficherArtiste(param)});
@@ -272,7 +271,7 @@ function evenementRep(personne){
 		});
 	}
 // Evenement sur le répertoire des contacts
-	else if(personne=="contact"){
+	else if(personne=="AutresContact"){
 		$('p').on('click',function() {
 			var param=$(this).attr('idp');
 			$('#content').load('pages/afficherArtiste.html',function(){afficherArtiste(param)});
@@ -314,7 +313,7 @@ function eventMenuRep(){
 	$('#menuRepContact').on('click',function() {
 	activerOptionMenu($(this));
 	$('#repertoire').empty();
-	afficherRep("Contacts");
+	afficherRep("AutresContact");
 	});
 
 	$('#menuRepArtistes').click();
@@ -341,7 +340,7 @@ function evenementFormulaireEve() {
 	$('#dateFin').bind('change', function() {
 				$('#info2').show();
 				$('#info3').show();
-				getListeGroupes(i);
+				getListeGroupesDate(i);
 				 i=i+1;
 				 getListeOrganisateurs();
 			});
@@ -355,14 +354,17 @@ function evenementFormulaireEve() {
 //-----------------------------------GET LISTE ORGANISATEUR-----------------------------------------------------------------
 function getListeOrganisateurs(){
 				$.ajax({	type: "POST",
-						url: "ajax/getListeArtistes.php",
+						url: "ajax/getRepertoire.php",
+						data:'personne=organisateurs',
 						success: function(data, textStatus, jqXHR) {
 						var result = JSON.parse(data) ;
 						if (result.status == 'success') {
 					// Boucle pour remplir la liste des Artistes
-							 for (var id=0; id < result.artistes.length; id++) {
-								 $('#selectOrganisateur').append('<option>'+result.artistes[id].nom+'</option>');
+					  if(result.personnes){
+							 for (var id=0; id < result.personnes.length; id++) {
+								 $('#selectOrganisateur').append('<option>'+result.personnes[id].nom+'</option>');
 							 }
+					}
 					 }
 					},
 					error: function() {
@@ -373,7 +375,7 @@ function getListeOrganisateurs(){
 }
 //---------------------------------------------------------------------------------------------------------------------
 //-----------------------------------GET LISTE GROUPES-----------------------------------------------------------------
-function getListeGroupes(i) {
+function getListeGroupesDate(i) {
 
 		// On transforme la date de Début et la date de fin en entier
 		if(veriferDates()==false){
@@ -639,14 +641,17 @@ function evenementFormulaireGroupe() {
 //-----------------------------------CREER LISTE ARTISTES----------------------------------------------------------
 function getListeArtistes(){
 $.ajax({	type: "POST",
-					url: "ajax/getListeArtistes.php",
+					url: "ajax/getRepertoire.php",
+					data:'personne=artistes',
 					success: function(data, textStatus, jqXHR) {
 						var result = JSON.parse(data) ;
 						if (result.status == 'success') {
+							if(result.personnes){
 					// Boucle pour remplir la liste des Artistes
-							 for (var id=0; id < result.artistes.length; id++) {
-								 $('#listeArtiste').append('<option>'+result.artistes[id].nomArtiste+'</option>');
+							 for (var id=0; id < result.personnes.length; id++) {
+								 $('#listeArtiste').append('<option>'+result.personnes[id].nom+'</option>');
 							 }
+						 }
 					 }
 					},
 					error: function() {
