@@ -3,10 +3,20 @@
 	$result["status"] = "success" ;
 
 	// Normalement, ici : insertion ou mise � jour de la base
-	if (isset($_REQUEST["roles"])) {
+	if (isset($_result["roles"])) {
 		$result['msg'] =$_REQUEST["roles"];
 		}
 			echo json_encode($result);
+
+
+
+
+
+
+
+
+
+
 /*		try {
 			$requete = "insert into Personne (nom, prenom) values (\"" . getNom() . "\", (\"{$_REQUEST["prenom"]}\"";
 			$result['idPersonne'] = mysqlxxx.getlastInsertId();
