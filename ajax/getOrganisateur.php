@@ -1,5 +1,5 @@
 <?php
-	include "artistes.php" ;
+
 	$result = array() ;
 	$result["status"] = "success" ;
 

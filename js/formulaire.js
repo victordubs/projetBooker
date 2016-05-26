@@ -201,8 +201,41 @@ function afficherEvenement(idEvenement){
 				}
 	});
 }
+
 //--------------------------------------------------------------------------------------------------------------------
 //-----------------------------------AFFICHER UN CONTACT--------------------------------------------------------------
+
+function afficherContact(idContact){
+
+	$.ajax({	type: "POST",
+				url: "ajax/getArtiste.php",
+				data: "idp=" + idContact,// On passe l'id de la personne que l'on veut voir
+				success: function(data, textStatus, jqXHR) {
+					var result = JSON.parse(data) ;
+					if (result.status == 'success') {
+						if (result.contact) {
+							if (result.contact.prenom){ $('.nomPrenom').prepend(result.contact.prenom);$('.nomPrenom').prepend(" ");}
+							if (result.contact.idp)$('section').attr('idContact',result.contact.idp);
+							if (result.contact.nom) $('.nomPrenom').prepend(result.contact.nom);
+							if (result.contact.mail) $('#mail').append('<a href="mailto:'+result.contact.mail+'">'+result.contact.mail+'</a>');
+							if (result.contact.tel) $('#tel').append('<a href="tel:'+result.contact.tel+'">'+result.contact.tel+'</a>');
+
+							if (result.contact.prenom) $('#prenom').append(result.contact.prenom);
+							if (result.contact.nom) $('#nom').append(result.contact.nom);
+							if (result.contact.adresse) $('#adresse').append(result.contact.adresse);
+							if (result.contact.ville) $('#ville').append(result.contact.ville);
+								evenementContact();
+						}
+					}
+				},
+				error: function() {
+					alert('Erreur dans la requ�te au serveur.');
+				}
+	});
+}
+
+//--------------------------------------------------------------------------------------------------------------------
+//-----------------------------------AFFICHER UN ARTISTE--------------------------------------------------------------
 
 function afficherArtiste(idArtiste){
 
@@ -674,7 +707,7 @@ $.ajax({	type: "POST",
 							 for (var id=0; id < result.personnes.length; id++) {
 								 $('#listeContact').append('<option>'+result.personnes[id].nom+'</option>');
 							 }
-						 } 
+						 }
 					 }
 					},
 					error: function() {

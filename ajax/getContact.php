@@ -1,24 +1,25 @@
 <?php
-	include "artistes.php" ;
+	include_once("DAO.class.php");
 	$result = array() ;
 	$result["status"] = "success" ;
+	$result["contact"]=array();
 
 	if (isset($_REQUEST['idp'])) {
 		$reponse=$dao->getContact($_REQUEST['idp']);
 		if (isset($reponse)) {
 
-			$artiste = array() ;
-			$artiste['nom'] = $reponse->nom;
-			$artiste['prenom'] = $reponse->prenom;
-			$artiste['ville'] = $reponse->ville;
-			$artiste['adresse'] = $reponse->adresse;
-			$artiste['tel'] = $reponse->tel;
-			$artiste['mail'] = $reponse->mail;
-			$artiste['siteWeb'] = $reponse->siteweb;
-			$artiste['idp'] = $reponse->id;
-			$artiste['types'] = $reponse->type;
-			$artiste['groupes'] = $reponse->groupes;
-			$result["artiste"]=$artiste;
+			$contact = array() ;
+			$contact['nom'] = $reponse->nom;
+			$contact['prenom'] = $reponse->prenom;
+			$contact['ville'] = $reponse->ville;
+			$contact['adresse'] = $reponse->adresse;
+			$contact['tel'] = $reponse->tel;
+			$contact['mail'] = $reponse->mail;
+			$contact['siteWeb'] = $reponse->siteweb;
+			$contact['idp'] = $reponse->id;
+			$contact['types'] = $reponse->type;
+			$contact['groupes'] = $reponse->groupes;
+			$result["contact"]=$contact;
 
 		} else {
 			$result["status"] = "error" ;
