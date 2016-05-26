@@ -2,6 +2,7 @@
 	include_once("DAO.class.php");
 	$result = array() ;
 	$result["status"] = "success" ;
+	$result["artiste"]=array();
 
 
 	if (isset($_REQUEST['idp'])) {

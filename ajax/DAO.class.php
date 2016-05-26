@@ -36,10 +36,9 @@
 
         function getArtiste($id) {
             $req = "select * from artistes  where id=$id; ";
-	    var_dump($req);
             $sth = $this->db->query($req);
             $result = $sth->fetchAll(PDO::FETCH_CLASS, 'Artiste');
-		
+
 
             $req ="select  G.nom,G.id from  artistes A,groupes G,liaisonartistegroupe AG where A.id=$id and AG.idartiste=A.id and AG.idgroupe=G.id;";
             $sth = $this->db->query($req);
@@ -68,15 +67,15 @@
             $sth = $this->db->query($req);
             $result = $sth->fetchAll(PDO::FETCH_CLASS, 'AutresContacts');
 
-            $req ="select  G.nom,G.id 
-				   from  autrescontact A,groupes G,liaisongroupeautrescontact AG 
+            $req ="select  G.nom,G.id
+				   from  autrescontact A,groupes G,liaisongroupeautrescontact AG
 				   where A.id=$id and AG.idautrescontact=A.id and AG.idgroupe=G.id;";
             $sth = $this->db->query($req);
             $result1 = $sth->fetchAll(PDO::FETCH_ASSOC);
             $result[0]->groupes=$result1;
 
-			$req ="select  R.nomtype 
-				   from  artistes A,type R,liaisonautrescontacttype Ar 
+			$req ="select  R.nomtype
+				   from  artistes A,type R,liaisonautrescontacttype Ar
 				   where A.id=$id and Ar.idautrescontact=A.id and Ar.nomtype = r.nomtype;";
             $sth = $this->db->query($req);
             $result2 = $sth->fetchAll(PDO::FETCH_ASSOC);
@@ -126,14 +125,14 @@
 
         function getOrganisateur($id) {
             $req = "select *
-		    from organisateurs 
+		    from organisateurs
 		    where id=$id; ";
 		var_dump($req);
             $sth = $this->db->query($req);
             $result = $sth->fetchAll(PDO::FETCH_CLASS, 'Organisateur');
 
-            $req ="select  e.nom,e.id 
-		   from  organisateurs o,evenement e,liaisonevenementorganisateur AG 
+            $req ="select  e.nom,e.id
+		   from  organisateurs o,evenement e,liaisonevenementorganisateur AG
 		   where o.id=$id and AG.idorganisateur=o.id and AG.idevenement=e.id;";
            var_dump($req);
 	    $sth = $this->db->query($req);

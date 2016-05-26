@@ -2,7 +2,7 @@
 include_once("DAO.class.php");
 $result = array() ;
 $result["status"] = "success" ;
-
+$result["artiste"]=array();
 $_REQUEST['idp']="3";
 
 if (isset($_REQUEST['idp'])) {
@@ -30,4 +30,6 @@ if (isset($_REQUEST['idp'])) {
   $result["status"] = "error" ;
   $result["errMessage"] = "Param�tre idPersonne manquant" ;
 }
+
+var_dump($result["artiste"]);
 ?>
