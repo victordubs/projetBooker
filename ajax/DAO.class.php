@@ -60,15 +60,15 @@
             $result = $sth->fetchAll(PDO::FETCH_CLASS, 'AutresContacts');
 
             $req ="select  G.nom,G.id 
-				   from  autrescontact A,groupes G,liaisongroupeautrescontact AG 
-				   where A.id=$id and AG.idautrescontact=A.id and AG.idgroupe=G.id;";
+		   		  from  autrescontact A,groupes G,liaisongroupeautrescontact AG 
+		   		  where A.id=$id and AG.idautrescontact=A.id and AG.idgroupe=G.id;";
             $sth = $this->db->query($req);
             $result1 = $sth->fetchAll(PDO::FETCH_ASSOC);
             $result[0]->groupes=$result1;
 
-			$req ="select  R.nomtype 
+	    	$req ="select  R.nomtype 
 				   from  artistes A,type R,liaisonautrescontacttype Ar 
-				   where A.id=$id and Ar.idautrescontact=A.id and Ar.nomtype = r.nomtype;";
+				   where A.id=$id and Ar.idautrescontact=A.id and Ar.nomtype = R.nomtype;";
             $sth = $this->db->query($req);
             $result2 = $sth->fetchAll(PDO::FETCH_ASSOC);
             $result[0]->type=$result2;
@@ -95,7 +95,7 @@
             $sth = $this->db->query($req);
             // pour pouvoir acceder à la class "artiste" car avant $personnes vaut "artistes"
 
-            if($personnes!='AutresContact'){
+            if($personne!='AutresContact'){
               $personne=substr($personne,0,-1);
             }
 
