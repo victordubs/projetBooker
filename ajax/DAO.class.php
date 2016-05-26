@@ -38,7 +38,7 @@
             $req = "select * from artistes  where id=$id; ";
             $sth = $this->db->query($req);
             $result = $sth->fetchAll(PDO::FETCH_CLASS, 'Artiste');
-		
+
 
             $req ="select  G.nom,G.id from  artistes A,groupes G,liaisonartistegroupe AG where A.id=$id and AG.idartiste=A.id and AG.idgroupe=G.id;";
             $sth = $this->db->query($req);
@@ -59,18 +59,18 @@
             $sth = $this->db->query($req);
             $result = $sth->fetchAll(PDO::FETCH_CLASS, 'AutresContact');
 
-            $req ="select  G.nom,G.id 
-		   		  from  autrescontact A,groupes G,liaisongroupeautrescontact AG 
+            $req ="select  G.nom,G.id
+		   		  from  autrescontact A,groupes G,liaisongroupeautrescontact AG
 		   		  where A.id=$id and AG.idautrescontact=A.id and AG.idgroupe=G.id;";
             $sth = $this->db->query($req);
             $result1 = $sth->fetchAll(PDO::FETCH_ASSOC);
             $result[0]->groupes=$result1;
 
-	    	$req ="select  nomtype 
+	    	$req ="select  nomtype
 				   from liaisonautrescontacttype
 				   where idautrescontact=$id;";
             $sth = $this->db->query($req);
-            $result2 = $sth->fetchAll(PDO::FETCH_ASSOC);
+            $result2 = $sth->fetchAll(PDO::FETCH_COLUMN);
             $result[0]->type=$result2;
 
             return $result[0];
@@ -120,13 +120,13 @@
 
         function getOrganisateur($id) {
             $req = "select *
-		    from organisateurs 
+		    from organisateurs
 		    where id=$id; ";
             $sth = $this->db->query($req);
             $result = $sth->fetchAll(PDO::FETCH_CLASS, 'Organisateur');
 
-            $req ="select  e.nom,e.id 
-		   from  organisateurs o,evenement e,liaisonevenementorganisateur AG 
+            $req ="select  e.nom,e.id
+		   from  organisateurs o,evenement e,liaisonevenementorganisateur AG
 		   where o.id=$id and AG.idorganisateur=o.id and AG.idevenement=e.id;";
 	    $sth = $this->db->query($req);
             $result1 = $sth->fetchAll(PDO::FETCH_ASSOC);
@@ -144,15 +144,15 @@
             $sth = $this->db->query($req);
             $result = $sth->fetchAll(PDO::FETCH_CLASS, 'Groupe');
 
-            $req ="select  a.nom,a.id 
-		   from  artistes a,groupes g,liaisonartistegroupe AG 
+            $req ="select  a.nom,a.id
+		   from  artistes a,groupes g,liaisonartistegroupe AG
 		   where g.id=$id and AG.idgroupe=g.id and AG.idartiste=a.id;";
 	    	$sth = $this->db->query($req);
             $result1 = $sth->fetchAll(PDO::FETCH_ASSOC);
             $result[0]->artistes=$result1;
 
-            $req ="select  a.nom,a.id 
-		   from  autrescontact a,groupes g,liaisongroupeautrescontact AG 
+            $req ="select  a.nom,a.id
+		   from  autrescontact a,groupes g,liaisongroupeautrescontact AG
 		   where g.id=$id and AG.idgroupe=g.id and AG.idautrescontact=a.id;";
 	    	$sth = $this->db->query($req);
             $result2 = $sth->fetchAll(PDO::FETCH_ASSOC);

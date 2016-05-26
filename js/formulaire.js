@@ -208,7 +208,7 @@ function afficherEvenement(idEvenement){
 function afficherContact(idContact){
 
 	$.ajax({	type: "POST",
-				url: "ajax/getArtiste.php",
+				url: "ajax/getContact.php",
 				data: "idp=" + idContact,// On passe l'id de la personne que l'on veut voir
 				success: function(data, textStatus, jqXHR) {
 					var result = JSON.parse(data) ;
@@ -224,6 +224,22 @@ function afficherContact(idContact){
 							if (result.contact.nom) $('#nom').append(result.contact.nom);
 							if (result.contact.adresse) $('#adresse').append(result.contact.adresse);
 							if (result.contact.ville) $('#ville').append(result.contact.ville);
+							if (result.contact.types){
+								for(var i=0;i<result.contact.types.length;i++){
+									$('#type').append(result.contact.types[i]);
+									if(i!=(result.contact.types.length)-1){
+										$('#type').append("/");
+									}
+								}
+							}
+							if (result.contact.groupes){
+								for(var i=0;i<result.contact.groupes.length;i++){
+									$groupe = $(document.createElement('p'));
+									$groupe.append(result.contact.groupes[i]["nom"]);
+									$groupe.attr("idGroupe",result.contact.groupes[i]["id"]);
+									$('#infoGroupes').append($groupe);
+								}
+							}
 								evenementContact();
 						}
 					}
@@ -255,7 +271,8 @@ function afficherArtiste(idArtiste){
 							if (result.artiste.prenom) $('#prenom').append(result.artiste.prenom);
 							if (result.artiste.nom) $('#nom').append(result.artiste.nom);
 							if (result.artiste.adresse) $('#adresse').append(result.artiste.adresse);
-							if (result.artiste.ville) $('#adresse').append(result.artiste.ville);
+							if (result.artiste.ville) $('#ville').append(result.artiste.ville);
+
 								evenementArtiste();
 						}
 					}
@@ -284,7 +301,7 @@ function evenementRep(personne){
 // Evenement sur le répertoire des groupes
 	else if(personne=="Groupes"){
 		$('p').on('click',function() {
-			var param=$(this).attr('idp');
+			var param=$(this).attr('id');
 			$('#content').load('pages/afficherGroupe.html',function(){afficherGroupe(param)});
 		});
 
@@ -295,7 +312,7 @@ function evenementRep(personne){
 // Evenement sur le répertoire des organisateurs
 	else if(personne=="Organisateurs"){
 		$('p').on('click',function() {
-			var param=$(this).attr('idp');
+			var param=$(this).attr('id');
 			$('#content').load('pages/afficherArtiste.html',function(){afficherArtiste(param)});
 		});
 
@@ -306,8 +323,8 @@ function evenementRep(personne){
 // Evenement sur le répertoire des contacts
 	else if(personne=="AutresContact"){
 		$('p').on('click',function() {
-			var param=$(this).attr('idp');
-			$('#content').load('pages/afficherArtiste.html',function(){afficherArtiste(param)});
+			var param=$(this).attr('id');
+			$('#content').load('pages/afficherContact.html',function(){afficherContact(param)});
 		});
 
 		$('#add').on('click',function() {
@@ -501,6 +518,31 @@ function eventEvenement(){
 	$('#modifier').click(function(){
 		var param=$('section').attr('idEvent');
 		$('#content').load('pages/formulaireEvenement.html',function(){modifierEvenement(param)})
+	});
+}
+
+//------------------------------------------------------------------------------------------------------------------
+//-----------------------------------EVENEMENT SUR CONTACT----------------------------------------------------------
+
+function 	evenementContact(){
+	$('.option').hide();
+	/*$('#edit').on('click',function() {
+		$('.option').show();
+		$('.option').focus();
+	});*/
+
+	$('#edit').on('click',function() {
+		$('.option').toggle();
+	});
+
+	$('.option').focusout(function() {
+		alert(pouet);
+		$('.option').hide();
+	});
+
+	$('#modifier').click(function(){
+		var param=$('section').attr('idArtiste');
+		$('#content').load('pages/formulaireContact.html',function(){modifierContact(param)})
 	});
 }
 //------------------------------------------------------------------------------------------------------------------
