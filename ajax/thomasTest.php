@@ -4,7 +4,7 @@ include_once("DAO.class.php");
 $result = array() ;
 $result["status"] = "success" ;
 $result["personnes"] = array();
-$_REQUEST['personne']='autresContacts';
+$_REQUEST['personne']='AutresContact';
 
 if (isset($_REQUEST['personne'])) {
 

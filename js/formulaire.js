@@ -550,7 +550,7 @@ function evenementFormulaireArt() {
 // Initialisation de la liste des roles
 	getRoles();
 // Initialisation de la liste des genres
-  getGenres();
+  //getGenres();
 // Action ajouter un autre champ Role
 	$('#btnAjouterRole').on('click',function() {
 			   ajouterAutreChamp($(this),$(this).attr('new'),autreChamp.nbRole);
@@ -664,14 +664,17 @@ $.ajax({	type: "POST",
 //-----------------------------------CREER LISTE CONTACT----------------------------------------------------------
 function getListeContacts(){
 $.ajax({	type: "POST",
-					url: "ajax/getListeArtistes.php",
+					url: "ajax/getRepertoire.php",
+					data:'personne=AutresContact',
 					success: function(data, textStatus, jqXHR) {
 						var result = JSON.parse(data) ;
 						if (result.status == 'success') {
 					// Boucle pour remplir la liste des Artistes
-							 for (var id=0; id < result.artistes.length; id++) {
-								 $('#listeContact').append('<option>'+result.artistes[id].nomArtiste+'</option>');
+					    if(result.personnes){
+							 for (var id=0; id < result.personnes.length; id++) {
+								 $('#listeContact').append('<option>'+result.personnes[id].nom+'</option>');
 							 }
+						 } 
 					 }
 					},
 					error: function() {
@@ -779,16 +782,16 @@ function enregistrerArtiste() {
 						var data=InitialiserData();
       //Ajoute valeur dans data si Roles et Genres ont été séléctionnés
 						if($('#roles').val()!=null) data=data+'&roles=' + $('#roles').val();
-						if($('#genres').val()!=null) data=data+'&genres=' + $('#genres').val();
+						//if($('#genres').val()!=null) data=data+'&genres=' + $('#genres').val();
 			//Ajoute valeur dans data des autres Roles et Genres
+						for(var i=1;i<autreChamp.nbRole;i++){
+							data=data+'&autreRole'+i+'='+$('#autreRole'+i).val();
+						}
+/*
 						for(var i=1;i<autreChamp.nbGenre;i++){
 							data=data+'&autreGenre'+i+'='+$('#autreGenre'+i).val();
 						}
-
-						for(var i=1;i<autreChamp.nbGenre;i++){
-							data=data+'&autreGenre'+i+'='+$('#autreGenre'+i).val();
-						}
-
+*/
 						alert(data);
 
 				$.ajax({	type: "POST",
