@@ -915,7 +915,7 @@ function modifierGroupe(idGroupe){
 					if (result.status == 'success') {
 						if (result.artiste) {
 							if (result.groupe.nom) $('#nom').val(result.artiste.nom) ;
-
+							if (result.groupe.idp) $('section').attr('idp',result.artiste.idp);
 						}
 					}
 				},
