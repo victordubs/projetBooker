@@ -15,7 +15,10 @@
 			$artiste['adresse'] = $reponse->adresse;
 			$artiste['tel'] = $reponse->tel;
 			$artiste['mail'] = $reponse->mail;
-			$artiste['idArtiste'] = $reponse->id ;
+			$artiste['siteWeb'] = $reponse->siteweb;
+			$artiste['id'] = $reponse->id;
+			$artiste['roles'] = $reponse->role;
+			$artiste['groupes'] = $reponse->groupes;
 			$result["artiste"]=$artiste;
 
 		} else {
