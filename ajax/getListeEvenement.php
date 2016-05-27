@@ -4,8 +4,7 @@ include_once("DAO.class.php");
 	$result["status"] = "success" ;
 
 
-	if (isset($_REQUEST['idp'])) {
-		$reponse=$dao->getGroupeDispoAtDate($_REQUEST['idp']);
+		$reponse=$dao->getListeEvenements();
 		if (isset($reponse)) {
 			$result["evenements"]= array() ;
 			for($i=0;$i<count($reponse);$i++){
@@ -20,6 +19,5 @@ include_once("DAO.class.php");
 			$result["status"] = "error" ;
 			//$result["errMessage"] = "Artiste {$_REQUEST['idArtiste']} inconnue" ;
 		}
-
 		echo json_encode($result) ;
 ?>
