@@ -3,24 +3,22 @@ include_once("DAO.class.php");
 	$result = array() ;
 	$result["status"] = "success" ;
 
-	if (isset($_REQUEST['idp'])) {
-		$reponse=$dao->getOrganisateur($_REQUEST['idp']);
-		if (isset($reponse)) {
 
+	if (isset($_REQUEST['idp'])) {
+		$reponse=$dao->getGroupeDispoAtDate($_REQUEST['idp']);
+		if (isset($reponse)) {
 			$result["groupesDispo"]= array() ;
-			$groupesDispo = array() ;
-			$groupesDispo['nom'] = $reponse->nom;
-			$groupesDispo['idp'] = $reponse->id;
-			$result["groupesDispo"]=$groupesDispo;
+			for($i=0;$i<count($reponse);$i++){
+				$groupesDispo = array() ;
+				$groupesDispo['nom'] = $reponse[$i]['nom'];
+				$groupesDispo['idp'] = $reponse[$i]['id'];
+				$result["groupesDispo"][$i]=$groupesDispo;
+			}
 
 		} else {
 			$result["status"] = "error" ;
 			//$result["errMessage"] = "Artiste {$_REQUEST['idArtiste']} inconnue" ;
 		}
-	} else {
-		$result["status"] = "error" ;
-		$result["errMessage"] = "Param�tre idPersonne manquant" ;
-	}
 
 		echo json_encode($result) ;
 ?>

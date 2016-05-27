@@ -1,19 +1,25 @@
 <?php
-	include "evenements.php" ;
-
+include_once("DAO.class.php");
 	$result = array() ;
 	$result["status"] = "success" ;
-  if (count($evenements) > 0) {
-		$result["evenements"] = array();
 
-		foreach ($evenements as $idEvenement => $evenementBD) {
-			$evenement = array() ;
-			$evenement['idEvenement'] = $idEvenement;
-			$evenement['nomEvenement'] = $evenementBD["nomEvenement"];
-      $evenement['dateDeb'] = $evenementBD["dateDeb"];
-      $evenement['ville'] = $evenementBD["ville"];
-			array_push($result["evenements"], $evenement) ;
+
+	if (isset($_REQUEST['idp'])) {
+		$reponse=$dao->getGroupeDispoAtDate($_REQUEST['idp']);
+		if (isset($reponse)) {
+			$result["evenements"]= array() ;
+			for($i=0;$i<count($reponse);$i++){
+				$evenements = array() ;
+				$evenements['nom'] = $reponse[$i]['nom'];
+				$evenements['idp'] = $reponse[$i]['id'];
+				$evenements['datedebut'] = $reponse[$i]['datedebut'];
+				$result["evenements"][$i]=$evenements;
+			}
+
+		} else {
+			$result["status"] = "error" ;
+			//$result["errMessage"] = "Artiste {$_REQUEST['idArtiste']} inconnue" ;
 		}
-	}
-	echo json_encode($result);
-  ?>
+
+		echo json_encode($result) ;
+?>

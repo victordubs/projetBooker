@@ -155,7 +155,7 @@ $result = array() ;
 //test getevenement
 /*	$result = $dao->getEvenement(1);
 	var_dump($result);*/
-
+/*
 		$reponse=$dao->getEvenement(1);
 		if (isset($reponse)) {
 
@@ -177,5 +177,25 @@ $result = array() ;
 			//$result["errMessage"] = "Artiste {$_REQUEST['idArtiste']} inconnue" ;
 		}
 
-		var_dump($result["evenement"]);
+		var_dump($result["evenement"]);*/
+
+// test liste evenement
+/*	$result = $dao->getListeEvenements();
+	var_dump($result);*/
+$reponse=$dao->getListeEvenements();
+		if (isset($reponse)) {
+			$result["evenements"]= array() ;
+			for($i=0;$i<count($reponse);$i++){
+				$evenements = array() ;
+				$evenements['nom'] = $reponse[$i]['nom'];
+				$evenements['idp'] = $reponse[$i]['id'];
+				$evenements['datedebut'] = $reponse[$i]['datedebut'];
+				$result["evenements"][$i]=$evenements;
+			}
+
+		} else {
+			$result["status"] = "error" ;
+			//$result["errMessage"] = "Artiste {$_REQUEST['idArtiste']} inconnue" ;
+		}
+var_dump($result["evenements"]);
   ?>

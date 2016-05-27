@@ -98,9 +98,9 @@
 
 
         function getListeEvenements() {
-            $req = "select * from evenement;";
+            $req = "select nom, datedebut, id from evenement;";
             $sth = $this->db->query($req);
-            $result = $sth->fetchAll(PDO::FETCH_CLASS, 'Evenement');
+            $result = $sth->fetchAll(PDO::FETCH_ASSOC);
             return $result;
         }
 
