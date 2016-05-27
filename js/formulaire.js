@@ -96,7 +96,8 @@ function chargeSite(){
 
 	$('body nav #mnuCalendrier').bind('click', function() { // Au clic sur le bouton "mnuPersonne" dans le menu
 		// On charge la page voirPersonne.html dans la div content et on appelle la fonction d'initialisation de cette page
-		$('#content').load('pages/formulaireEvenement.html',evenementFormulaireEve);
+	//	$('#content').load('pages/formulaireEvenement.html',evenementFormulaireEve);
+	    $('#content').load('pages/calendrier.html');
 	});
 
 	$('body nav #mnuAccueil').click();
@@ -311,7 +312,7 @@ function afficherArtiste(idArtiste){
 					if (result.status == 'success') {
 						if (result.artiste) {
 							if (result.artiste.prenom){ $('.nomPrenom').prepend(result.artiste.prenom);$('.nomPrenom').prepend(" ");}
-							if (result.artiste.idp)$('section').attr('id',result.artiste.idArtiste);
+							if (result.artiste.idp)$('section').attr('id',result.artiste.idp);
 							if (result.artiste.nom) $('.nomPrenom').prepend(result.artiste.nom);
 							if (result.artiste.mail) $('#mail').append('<a href="mailto:'+result.artiste.mail+'">'+result.artiste.mail+'</a>');
 							if (result.artiste.tel) $('#tel').append('<a href="tel:'+result.artiste.tel+'">'+result.artiste.tel+'</a>');
