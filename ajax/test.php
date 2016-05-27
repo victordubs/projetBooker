@@ -11,8 +11,8 @@ $result = array() ;
 //test pour getArtiste
 /*	$result = $dao->getArtiste(1);
 	var_dump($result);*/
-
-/*	$reponse=$dao->getArtiste(1);
+/*
+	$reponse=$dao->getArtiste(1);
 	if (isset($reponse)) {
 
 		$artiste = array() ;
@@ -34,8 +34,8 @@ $result = array() ;
 	}
 
 	var_dump($result["artiste"]);
-
 */
+
 
 //test pour autre contact
 
@@ -74,7 +74,7 @@ $result = array() ;
 	var_dump($result);*/
 
 
-		$reponse=$dao->getOrganisateur(2);
+	/*	$reponse=$dao->getOrganisateur(2);
 		if (isset($reponse)) {
 
 			$artiste = array() ;
@@ -95,7 +95,7 @@ $result = array() ;
 			//$result["errMessage"] = "Artiste {$_REQUEST['idArtiste']} inconnue" ;
 		}
 	
-	var_dump($result["artiste"]);
+	var_dump($result["artiste"]);*/
 
 
 //test des groupes
@@ -213,5 +213,29 @@ var_dump($result);*/
 		}
 
 	var_dump($result["evenement"]);*/
+
+//test liste style
+/*$reponse=$dao->getListeStyle();
+		if (isset($reponse)) {
+			$result["styles"]= array() ;
+			$result["styles"]=$reponse;
+		} else {
+			$result["status"] = "error" ;
+			//$result["errMessage"] = "Artiste {$_REQUEST['idArtiste']} inconnue" ;
+		}
+
+var_dump($result["styles"]);*/
+
+//liste type
+$reponse=$dao->getListeType();
+		if (isset($reponse)) {
+			$result["types"]= array() ;
+			$result["types"]=$reponse;
+		} else {
+			$result["status"] = "error" ;
+			//$result["errMessage"] = "Artiste {$_REQUEST['idArtiste']} inconnue" ;
+		}
+
+var_dump($result["types"]);
 
   ?>

@@ -415,6 +415,22 @@
 		return $result;
 	}
 
+	function getListeStyle() {
+		$req = "select * from style;";
+        $sth = $this->db->query($req);
+        $result = $sth->fetchAll(PDO::FETCH_COLUMN);
+	
+		return $result;
+	}
+
+	function getListeType() {
+		$req = "select * from type;";
+        $sth = $this->db->query($req);
+        $result = $sth->fetchAll(PDO::FETCH_COLUMN);
+	
+		return $result;
+	}
+
 
   }
 ?>
