@@ -16,27 +16,30 @@ var nbGroupeEvenement=0;
 
 
 $(document).ready(function() {
-
-	$.ajax({	type: "POST",
-				url: "ajax/verifConnecter.php",
-				success: function(data, textStatus, jqXHR) {
-					var result = JSON.parse(data) ;
-					if (result.status == 'success') {
-						if (result.reponse == 'true') {
-								$('#menu').load('pages/menu.html',chargeSite);
-
-						}else{
-								$('#content').load('pages/formulaireConnexion.html',eventConnexion);
-
-						}
-					}
-				},
-				error: function() {
-					alert('Erreur dans la requ�te au serveur.');
-				}
-	});
-
+					verifeConnecter();
 });
+//--------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------VERIFE CONNECCTER---------------------------------------------------------------------
+function verifeConnecter(){
+$.ajax({	type: "POST",
+			url: "ajax/verifConnecter.php",
+			success: function(data, textStatus, jqXHR) {
+				var result = JSON.parse(data) ;
+				if (result.status == 'success') {
+					if (result.reponse == 'true') {
+							$('#menu').load('pages/menu.html',chargeSite);
+
+					}else{
+							$('#content').load('pages/formulaireConnexion.html',eventConnexion);
+
+					}
+				}
+			},
+			error: function() {
+				alert('Erreur dans la requ�te au serveur.');
+			}
+});
+}
 //--------------------------------------------------------------------------------------------------------------------------
 //-----------------------------------EVEMENT FORMULAIRE CONNECTION---------------------------------------------------------------------
 function eventConnexion(){
@@ -97,7 +100,7 @@ function chargeSite(){
 	$('body nav #mnuCalendrier').bind('click', function() { // Au clic sur le bouton "mnuPersonne" dans le menu
 		// On charge la page voirPersonne.html dans la div content et on appelle la fonction d'initialisation de cette page
 	//	$('#content').load('pages/formulaireEvenement.html',evenementFormulaireEve);
-	    $('#content').load('pages/calendrier.html');
+	    $('#content').load('pages/calendrier.html',eventCalendrier);
 	});
 
 	$('body nav #mnuAccueil').click();
@@ -154,6 +157,8 @@ function afficherRep(personne){
 				}
 	});
 }
+//----------------------------------------------------------------------------------------------------------------------
+//-----------------------------------AFFICHER ACCUEIL--------------------------------------------------------------
 function afficherAccueil(){
 
 	$.ajax({	type: "POST", // envoie une requ�te � getListeEvenement pour demander la liste des personnes
@@ -163,6 +168,7 @@ function afficherAccueil(){
 					if (result.status == 'success') {
 
 								for (var id=0; id < result.evenements.length; id++) {
+
 										$articleAcc = $(document.createElement('article')); // On cr�e un article
 										$articleAcc.attr('idEvent',result.evenements[id].idp);
 										$articleAcc.append('<h2>'+result.evenements[id].nom+'</h2>');
@@ -174,6 +180,73 @@ function afficherAccueil(){
 				error: function() {
 					alert('Erreur dans la requ�te au serveur.');
 				}
+	});
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+//-----------------------------------AJOUTER CALENDRIER--------------------------------------------------------------
+function ajouterCalendrier(){
+
+	$.ajax({	type: "POST", // envoie une requ�te � getListeEvenement pour demander la liste des personnes
+				url: "ajax/getListeEvenement.php",
+				success: function(data, textStatus, jqXHR) {
+					var result=JSON.parse(data);
+					if (result.status == 'success') {
+							if(result.evenements){
+								for (var id=0; id < result.evenements.length; id++) {
+										$point = $(document.createElement('p'));
+										$point.attr("class","token");
+										$point.html("•");
+
+										if($('#j'+result.evenements[id].dateDeb.substr(0,2)).attr('nbEvent')==undefined){
+											var i=1;
+											$('#j'+result.evenements[id].dateDeb.substr(0,2)).attr("nbEvent",i);
+											$('#j'+result.evenements[id].dateDeb.substr(0,2)).attr("nom"+i,result.evenements[id].nom);
+											$('#j'+result.evenements[id].dateDeb.substr(0,2)).attr("idp"+i,result.evenements[id].idp);
+											$('#j'+result.evenements[id].dateDeb.substr(0,2)).append($point);
+									}else{
+										var i=i+1
+										$('#j'+result.evenements[id].dateDeb.substr(0,2)).attr("nbEvent",i);
+										$('#j'+result.evenements[id].dateDeb.substr(0,2)).attr("nom"+i,result.evenements[id].nom);
+										$('#j'+result.evenements[id].dateDeb.substr(0,2)).attr("idp"+i,result.evenements[id].idp);
+										$('#j'+result.evenements[id].dateDeb.substr(0,2)).append($point);
+									}
+							  }
+							}
+					}
+				},
+				error: function() {
+					alert('Erreur dans la requ�te au serveur.');
+				}
+	});
+}
+//----------------------------------------------------------------------------------------------------------------------
+//-----------------------------------AJOUTER CALENDRIER-----------------------------------------------------------------
+function eventCalendrier(){
+	ajouterCalendrier();
+
+	$('td').on('click',function() {
+				$('td').attr('selected',false);
+				$(this).attr('selected',true);
+
+				$('#infosEvent').empty();
+				$ulevent = $(document.createElement('ul'));
+    		for(var i=1;i<=$(this).attr("nbEvent");i++){
+
+							$lievent = $(document.createElement('li'));
+							$lievent.html($(this).attr("nom"+i));
+							$lievent.attr("idp",$(this).attr("idp"+i));
+							$ulevent.append($lievent);
+			}
+
+				$('#infosEvent').append($ulevent);
+
+				$('li').on('click',function() {
+						var param=$(this).attr('idp');
+					  $('#content').load('pages/afficherEvenement.html',function(){afficherEvenement(param)});
+
+				});
+
 	});
 }
 
@@ -586,7 +659,8 @@ function deconnexion(){
 			var result = JSON.parse(data) ;
 			if (result.status == 'success') {
 					if(result.reponse==true){
-						alert("Merci de votre passage. Vous allez eêtre déconnecté");
+						alert("Merci de votre passage. Vous allez être déconnecté");
+						verifeConnecter();
 					}else{
 						alert("Erreur dans la deconnexion");
 					}
@@ -825,20 +899,11 @@ var clickHandler = function() {
 
 function evenementArtiste(){
 	$('.option').hide();
-	/*$('#edit').on('click',function() {
-		$('.option').show();
-		$('.option').focus();
-	});*/
 
 	$('#edit').on('click',function() {
 		// console.log('click sur edit');
 		$('.option').toggle();
 		setTimeout(function(){ $(':NOT(.option)').bind('click', clickHandler); }, 200);
-	});
-
-	$('.option').on('focusout', function() {
-		alert(pouet);
-		$('.option').hide();
 	});
 
 	$('#modifier').click(function(){
@@ -847,7 +912,7 @@ function evenementArtiste(){
 	});
 }
 //------------------------------------------------------------------------------------------------------------------
-//-----------------------------------AJOUTER UN AUTRE CHAMP---------------------------------------------------
+//-----------------------------------AJOUTER UN AUTRE CHAMP---------------------------------------------------------
 function ajouterAutreChamp(place,placeAttr,nbAutre){
 	$nouveauChamp = $(document.createElement('input'));
 	$($nouveauChamp).attr('type','text');

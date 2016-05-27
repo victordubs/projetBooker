@@ -182,14 +182,16 @@ $result = array() ;
 // test liste evenement
 /*	$result = $dao->getListeEvenements();
 	var_dump($result);*/
-/*$reponse=$dao->getListeEvenements();
+$reponse=$dao->getListeEvenements();
 		if (isset($reponse)) {
 			$result["evenements"]= array() ;
 			for($i=0;$i<count($reponse);$i++){
 				$evenements = array() ;
 				$evenements['nom'] = $reponse[$i]['nom'];
 				$evenements['idp'] = $reponse[$i]['id'];
-				$evenements['datedebut'] = $reponse[$i]['datedebut'];
+        $date=explode( '-', $reponse[$i]['datedebut']);
+        $frenchDate=$date[2]."/".$date[1]."/".$date[0];
+				$evenements['datedebut'] = $frenchDate;
 				$result["evenements"][$i]=$evenements;
 			}
 
@@ -197,7 +199,7 @@ $result = array() ;
 			$result["status"] = "error" ;
 			//$result["errMessage"] = "Artiste {$_REQUEST['idArtiste']} inconnue" ;
 		}
-var_dump($result["evenements"]);*/
+var_dump($frenchDate);
 
 
 //test listeRole
@@ -227,7 +229,7 @@ var_dump($result);*/
 var_dump($result["styles"]);*/
 
 //liste type
-$reponse=$dao->getListeType();
+/*$reponse=$dao->getListeType();
 		if (isset($reponse)) {
 			$result["types"]= array() ;
 			$result["types"]=$reponse;
@@ -236,6 +238,6 @@ $reponse=$dao->getListeType();
 			//$result["errMessage"] = "Artiste {$_REQUEST['idArtiste']} inconnue" ;
 		}
 
-var_dump($result["types"]);
+var_dump($result["types"]);*/
 
   ?>

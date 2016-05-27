@@ -656,7 +656,7 @@ border-radius: 10px;
 text-align: center;
 }
 
-#select{
+.calendrier [selected="selected"] {
   border: solid;
   border-color: #888888;
 }
@@ -664,7 +664,7 @@ text-align: center;
   color: #888888;
 }
 
-.calendrier #j3{
+.calendrier #j03{
   color: #F2F2F2;
   background-color: #2A88AD;
 }
@@ -677,6 +677,25 @@ text-align: center;
   color: #2A88AD;
 }
 
-#j3 .token{
+#j03 .token{
   color: #F2F2F2;
+}
+
+.calendrier article ul {
+	border: 2px solid #EAEAEA;
+	border-radius: 15px;
+	color: #888888;
+	padding: 0%;
+	font-size: 200%;
+	list-style: none;
+}
+
+.calendrier article ul li {
+
+	border-bottom: 1px solid grey;
+	padding: 2%;
+}
+
+.calendrier li:active {
+	background-color: #C6C6C6;
 }
