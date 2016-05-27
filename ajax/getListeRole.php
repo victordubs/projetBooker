@@ -6,8 +6,8 @@ include_once("DAO.class.php");
 
 		$reponse=$dao->getListeRole();
 		if (isset($reponse)) {
-			$result["evenements"]= array() ;
-			$result["evenement"]=$reponse;
+			$result["roles"]= array() ;
+			$result["roles"]=$reponse;
 		} else {
 			$result["status"] = "error" ;
 			//$result["errMessage"] = "Artiste {$_REQUEST['idArtiste']} inconnue" ;

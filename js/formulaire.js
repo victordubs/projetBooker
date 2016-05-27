@@ -164,9 +164,9 @@ function afficherAccueil(){
 
 								for (var id=0; id < result.evenements.length; id++) {
 										$articleAcc = $(document.createElement('article')); // On cr�e un article
-										$articleAcc.attr('idEvent',result.evenements[id].idEvenement);
-										$articleAcc.append('<h2>'+result.evenements[id].nomEvenement+'</h2>');
-										$articleAcc.append('<p> Date :'+result.evenements[id].dateDeb+'<br/ >Lieu :'+result.evenements[id].ville+'</p>');
+										$articleAcc.attr('idEvent',result.evenements[id].idp);
+										$articleAcc.append('<h2>'+result.evenements[id].nom+'</h2>');
+										$articleAcc.append('<p> Date :'+result.evenements[id].dateDeb+/*+'<br/ >Lieu :'+result.evenements[id].ville+*/'</p>');
 										$('section').append($articleAcc);
 							  }
 							}evenementAccueil();
@@ -183,17 +183,47 @@ function afficherEvenement(idEvenement){
 
 	$.ajax({	type: "POST",
 				url: "ajax/getEvenement.php",
-				data: "idEvenement=" + idEvenement,// On passe l'id de la personne que l'on veut voir
+				data: "idp=" + idEvenement,// On passe l'id de la personne que l'on veut voir
 				success: function(data, textStatus, jqXHR) {
 					var result = JSON.parse(data) ;
 					if (result.status == 'success') {
 
 						if (result.evenement) {
-							if (result.evenement.idEvenement)$('section').attr('idEvent',result.evenement.idEvenement);
-							if (result.evenement.nomEvenement){$("#nomEvent").prepend(result.evenement.nomEvenement);}
+							if (result.evenement.idp)$('section').attr('idEvent',result.evenement.idp);
+							if (result.evenement.nom){$("#nomEvent").prepend(result.evenement.nom);}
 							if (result.evenement.dateDeb) $("#dateDeb").append(result.evenement.dateDeb);
 							if (result.evenement.dateFin) $("#dateFin").append(result.evenement.dateFin);
+							if (result.evenement.heureDeb) $("#heureDeb").append(result.evenement.heureDeb);
+							if (result.evenement.heureFin) $("#heureFin").append(result.evenement.heureFin);
 							if (result.evenement.ville) $("#ville").append(result.evenement.ville);
+							if (result.evenement.libelle) $("#descri").append(result.evenement.libelle);
+
+							if (result.evenement.plages){
+								$ulevent = $(document.createElement('ul'));
+								for(var i=0;i<result.evenement.plages.length;i++){
+
+									$lievent = $(document.createElement('li'));
+									$lievent .append(result.evenement.plages[i]["nom"]);
+									$lievent.attr("idGroupe",result.evenement.plages[i]["id"]);
+									$ulevent.append($lievent);
+
+								}
+								$('#infoGroupes').append($ulevent);
+							}
+
+							if (result.evenement.organisateurs){
+								$ulevent = $(document.createElement('ul'));
+								for(var i=0;i<result.evenement.organisateurs.length;i++){
+
+									$lievent = $(document.createElement('li'));
+									$lievent .append(result.evenement.organisateurs[i]["nom"]);
+									$lievent.attr("idOrga",result.evenement.organisateurs[i]["id"]);
+									$ulevent.append($lievent);
+
+								}
+								$('#infoOrganisateurs').append($ulevent);
+							}
+
 						}
 					}eventEvenement();
 				},
@@ -846,13 +876,13 @@ function evenementFormulaireContact() {
 //-----------------------------------CREER LISTE METIER---------------------------------------------------
 function getMetiers(){
 				$.ajax({	type: "POST",
-						url: "ajax/getListeArtistes.php",
+						url: "ajax/getListeType.php",
 						success: function(data, textStatus, jqXHR) {
 						var result = JSON.parse(data) ;
 						if (result.status == 'success') {
 					// Boucle pour remplir la liste des métiers
-							 for (var id=0; id < result.artistes.length; id++) {
-								 $('#metiers').append('<option>'+result.artistes[id].nomArtiste+'</option>');
+							 for (var id=0; id < result.types.length; id++) {
+								 $('#metiers').append('<option>'+result.types[id]+'</option>');
 							 }
 					 }
 					},
@@ -892,13 +922,13 @@ function evenementFormulaireArt() {
 //-----------------------------------CREER LISTE GENRES------------------------------------------------------------
 function getRoles(){
 				$.ajax({	type: "POST",
-						url: "ajax/getListeArtistes.php",
+						url: "ajax/getListeRole.php",
 						success: function(data, textStatus, jqXHR) {
 						var result = JSON.parse(data) ;
 						if (result.status == 'success') {
 					// Boucle pour remplir la liste des roles
-							 for (var id=0; id < result.artistes.length; id++) {
-								 $('#roles').append('<option>'+result.artistes[id].nomArtiste+'</option>');
+							 for (var id=0; id < result.roles.length; id++) {
+								 $('#roles').append('<option>'+result.roles[id]+'</option>');
 							 }
 					 }
 					},
@@ -912,13 +942,13 @@ function getRoles(){
 //-----------------------------------CREER LISTE GENRES---------------------------------------------------
 function getGenres(){
 				$.ajax({	type: "POST",
-						url: "ajax/getListeArtistes.php",
+						url: "ajax/getListeStyle.php",
 						success: function(data, textStatus, jqXHR) {
 						var result = JSON.parse(data) ;
 						if (result.status == 'success') {
 				 	// Boucle pour remplir la liste des genres
-							 for (var id=0; id < result.artistes.length; id++) {
-								 $('#genres').append('<option>'+result.artistes[id].nomArtiste+'</option>');
+							 for (var id=0; id < result.styles.length; id++) {
+								 $('#genres').append('<option>'+result.styles[id]+'</option>');
 							 }
 					 }
 					},
@@ -1401,5 +1431,4 @@ function supprimerOrganisateur(idOrganisateur){
 					alert('Erreur dans la requ�te au serveur.');
 				}
 	});
-
 }

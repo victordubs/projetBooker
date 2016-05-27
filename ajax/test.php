@@ -63,7 +63,7 @@ $result = array() ;
 			//$result["errMessage"] = "Artiste {$_REQUEST['idArtiste']} inconnue" ;
 		}
 
-	  
+
 
 	var_dump($result["artiste"]);
 */
@@ -94,7 +94,7 @@ $result = array() ;
 			$result["status"] = "error" ;
 			//$result["errMessage"] = "Artiste {$_REQUEST['idArtiste']} inconnue" ;
 		}
-	
+
 	var_dump($result["artiste"]);*/
 
 
@@ -182,7 +182,7 @@ $result = array() ;
 // test liste evenement
 /*	$result = $dao->getListeEvenements();
 	var_dump($result);*/
-$reponse=$dao->getListeEvenements();
+/*$reponse=$dao->getListeEvenements();
 		if (isset($reponse)) {
 			$result["evenements"]= array() ;
 			for($i=0;$i<count($reponse);$i++){
@@ -197,7 +197,7 @@ $reponse=$dao->getListeEvenements();
 			$result["status"] = "error" ;
 			//$result["errMessage"] = "Artiste {$_REQUEST['idArtiste']} inconnue" ;
 		}
-var_dump($result["evenements"]);
+var_dump($result["evenements"]);*/
 
 
 //test listeRole
@@ -227,7 +227,7 @@ var_dump($result);*/
 var_dump($result["styles"]);*/
 
 //liste type
-/*$reponse=$dao->getListeType();
+$reponse=$dao->getListeType();
 		if (isset($reponse)) {
 			$result["types"]= array() ;
 			$result["types"]=$reponse;
@@ -236,6 +236,6 @@ var_dump($result["styles"]);*/
 			//$result["errMessage"] = "Artiste {$_REQUEST['idArtiste']} inconnue" ;
 		}
 
-var_dump($result["types"]);*/
+var_dump($result["types"]);
 
   ?>

@@ -11,7 +11,7 @@ include_once("DAO.class.php");
 				$evenements = array() ;
 				$evenements['nom'] = $reponse[$i]['nom'];
 				$evenements['idp'] = $reponse[$i]['id'];
-				$evenements['datedebut'] = $reponse[$i]['datedebut'];
+				$evenements['dateDeb'] = $reponse[$i]['datedebut'];
 				$result["evenements"][$i]=$evenements;
 			}
 

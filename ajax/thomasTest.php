@@ -1,26 +1,37 @@
 <?php
 include_once("DAO.class.php");
 
-$result = array() ;
-$result["status"] = "success" ;
-$_REQUEST['nomPersonne']="Artiste";
+	$result = array() ;
+	$result["status"] = "success" ;
+$_REQUEST['idp']="1";
 
-if (isset($_REQUEST['nomPersonne'])) {
-	$result["personnes"] = array();
-	$listePersonnes=$dao->recherchePersonnes($_REQUEST['nomPersonne']);
- if(!empty($listePersonnes)){
+if (isset($_REQUEST['idp'])) {
+	$reponse=$dao->getEvenement($_REQUEST['idp']);
+	if (isset($reponse)) {
 
-	  foreach ($listePersonnes as $pers) {
-					$personne = array() ;
-					$personne['nom'] = $pers['nom'];
-					$personne['idp'] = $pers['id'];
-					array_push($result["personnes"], $personne) ;
-		}
-}else{
-   $result["msg"] = "non Trouvé" ;
- }
-}else{
+	if (isset($reponse)) {
+		$result["evenement"]= array() ;
+		$evenement = array() ;
+		$evenement['nom'] = $reponse->nom;
+		$evenement['dateDeb'] = $reponse->datedebut;
+		$evenement['datefin'] = $reponse->datefin;
+		$evenement['libelle'] = $reponse->libelle;
+		$evenement['heureDeb'] = substr($reponse->heuredebut,0,-3);
+		$evenement['heurefin'] = substr($reponse->heurefin,0,-3);
+		$evenement['organisateurs'] = $reponse->organisateurs;
+		$evenement['idp'] = $reponse->id;
+		$evenement['plages'] = $reponse->plages;
+		$result["evenement"]=$evenement;
+
+	} else {
+		$result["status"] = "error" ;
+		//$result["errMessage"] = "Artiste {$_REQUEST['idArtiste']} inconnue" ;
+	}
+} else {
 	$result["status"] = "error" ;
+	$result["errMessage"] = "Param�tre idPersonne manquant" ;
 }
+}
+		var_dump($result["evenement"]);
 
 ?>

@@ -186,11 +186,11 @@
       }
 
 		function getGroupeDispoAtDate($date) {
-			
+
 
 			$req = "select nom, id
-					from groupes 
-					where id 
+					from groupes
+					where id
 					not in (select idgroupe
 							from plagehoraire ph, evenement e
 							where idevenement = id and datedebut = $date);";
@@ -233,28 +233,28 @@
 			var_dump($result[0]['max']);
 			return (intval($result[0]['max'])+1);
 		}
-	
+
 
 		function insertArtiste($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$prenom,$role,$groupes) {
-			$req ="insert into artistes values ('$mail','$tel','$siteWeb',$id,'$ville','$adresse','$nom','$prenom');";	
-			
+			$req ="insert into artistes values ('$mail','$tel','$siteWeb',$id,'$ville','$adresse','$nom','$prenom');";
+
 			$nbLignes=$this->db->exec($req);
 			var_dump($nbLignes);
 
 			$req ="insert into liaisonartisterole values ($id,'$role');";
 			$nbLignes2=$this->db->exec($req);
 			var_dump($nbLignes2);
-/*			
+/*
 			foreach($role as $value) {
 				$req ="insert into liaisonartisterole values ($id,'$value');";
 				$this->db->exec($req);
 			}
-*/	
+*/
 		}
 
 		function updateArtiste($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$prenom,$role,$groupes) {
 			$req ="update artistes set mail = '$mail' where id=$id;";
-			$this->db->exec($req);	
+			$this->db->exec($req);
 			$req ="update artistes set tel = '$tel'where id=$id;";
 			$this->db->exec($req);
 			$req ="update artistes set siteWeb = '$siteWeb'where id=$id;";
@@ -270,23 +270,23 @@
 			$nbLignes4=$req="update liaisonartisterole set nomRole='$role' where idArtiste=$id;";
 			$nbLignes4=$this->db->exec($req);
 			var_dump($nbLignes4);
-			
-		
+
+
 		}
 
 		function insertAutresContact($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$prenom,$metier,$type) {
-			$req ="insert into autresContact values ('$mail','$tel','$siteWeb',$id,'$ville','$adresse','$nom','$prenom','$metier');";	
+			$req ="insert into autresContact values ('$mail','$tel','$siteWeb',$id,'$ville','$adresse','$nom','$prenom','$metier');";
 			$nbLignes=$this->db->exec($req);
 			var_dump($req);
 
 			$req="insert into liaisonautrescontacttype values($id,'$type');";
-			
-	
+
+
 		}
 
 		function updateAutresContact($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$prenom,$metier,$type) {
 			$req ="update autresContact set mail = '$mail' where id=$id;";
-			$this->db->exec($req);	
+			$this->db->exec($req);
 			$req ="update autresContact set tel = '$tel' where id=$id;";
 			$this->db->exec($req);
 			$req ="update autresContact set siteWeb = '$siteWeb' where id=$id;";
@@ -301,14 +301,14 @@
 			$this->db->exec($req);
 			$req ="update autresContact set prenom = '$metier' where id=$id;";
 			$this->db->exec($req);
-			
+
 			$req="update liaisonautrescontacttype set nomtype='$type' where id=$id;";
 			$this->db->exec($req);
-		
+
 		}
 
 		function insertOrganisateur($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$prenom,$nbPlaces) {
-			$req ="insert into organisateurs values ('$mail','$tel','$siteWeb',$id,'$ville','$adresse','$nom','$prenom',$nbPlaces);";	
+			$req ="insert into organisateurs values ('$mail','$tel','$siteWeb',$id,'$ville','$adresse','$nom','$prenom',$nbPlaces);";
 			$nbLignes=$this->db->exec($req);
 			var_dump($req);
 			var_dump($nbLignes);
@@ -316,7 +316,7 @@
 
 		function updateOrganisateur($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$prenom,$nbPlaces) {
 			$req ="update organisateurs set mail = '$mail' where id=$id;";
-			$this->db->exec($req);	
+			$this->db->exec($req);
 			$req ="update organisateurs set tel = '$tel' where id=$id;";
 			$this->db->exec($req);
 			$req ="update organisateurs set siteWeb = '$siteWeb' where id=$id;";
@@ -334,7 +334,7 @@
 		}
 
 		function insertGroupe($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$prenom,$genres,$artistes,$contacts) {
-			$req ="insert into groupes values ('$mail','$tel','$siteWeb',$id,'$ville','$adresse','$nom');";	
+			$req ="insert into groupes values ('$mail','$tel','$siteWeb',$id,'$ville','$adresse','$nom');";
 			$nbLignes=$this->db->exec($req);
 			var_dump($req);
 			var_dump($nbLignes);
@@ -355,7 +355,7 @@
 
 		function updateGroupe($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$prenom,$genres,$artistes,$contacts) {
 			$req ="update groupes set mail = '$mail' where id=$id;";
-			$this->db->exec($req);	
+			$this->db->exec($req);
 			$req ="update groupes set tel = '$tel' where id=$id;";
 			$this->db->exec($req);
 			$req ="update groupes set siteWeb = '$siteWeb' where id=$id;";
@@ -391,13 +391,13 @@
             $req ="select  o.nom,o.id
 		   from  liaisonevenementorganisateur eo, organisateurs o
 		   where idevenement = $id and idorganisateur=o.id;";
-		var_dump($req);
+	
 	    	$sth = $this->db->query($req);
             $result1 = $sth->fetchAll(PDO::FETCH_ASSOC);
             $result[0]->organisateurs=$result1;
 
             $req ="select  heuredebut, heurefin, idgroupe, g.nom
-		   from  plagehoraire ph, groupes g 
+		   from  plagehoraire ph, groupes g
 		   where idevenement=$id and idgroupe=g.id ;";
 	    	$sth = $this->db->query($req);
             $result2 = $sth->fetchAll(PDO::FETCH_ASSOC);
@@ -411,7 +411,7 @@
 		$req = "select * from role;";
         $sth = $this->db->query($req);
         $result = $sth->fetchAll(PDO::FETCH_COLUMN);
-	
+
 		return $result;
 	}
 
@@ -419,7 +419,7 @@
 		$req = "select * from style;";
         $sth = $this->db->query($req);
         $result = $sth->fetchAll(PDO::FETCH_COLUMN);
-	
+
 		return $result;
 	}
 
@@ -427,7 +427,7 @@
 		$req = "select * from type;";
         $sth = $this->db->query($req);
         $result = $sth->fetchAll(PDO::FETCH_COLUMN);
-	
+
 		return $result;
 	}
 

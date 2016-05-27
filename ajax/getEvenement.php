@@ -11,11 +11,11 @@ include_once("DAO.class.php");
 			$result["evenement"]= array() ;
 			$evenement = array() ;
 			$evenement['nom'] = $reponse->nom;
-			$evenement['datedebut'] = $reponse->datedebut;
-			$evenement['datefin'] = $reponse->datefin;
+			$evenement['dateDeb'] = $reponse->datedebut;
+			$evenement['dateFin'] = $reponse->datefin;
 			$evenement['libelle'] = $reponse->libelle;
-			$evenement['heuredebut'] = $reponse->heuredebut;
-			$evenement['heurefin'] = $reponse->heurefin;
+			$evenement['heureDeb'] = substr($reponse->heuredebut,0,-3);
+	  	$evenement['heureFin'] = substr($reponse->heurefin,0,-3);
 			$evenement['organisateurs'] = $reponse->organisateurs;
 			$evenement['idp'] = $reponse->id;
 			$evenement['plages'] = $reponse->plages;
@@ -30,5 +30,6 @@ include_once("DAO.class.php");
 		$result["errMessage"] = "Param�tre idPersonne manquant" ;
 	}
 
+}
 		echo json_encode($result) ;
 ?>
