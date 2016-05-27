@@ -7,13 +7,13 @@
 
 	if (!isset($_REQUEST['idp'])) {
 		var_dump("Dans le INSERT");
-		$result = $dao->getMaxIdPlus1Groupe();
+		$result = $dao->getMaxIdPlus1Organisateur();
 		$_REQUEST['idp']=$result;
-		$dao->insertGroupe($_REQUEST['mail'],$_REQUEST['tel'],$_REQUEST['siteWeb'],$_REQUEST['idp'],$_REQUEST['ville'],$_REQUEST['adresse'],$_REQUEST['nom'],$_REQUEST['genres'],$_REQUEST['listeArtiste'],$_REQUEST['listeContact']);
+		$dao->insertOrganisateur($_REQUEST['mail'],$_REQUEST['tel'],$_REQUEST['siteWeb'],$_REQUEST['idp'],$_REQUEST['ville'],$_REQUEST['adresse'],$_REQUEST['nom'],$_REQUEST['prenom'],$_REQUEST['nbPlaces']);
 	}
 
 	else {
-		$dao->updateGroupe($_REQUEST['mail'],$_REQUEST['tel'],$_REQUEST['siteWeb'],$_REQUEST['idp'],$_REQUEST['ville'],$_REQUEST['adresse'],$_REQUEST['nom'],$_REQUEST['genres'],$_REQUEST['listeArtiste'],$_REQUEST['listeContact']);
+		$dao->updateOrganisateur($_REQUEST['mail'],$_REQUEST['tel'],$_REQUEST['siteWeb'],$_REQUEST['idp'],$_REQUEST['ville'],$_REQUEST['adresse'],$_REQUEST['nom'],$_REQUEST['prenom'],$_REQUEST['nbPlaces']);
 	}
 
 	

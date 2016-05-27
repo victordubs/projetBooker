@@ -7,13 +7,12 @@ include_once("DAO.class.php");
 	if (isset($_REQUEST['idp'])) {
 		$reponse=$dao->getGroupeDispoAtDate($_REQUEST['idp']);
 		if (isset($reponse)) {
-			$result["evenements"]= array() ;
+			$result["groupesDispo"]= array() ;
 			for($i=0;$i<count($reponse);$i++){
-				$evenements = array() ;
-				$evenements['nom'] = $reponse[$i]['nom'];
-				$evenements['idp'] = $reponse[$i]['id'];
-				$evenements['datedebut'] = $reponse[$i]['datedebut'];
-				$result["evenements"][$i]=$evenements;
+				$groupesDispo = array() ;
+				$groupesDispo['nom'] = $reponse[$i]['nom'];
+				$groupesDispo['idp'] = $reponse[$i]['id'];
+				$result["groupesDispo"][$i]=$groupesDispo;
 			}
 
 		} else {

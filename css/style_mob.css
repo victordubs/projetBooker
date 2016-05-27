@@ -3,14 +3,15 @@
 html{
   /*background-color: #0c67a0 white;*/
   color: #F5F5F5;
-  font-family: "Calibri", Times, sans-serif;
+  font-family: "Verdana", Geneva, sans-serif;
   width: 100%;
 }
 
 
 h1{
   font-size: 500%;
-  width: 100%;
+  width: 99%;
+  padding-left: 1%;
   margin-top: 0%;;
   padding-top: 200px;
   background-color: #2A88AD;
@@ -613,4 +614,69 @@ vertical-align: bottom;
 .cal{
   width:100%;
   margin-top:8%;
+}
+
+
+.calendrier{
+  text-align: center;
+}
+
+.calendrier h1{
+  text-align: left;
+}
+
+.calendrier h2{
+  color: #2A88AD;
+  width: 100%;
+  font-size: 500%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+
+}
+
+.calendrier table{
+  color: black;
+  background-color: #F2F2F2;
+  border-radius: 10px;
+  width: 95%;
+  height: 800px;
+  padding: 2%;
+  margin-left: 2.5%;
+  font-size: 250%;
+}
+.calendrier tbody{
+}
+
+.calendrier tr{
+
+}
+.calendrier td{
+border-radius: 10px;
+text-align: center;
+}
+
+#select{
+  border: solid;
+  border-color: #888888;
+}
+#m30,#m31,#ju1,#ju2,#ju3{
+  color: #888888;
+}
+
+.calendrier #j3{
+  color: #F2F2F2;
+  background-color: #2A88AD;
+}
+.token{
+  margin: 0;
+  margin-top: -10px;
+  padding: 0;
+  font-size: 200%;
+  letter-spacing: -0.12em;
+  color: #2A88AD;
+}
+
+#j3 .token{
+  color: #F2F2F2;
 }

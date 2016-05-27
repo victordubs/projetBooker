@@ -102,7 +102,7 @@ $result = array() ;
 /*	$result = $dao->getGroupe(4);
 	var_dump($result);
 */
-
+/*
 
 		$reponse=$dao->getGroupe(4);
 		if (isset($reponse)) {
@@ -127,5 +127,75 @@ $result = array() ;
 		}
 
 
-		var_dump($result["groupe"]);
+		var_dump($result["groupe"]);*/
+
+
+//test de get groupedispoatdate
+/*	$result = $dao->getGroupeDispoAtDate("'2016-05-05'");
+	var_dump($result);*/
+
+	/*	$reponse=$dao->getGroupeDispoAtDate("'2016-05-05'");
+		if (isset($reponse)) {
+			$result["groupesDispo"]= array() ;
+			for($i=0;$i<count($reponse);$i++){
+				$groupesDispo = array() ;
+				$groupesDispo['nom'] = $reponse[$i]['nom'];
+				$groupesDispo['idp'] = $reponse[$i]['id'];
+				$result["groupesDispo"][$i]=$groupesDispo;
+			}
+
+		} else {
+			$result["status"] = "error" ;
+			//$result["errMessage"] = "Artiste {$_REQUEST['idArtiste']} inconnue" ;
+		}
+
+	var_dump($result["groupesDispo"]);*/
+
+
+//test getevenement
+/*	$result = $dao->getEvenement(1);
+	var_dump($result);*/
+/*
+		$reponse=$dao->getEvenement(1);
+		if (isset($reponse)) {
+
+			$result["evenement"]= array() ;
+			$evenement = array() ;
+			$evenement['nom'] = $reponse->nom;
+			$evenement['datedebut'] = $reponse->datedebut;
+			$evenement['datefin'] = $reponse->datefin;
+			$evenement['libelle'] = $reponse->libelle;
+			$evenement['heuredebut'] = $reponse->heuredebut;
+			$evenement['heurefin'] = $reponse->heurefin;
+			$evenement['organisateurs'] = $reponse->organisateurs;
+			$evenement['idp'] = $reponse->id;
+			$evenement['plages'] = $reponse->plages;
+			$result["evenement"]=$evenement;
+
+		} else {
+			$result["status"] = "error" ;
+			//$result["errMessage"] = "Artiste {$_REQUEST['idArtiste']} inconnue" ;
+		}
+
+		var_dump($result["evenement"]);*/
+
+// test liste evenement
+/*	$result = $dao->getListeEvenements();
+	var_dump($result);*/
+$reponse=$dao->getListeEvenements();
+		if (isset($reponse)) {
+			$result["evenements"]= array() ;
+			for($i=0;$i<count($reponse);$i++){
+				$evenements = array() ;
+				$evenements['nom'] = $reponse[$i]['nom'];
+				$evenements['idp'] = $reponse[$i]['id'];
+				$evenements['datedebut'] = $reponse[$i]['datedebut'];
+				$result["evenements"][$i]=$evenements;
+			}
+
+		} else {
+			$result["status"] = "error" ;
+			//$result["errMessage"] = "Artiste {$_REQUEST['idArtiste']} inconnue" ;
+		}
+var_dump($result["evenements"]);
   ?>
