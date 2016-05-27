@@ -134,7 +134,7 @@ $result = array() ;
 /*	$result = $dao->getGroupeDispoAtDate("'2016-05-05'");
 	var_dump($result);*/
 
-		$reponse=$dao->getGroupeDispoAtDate("'2016-05-05'");
+	/*	$reponse=$dao->getGroupeDispoAtDate("'2016-05-05'");
 		if (isset($reponse)) {
 			$result["groupesDispo"]= array() ;
 			for($i=0;$i<count($reponse);$i++){
@@ -149,5 +149,33 @@ $result = array() ;
 			//$result["errMessage"] = "Artiste {$_REQUEST['idArtiste']} inconnue" ;
 		}
 
-	var_dump($result["groupesDispo"]);
+	var_dump($result["groupesDispo"]);*/
+
+
+//test getevenement
+/*	$result = $dao->getEvenement(1);
+	var_dump($result);*/
+
+		$reponse=$dao->getEvenement(1);
+		if (isset($reponse)) {
+
+			$result["evenement"]= array() ;
+			$evenement = array() ;
+			$evenement['nom'] = $reponse->nom;
+			$evenement['datedebut'] = $reponse->datedebut;
+			$evenement['datefin'] = $reponse->datefin;
+			$evenement['libelle'] = $reponse->libelle;
+			$evenement['heuredebut'] = $reponse->heuredebut;
+			$evenement['heurefin'] = $reponse->heurefin;
+			$evenement['organisateurs'] = $reponse->organisateurs;
+			$evenement['idp'] = $reponse->id;
+			$evenement['plages'] = $reponse->plages;
+			$result["evenement"]=$evenement;
+
+		} else {
+			$result["status"] = "error" ;
+			//$result["errMessage"] = "Artiste {$_REQUEST['idArtiste']} inconnue" ;
+		}
+
+		var_dump($result["evenement"]);
   ?>

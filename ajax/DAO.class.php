@@ -76,12 +76,6 @@
             return $result[0];
         }
 
-        function getEvenement($id) {
-            $req = "select * from evenement where id = $id;";
-            $sth = $this->db->query($req);
-            $result = $sth->fetchAll(PDO::FETCH_CLASS, 'Evenement');
-            return $result;
-        }
 
         function getListeArtistes() {
             $req = "select * from artiste order by nom;";
@@ -386,6 +380,32 @@
 				$this->db->exec($req);
 			}
 		}
+
+        function getEvenement($id) {
+            $req = "select *
+		    from evenement
+		    where id=$id; ";
+            $sth = $this->db->query($req);
+            $result = $sth->fetchAll(PDO::FETCH_CLASS, 'Evenement');
+
+            $req ="select  o.nom,o.id
+		   from  liaisonevenementorganisateur eo, organisateurs o
+		   where idevenement = $id and idorganisateur=o.id;";
+		var_dump($req);
+	    	$sth = $this->db->query($req);
+            $result1 = $sth->fetchAll(PDO::FETCH_ASSOC);
+            $result[0]->organisateurs=$result1;
+
+            $req ="select  heuredebut, heurefin, idgroupe, g.nom
+		   from  plagehoraire ph, groupes g 
+		   where idevenement=$id and idgroupe=g.id ;";
+	    	$sth = $this->db->query($req);
+            $result2 = $sth->fetchAll(PDO::FETCH_ASSOC);
+            $result[0]->plages=$result2;
+
+
+            return $result[0];
+          }
 
   }
 ?>
