@@ -6,7 +6,7 @@ include_once("DAO.class.php");
 	if (isset($_REQUEST['idp'])) {
 		$reponse=$dao->getOrganisateur($_REQUEST['idp']);
 		if (isset($reponse)) {
-
+			$result["organisateur"]=array();
 			$artiste = array() ;
 			$artiste['nom'] = $reponse->nom;
 			$artiste['prenom'] = $reponse->prenom;
@@ -18,7 +18,7 @@ include_once("DAO.class.php");
 			$artiste['idp'] = $reponse->id;
 			$artiste['evenements'] = $reponse->lesEvenements;
 			$artiste['nombrePlaces'] = $reponse->nombreplaces;
-			$result["artiste"]=$artiste;
+			$result["organisateur"]=$artiste;
 
 		} else {
 			$result["status"] = "error" ;
