@@ -7,18 +7,18 @@ include_once("DAO.class.php");
 		$reponse=$dao->getOrganisateur($_REQUEST['idp']);
 		if (isset($reponse)) {
 
-			$result["evenement"]= array() ;
-			$evenement = array() ;
-			$evenement['nom'] = $reponse->nom;
-			$evenement['datedebut'] = $reponse->datedebut;
-			$evenement['datefin'] = $reponse->datefin;
-			$evenement['libelle'] = $reponse->libelle;
-			$evenement['heuredebut'] = $reponse->heuredebut;
-			$evenement['heurefin'] = $reponse->heurefin;
-			$evenement['organisateurs'] = $reponse->organisateurs;
-			$evenement['idp'] = $reponse->id;
-			$evenement['plages'] = $reponse->plages;
-			$evenement["evenement"]=$evenement;
+			$artiste = array() ;
+			$artiste['nom'] = $reponse->nom;
+			$artiste['prenom'] = $reponse->prenom;
+			$artiste['ville'] = $reponse->ville;
+			$artiste['adresse'] = $reponse->adresse;
+			$artiste['tel'] = $reponse->tel;
+			$artiste['mail'] = $reponse->mail;
+			$artiste['siteWeb'] = $reponse->siteweb;
+			$artiste['idp'] = $reponse->id;
+			$artiste['evenements'] = $reponse->lesEvenements;
+			$artiste['nombrePlaces'] = $reponse->nombreplaces;
+			$result["artiste"]=$artiste;
 
 		} else {
 			$result["status"] = "error" ;

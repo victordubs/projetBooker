@@ -407,5 +407,14 @@
             return $result[0];
           }
 
+	function getListeRole() {
+		$req = "select * from role;";
+        $sth = $this->db->query($req);
+        $result = $sth->fetchAll(PDO::FETCH_COLUMN);
+	
+		return $result;
+	}
+
+
   }
 ?>
