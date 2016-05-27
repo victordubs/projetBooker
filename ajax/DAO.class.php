@@ -190,5 +190,21 @@
               $result = $sth->fetchAll(PDO::FETCH_ASSOC);
               return $result;
       }
+
+		function getGroupeDispoAtDate($date) {
+			
+
+			$req = "select nom, id
+					from groupes 
+					where id 
+					not in (select idgroupe
+							from plagehoraire ph, evenement e
+							where idevenement = id and datedebut = $date);";
+
+			$sth = $this->db->query($req);
+            $result = $sth->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+		}
+
   }
 ?>

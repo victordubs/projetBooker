@@ -102,7 +102,7 @@ $result = array() ;
 /*	$result = $dao->getGroupe(4);
 	var_dump($result);
 */
-
+/*
 
 		$reponse=$dao->getGroupe(4);
 		if (isset($reponse)) {
@@ -127,5 +127,27 @@ $result = array() ;
 		}
 
 
-		var_dump($result["groupe"]);
+		var_dump($result["groupe"]);*/
+
+
+//test de get groupedispoatdate
+/*	$result = $dao->getGroupeDispoAtDate("'2016-05-05'");
+	var_dump($result);*/
+
+		$reponse=$dao->getGroupeDispoAtDate("'2016-05-05'");
+		if (isset($reponse)) {
+			$result["groupesDispo"]= array() ;
+			for($i=0;$i<count($reponse);$i++){
+				$groupesDispo = array() ;
+				$groupesDispo['nom'] = $reponse[$i]['nom'];
+				$groupesDispo['idp'] = $reponse[$i]['id'];
+				$result["groupesDispo"][$i]=$groupesDispo;
+			}
+
+		} else {
+			$result["status"] = "error" ;
+			//$result["errMessage"] = "Artiste {$_REQUEST['idArtiste']} inconnue" ;
+		}
+
+	var_dump($result["groupesDispo"]);
   ?>
