@@ -16,7 +16,7 @@ if (isset($_REQUEST['nomPersonne'])) {
 					array_push($result["personnes"], $personne) ;
     }
   }else{
-   $result["msg"] = "non Trouvé" ;
+   $result["msg"] = "La personne recherchée n'est pas présente" ;
  }
 }else{
 	$result["status"] = "error" ;
