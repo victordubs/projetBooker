@@ -656,6 +656,7 @@ border-radius: 10px;
 text-align: center;
 }
 
+
 .calendrier [selected="selected"] {
   border: solid;
   border-color: #888888;
@@ -664,7 +665,7 @@ text-align: center;
   color: #888888;
 }
 
-.calendrier #j03{
+.calendrier [day="today"]{
   color: #F2F2F2;
   background-color: #2A88AD;
 }
@@ -677,7 +678,7 @@ text-align: center;
   color: #2A88AD;
 }
 
-#j03 .token{
+.calendrier [day="today"] .token{
   color: #F2F2F2;
 }
 

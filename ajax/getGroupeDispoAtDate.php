@@ -4,8 +4,8 @@ include_once("DAO.class.php");
 	$result["status"] = "success" ;
 
 
-	if (isset($_REQUEST['idp'])) {
-		$reponse=$dao->getGroupeDispoAtDate($_REQUEST['idp']);
+	if (isset($_REQUEST['dateDeb'])) {
+		$reponse=$dao->getGroupeDispoAtDate($_REQUEST['dateDeb']);
 		if (isset($reponse)) {
 			$result["groupesDispo"]= array() ;
 			for($i=0;$i<count($reponse);$i++){
@@ -16,9 +16,13 @@ include_once("DAO.class.php");
 			}
 
 		} else {
-			$result["status"] = "error" ;
-			//$result["errMessage"] = "Artiste {$_REQUEST['idArtiste']} inconnue" ;
+			$result["status"] = "error"  ;
+			$result["errMessage"] = "réponse vide" ;
 		}
-
+}else {
+	$result["status"] = "error" ;
+	//$rep=$_REQUEST['dateDeb'];
+	$result["errMessage"] ="non set";
+}
 		echo json_encode($result) ;
 ?>

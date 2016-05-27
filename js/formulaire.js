@@ -223,7 +223,14 @@ function ajouterCalendrier(){
 //----------------------------------------------------------------------------------------------------------------------
 //-----------------------------------AJOUTER CALENDRIER-----------------------------------------------------------------
 function eventCalendrier(){
+
+	var d = new Date();
+  var n = d.getDate();
+	$('#j'+n).attr('day','today');
 	ajouterCalendrier();
+	$('#add').on('click',function() {
+				$('#content').load('pages/formulaireEvenement.html',evenementFormulaireEve);
+	});
 
 	$('td').on('click',function() {
 				$('td').attr('selected',false);
@@ -727,9 +734,9 @@ function getListeGroupesDate(i) {
 		if(veriferDates()==false){
 					var data='dateDeb=' + $('#dateDeb').val() +
 								   '&dateFin=' + $('#dateFin').val();
-
+alert(data);
 					$.ajax({	type: "POST",
-								url: "ajax/getListeArtistes.php",
+								url: "ajax/getGroupeDispoAtDate.php",
 								success: function(data, textStatus, jqXHR) {
 								var result = JSON.parse(data) ;
 								if (result.status == 'success') {
@@ -748,12 +755,15 @@ function getListeGroupesDate(i) {
 									$('#selectGroupe'+i).append('<option>Aucun</option>')
 									$('#lesGroupes').append($divGroupe);
 
-									for (var id=0; id < result.artistes.length; id++) {
-										 $('#selectGroupe'+i).append('<option>'+result.artistes[id].nom+'</option>');
+									if(result.groupesDispo){
+											for (var id=0; id < result.groupesDispo.length; id++) {
+										 					$('#selectGroupe'+i).append('<option>'+result.groupesDispo[id].nom+'</option>');
+											}
 									}
-
 									 $divGroupe.append('</select></label><input type="time" id="heureG'+i+'" placeholder="Heure de passage">');
 									 $('#lesGroupes').append($divGroupe);
+							 }else{
+								 alert(result.errMessage);
 							 }
 							},
 							error: function() {
@@ -938,7 +948,7 @@ function evenementFormulaireContact() {
 		});
 }
 //-----------------------------------------------------------------------------------------------------------------
-//-----------------------------------CREER LISTE METIER---------------------------------------------------
+//-----------------------------------CREER LISTE METIER------------------------------------------------------------
 function getMetiers(){
 				$.ajax({	type: "POST",
 						url: "ajax/getListeType.php",
