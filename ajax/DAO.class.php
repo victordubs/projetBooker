@@ -187,7 +187,6 @@
 
 		function getGroupeDispoAtDate($date) {
 
-
 			$req = "select nom, id
 					from groupes
 					where id

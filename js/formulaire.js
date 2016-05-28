@@ -9,7 +9,7 @@ var erreurs = {
 var autreChamp = {
 	nbRole : 1,
 	nbGenre : 1,
-	nbMetier : 1,
+	nbType : 1,
 }
 
 var nbGroupeEvenement=0;
@@ -684,6 +684,7 @@ function evenementFormulaireEve() {
 
 	$('#info2').hide();
 	$('#info3').hide();
+	$('#info4').hide();
 
 	$('.btnAjouterContact').on('click',function() {
 			enregistrerEvenement();
@@ -693,13 +694,15 @@ function evenementFormulaireEve() {
 	$('#dateFin').bind('change', function() {
 				$('#info2').show();
 				$('#info3').show();
+				$('#info4').show();
 				getListeGroupesDate(i);
 				 i=i+1;
 				 getListeOrganisateurs();
+				 getListeContacts();
 			});
 
-	$('.btnAjouterChamp').on('click',function() {
-		 getListeGroupes(i);
+	$('.btnAjouterGroupes').on('click',function() {
+		 getListeGroupesDate(i);
 		 i=i+1;
 	});
 }
@@ -715,7 +718,10 @@ function getListeOrganisateurs(){
 					// Boucle pour remplir la liste des Artistes
 					  if(result.personnes){
 							 for (var id=0; id < result.personnes.length; id++) {
-								 $('#selectOrganisateur').append('<option>'+result.personnes[id].nom+'</option>');
+							 				$OptionGroupe = $(document.createElement('option'));
+							 				$OptionGroupe.attr('idp',result.personnes[id].idp);
+							 				$OptionGroupe.html(result.personnes[id].nom);
+							 				$('#selectOrganisateur').append($OptionGroupe);
 							 }
 					}
 					 }
@@ -737,6 +743,7 @@ function getListeGroupesDate(i) {
 alert(data);
 					$.ajax({	type: "POST",
 								url: "ajax/getGroupeDispoAtDate.php",
+								data:data,
 								success: function(data, textStatus, jqXHR) {
 								var result = JSON.parse(data) ;
 								if (result.status == 'success') {
@@ -757,7 +764,11 @@ alert(data);
 
 									if(result.groupesDispo){
 											for (var id=0; id < result.groupesDispo.length; id++) {
-										 					$('#selectGroupe'+i).append('<option>'+result.groupesDispo[id].nom+'</option>');
+
+															$OptionGroupe = $(document.createElement('option'));
+															$OptionGroupe.attr('idp',result.groupesDispo[id].id);
+															$OptionGroupe.html(result.groupesDispo[id].nom);
+															$('#selectGroupe'+i).append($OptionGroupe);
 											}
 									}
 									 $divGroupe.append('</select></label><input type="time" id="heureG'+i+'" placeholder="Heure de passage">');
@@ -811,14 +822,11 @@ function veriferDates(){
 
 function eventEvenement(){
 	$('.option').hide();
-	$('#edit').on('click',function() {
-		$('.option').show();
-		$('.option').focus();
-	});
 
-	$('.option').focusout(function() {
-		alert(pouet);
-		$('.option').hide();
+	$('#edit').on('click',function() {
+		// console.log('click sur edit');
+		$('.option').toggle();
+		setTimeout(function(){ $(':NOT(.option)').bind('click', clickHandler); }, 200);
 	});
 
 	$('#modifier').click(function(){
@@ -832,18 +840,11 @@ function eventEvenement(){
 
 function 	evenementContact(){
 	$('.option').hide();
-	/*$('#edit').on('click',function() {
-		$('.option').show();
-		$('.option').focus();
-	});*/
 
 	$('#edit').on('click',function() {
+		// console.log('click sur edit');
 		$('.option').toggle();
-		alert("ouvre");
-	});
-
-	$('.option').focusout(function() {
-		$('.option').hide();
+		setTimeout(function(){ $(':NOT(.option)').bind('click', clickHandler); }, 200);
 	});
 
 	$('#modifier').click(function(){
@@ -856,17 +857,11 @@ function 	evenementContact(){
 
 function 	evenementGroupe(){
 	$('.option').hide();
-	/*$('#edit').on('click',function() {
-		$('.option').show();
-		$('.option').focus();
-	});*/
 
 	$('#edit').on('click',function() {
+		// console.log('click sur edit');
 		$('.option').toggle();
-	});
-
-	$('.option').focusout(function() {
-		$('.option').hide();
+		setTimeout(function(){ $(':NOT(.option)').bind('click', clickHandler); }, 200);
 	});
 
 	$('#modifier').click(function(){
@@ -879,18 +874,11 @@ function 	evenementGroupe(){
 
 function 	evenementOrganisateur(){
 	$('.option').hide();
-	/*$('#edit').on('click',function() {
-		$('.option').show();
-		$('.option').focus();
-	});*/
 
 	$('#edit').on('click',function() {
+		// console.log('click sur edit');
 		$('.option').toggle();
-	});
-
-	$('.option').focusout(function() {
-
-		$('.option').hide();
+		setTimeout(function(){ $(':NOT(.option)').bind('click', clickHandler); }, 200);
 	});
 
 	$('#modifier').click(function(){
@@ -936,11 +924,11 @@ function ajouterAutreChamp(place,placeAttr,nbAutre){
 
 
 function evenementFormulaireContact() {
-  getMetiers();
+  getTypes();
 
-	$('#btnAjouterMetier').on('click',function() {
-			   ajouterAutreChamp($(this),$(this).attr('new'),autreChamp.nbRole);
-			   autreChamp.nbMetier++;
+	$('#btnAjouterType').on('click',function() {
+			   ajouterAutreChamp($(this),$(this).attr('new'),autreChamp.nbType);
+			   autreChamp.nbType++;
 	});
 
 	$('.btnAjouterContact').on('click',function() {
@@ -949,7 +937,7 @@ function evenementFormulaireContact() {
 }
 //-----------------------------------------------------------------------------------------------------------------
 //-----------------------------------CREER LISTE METIER------------------------------------------------------------
-function getMetiers(){
+function getTypes(){
 				$.ajax({	type: "POST",
 						url: "ajax/getListeType.php",
 						success: function(data, textStatus, jqXHR) {
@@ -957,7 +945,7 @@ function getMetiers(){
 						if (result.status == 'success') {
 					// Boucle pour remplir la liste des métiers
 							 for (var id=0; id < result.types.length; id++) {
-								 $('#metiers').append('<option>'+result.types[id]+'</option>');
+								 $('#types').append('<option>'+result.types[id]+'</option>');
 							 }
 					 }
 					},
@@ -1079,7 +1067,6 @@ $.ajax({	type: "POST",
 
 								 $OptionGroupe = $(document.createElement('option'));
 								 $OptionGroupe.attr('idp',result.personnes[id].idp);
-								// $OptionGroupe.attr('',i);
 								 $OptionGroupe.html(result.personnes[id].nom);
 								 $('#listeArtiste').append($OptionGroupe);
 						 }
@@ -1165,7 +1152,7 @@ function InitialiserData() {
 							'&tel=' + $('#tel').val() +
 							'&mail=' + $('#mail').val();
 
-	if(document.getElementById('idp')!="") data=data+'&idp=' + document.getElementById('idp');
+	if(document.getElementById('idp')!=null) data=data+'&idp=' + document.getElementById('idp');
 	if($('#adresse').val()!="") data=data+'&addresse=' + $('#adresse').val();
 	if($('#ville').val()!="")   data=data+'&ville=' + $('#ville').val();
 	if($('#siteWeb').val()!="") data=data+'&siteWeb=' + $('#siteWeb').val();
@@ -1187,12 +1174,45 @@ function enregistrerEvenement() {
 					if($('#ville').val()!="") data=data+'&ville=' + $('#ville').val();
 					if($('#heureDebut').val()!="") data=data+'&heureDebut=' + $('#heureDebut').val();
 					if($('#heureFin').val()!="") data=data+'&heureFin=' + $('#heureFin').val();
-					if($('#organisateurs').val()!=null) data=data+'&organisateurs=' + $('#organisateurs').val();
 
-					for(var i=1;i<=nbGroupeEvenement;i++){
-							if($('#selectGroupe'+i).val()!=null) data=data+'&nomG'+i+'='+$('#selectGroupe'+i).val();
-							if($('#heureG'+i).val()!="") data=data+'&heureG'+i+'='+$('#heureG'+i).val();
-					}
+
+					// TABLEAU LISTE ORGANISATEURS SELECTIONNER
+							if($('#selectOrganisateur').val()!=null){
+								var organisateurs="";
+								$('#selectOrganisateur option').each(function() {
+									 if ($(this).is(':selected')) {
+											if(organisateurs ==""){organisateurs=$(this).attr("idp");}
+											 else{organisateurs= organisateurs+","+$(this).attr("idp");}
+									}
+							 });
+						 data=data+'&organisateurs=' + '["'+organisateurs+'"]';
+							}
+
+					// TABLEAU LISTE CONTACTS SELECTIONNER
+									if($('#listeContact').val()!=null){
+										var contacts="";
+										$('#listeContact option').each(function() {
+											 if ($(this).is(':selected')) {
+													if(contacts ==""){contacts=$(this).attr("idp");}
+													 else{contacts= contacts+","+$(this).attr("idp");}
+											}
+									 });
+								 data=data+'&autresContact=' + '["'+contacts+'"]';
+									}
+	// TABLEAU LISTE GROUPES SELECTIONNER
+
+							if(nbGroupeEvenement!=0){
+								var groupes="";
+								for(var i=1;i<=nbGroupeEvenement;i++){
+									if($('#selectGroupe'+i).val()!=null){
+												if ($('#selectGroupe'+i+' option').is(':selected')) {
+													 if(groupes ==""){groupes='"'+$('#selectGroupe'+i+' option').attr('idp')+'":"'+$('#heureG'+i).val()+'"';}
+														else{groupes= groupes+',"'+$('#selectGroupe'+i+' option').attr('idp')+'":"'+$('#heureG'+i).val()+'"';}
+											 }
+									}
+								 }
+								 data=data+'&groupes=' + '{'+groupes+'}';
+								}
 
 				alert(data);
 				$.ajax({	type: "POST",
@@ -1217,18 +1237,29 @@ function enregistrerArtiste() {
 	// Ici normalement, les contr�les sur les champs requis, les formats, ....
 				if(verifierChampObligatoire()==false){
 						var data=InitialiserData();
-      //Ajoute valeur dans data si Roles et Genres ont été séléctionnés
-						if($('#roles').val()!=null) data=data+'&roles=' + $('#roles').val();
-						//if($('#genres').val()!=null) data=data+'&genres=' + $('#genres').val();
-			//Ajoute valeur dans data des autres Roles et Genres
-						for(var i=1;i<autreChamp.nbRole;i++){
-							data=data+'&autreRole'+i+'='+$('#autreRole'+i).val();
+
+						if($('#roles').val()!=null){
+						   var roles="";
+						   $('#roles option').each(function() {
+							   	if ($(this).is(':selected')) {
+										 if(roles ==""){roles=$(this).val();}
+									  	else{roles= roles+","+$(this).val();}
+								  }
+					  	});
+						data=data+'&roles=' + '["'+roles+'"]';
+					  }
+
+						if(autreChamp.nbRole!=1){
+
+							var newRoles="";
+							for(var i=1;i<autreChamp.nbRole;i++){
+								if(newRoles ==""){newRoles=$('#autreRole'+i).val();}
+								else{newRoles= newRoles+","+$('#autreRole'+i).val();}
+							}
+
+							data=data+'&newRoles=' + '["'+newRoles+'"]';
 						}
-/*
-						for(var i=1;i<autreChamp.nbGenre;i++){
-							data=data+'&autreGenre'+i+'='+$('#autreGenre'+i).val();
-						}
-*/
+
 						alert(data);
 
 				$.ajax({	type: "POST",
@@ -1254,20 +1285,39 @@ function enregistrerContact() {
 	// Ici normalement, les contr�les sur les champs requis, les formats, ....
 		if(verifierChampObligatoire()==false){
 				var data=InitialiserData();
-				if($('#metiers').val()!=null) data=data+'&metiers=' + $('#metiers').val();
-				if($('#type').val()!=null) data=data+'&type=' + $('#type').val();
-	//Ajoute valeur dans data des autres métier
-				for(var i=1;i<autreChamp.nbMetier;i++){
-					data=data+'&autreMetier'+i+'='+$('#autreMetier'+i).val();
+
+					if($('#types').val()!=null){
+						 var types="";
+					   $('#types option').each(function() {
+    						if ($(this).is(':selected')) {
+										if(types ==""){types=$(this).val();}
+										else{types= types+","+$(this).val();}
+    						}
+					  });
+						data=data+'&types=' + '["'+types+'"]';
+					}
+
+
+			if(autreChamp.nbType!=1){
+
+				var newTypes="";
+				for(var i=1;i<autreChamp.nbType;i++){
+					if(newTypes ==""){newTypes=$('#autreType'+i).val();}
+					else{newTypes= newTypes+","+$('#autreType'+i).val();}
 				}
 
+				data=data+'&newTypes=' + '["'+newTypes+'"]';
+			}
+			alert(data);
 				$.ajax({	type: "POST",
-						url: "ajax/saveArtiste.php",
+						url: "ajax/saveAutresContact.php",
 						data: data, // On passe les informations saisies � l'�cran
 						success: function(data, textStatus, jqXHR) {
 							var result = JSON.parse(data) ;
 							if (result.status == 'success') {
-						  		alert('L\'enregistrement du contact a été effectué');
+								alert("sucess");
+						  		//alert('L\'enregistrement du contact a été effectué');
+									alert("le result"+result.types);
 							}
 							else {
 								alert('erreur lors de l\'enregistrement');
@@ -1289,24 +1339,57 @@ function enregistrerGroupe() {
 								'&tel=' + $('#tel').val() +
 								'&mail=' + $('#mail').val();
 
-    if(document.getElementById('idp')!="") data=data+'&idp=' + document.getElementById('idp');
+    if(document.getElementById('idp')!=null) data=data+'&idp=' + document.getElementById('idp');
 		if($('#adresse').val()!="") data=data+'&addresse=' + $('#adresse').val();
 		if($('#ville').val()!="")   data=data+'&ville=' + $('#ville').val();
 		if($('#siteWeb').val()!="") data=data+'&siteWeb=' + $('#siteWeb').val();
 
-		if($('#genres').val()!=null) data=data+'&genres=' + $('#genres').val();
+// TABLEAU LISTE GENRES SELECTIONNER
+  	if($('#genres').val()!=null){
+		   var genres="";
+		   $('#genres option').each(function() {
+			   	if ($(this).is(':selected')) {
+						 if(genres ==""){genres=$(this).val();}
+					  	else{genres= genres+","+$(this).val();}
+				 }
+	  	});
+		data=data+'&genres=' + '["'+genres+'"]';
+	  }
+// CREATION D'UN TABLEAU SI D'AUTRE GENRE SON AJOUTER
+		if(autreChamp.nbGenre!=1){
+
+			var newGenres="";
+			for(var i=1;i<autreChamp.nbGenre;i++){
+				if(newGenres ==""){newGenres=$('#autreGenre'+i).val();}
+				else{newGenres= newGenres+","+$('#autreGenre'+i).val();}
+			}
+
+			data=data+'&newGenres=' + '["'+newGenres+'"]';
+		}
+// TABLEAU LISTE ARTISTES SELECTIONNER
 		if($('#listeArtiste').val()!=null){
-
+			 var artistes="";
+			 $('#listeArtiste option').each(function() {
+					if ($(this).is(':selected')) {
+						 if(artistes ==""){artistes='"'+$(this).attr('idp')+'":"'+$(this).val()+'"';}
+							else{artistes= artistes+',"'+$(this).attr('idp')+'":"'+$(this).val()+'"';}
+				 }
+			});
+		data=data+'&artistes=' + '{'+artistes+'}';
 		}
 
-
-		data=data+'&listeArtiste=' + $('#listeArtiste').val();
-
-		if($('#listeContact').val()!=null) data=data+'&listeContact=' + $('#listeContact').val();
-
-		for(var i=1;i<autreChamp.nbGenre;i++){
-			data=data+'&autreGenre'+i+'='+$('#autreGenre'+i).val();
+// TABLEAU LISTE CONTACTS SELECTIONNER
+		if($('#listeContact').val()!=null){
+			var Contacts="";
+			$('#listeContact option').each(function() {
+				 if ($(this).is(':selected')) {
+						if(Contacts ==""){Contacts=$(this).attr("idp");}
+						 else{Contacts= Contacts+","+$(this).attr("idp");}
+				}
+		 });
+	 data=data+'&autresContact=' + '["'+Contacts+'"]';
 		}
+
 		alert(data);
 		$.ajax({	type: "POST",
 				url: "ajax/saveGroupe.php",
@@ -1315,6 +1398,7 @@ function enregistrerGroupe() {
 					var result = JSON.parse(data) ;
 					if (result.status == 'success') {
 						  alert("Le groupe a été ajouté");
+							alert("resut"+result.artistes);
 					} else {
 						alert('erreur lors de l\'enregistrement');
 					}

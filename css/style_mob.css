@@ -507,7 +507,7 @@ label *{
     padding: 10%;
 }
 
-.btnAjouterContact{
+.btnAjouterContact, .btnAjouterGroupes{
   width: 90%;
 }
 

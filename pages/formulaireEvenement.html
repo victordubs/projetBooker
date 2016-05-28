@@ -13,6 +13,7 @@
          <label><input type="date" id="dateFin" placeholder="Date fin"></label>
          <label><input type="time" id="heureDeb" placeholder="Heure début"></label>
          <label><input type="time" id="heureFin" placeholder="Heure fin"></label>
+         <label><textarea rows="4" cols="100" id="libelle" placeholder="Description de l'organisateur"></textarea></label>
 
     </div>
 
@@ -21,7 +22,7 @@
         <div class="section"><h2>Information sur les groupes</h2></div>
         <div class="inner-wrap">
             <div id="lesGroupes"></div>
-            <button type="button" class="btnAjouterChamp">Ajouter Groupe</button>
+            <button type="button" class="btnAjouterGroupes">Ajouter Groupe</button>
         </div>
      </div>
 
@@ -33,6 +34,14 @@
           <select id='selectOrganisateur' multiple></select>
       </div>
   </div>
+
+  <!-- Informations sur les contacts  - - - - - - - - - - - - - - - -->
+     <div id="info4">
+      <div class="section"><h2>Information sur les autres contacts</h2></div>
+        <div class="inner-wrap">
+            <select id='listeContact' multiple></select>
+        </div>
+    </div>
 
     <div class="button-section">
        <input type="button" class="btnAjouterContact" value="Ajouter l'événement" />
