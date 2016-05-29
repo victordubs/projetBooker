@@ -232,28 +232,36 @@
 			//var_dump($result[0]['max']);
 			return (intval($result[0]['max'])+1);
 		}
+		
+		function getMaxIdPlus1Evenement() {
+			$req="select MAX(id) from evenement;";
+			$sth = $this->db->query($req);
+            $result = $sth->fetchAll(PDO::FETCH_ASSOC);
+			var_dump($result[0]['max']);
+			return (intval($result[0]['max'])+1);
+		}
 
 
 		function insertArtiste($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$prenom,$role,$groupes) {
-			$req ="insert into artistes values ('$mail','$tel','$siteWeb',$id,'$ville','$adresse','$nom','$prenom');";
-
+			$req ="insert into artistes values ('$mail','$tel','$siteWeb',$id,'$ville','$adresse','$nom','$prenom');";	
+			
 			$nbLignes=$this->db->exec($req);
-		//	var_dump($nbLignes);
+			var_dump($nbLignes);
 
 			$req ="insert into liaisonartisterole values ($id,'$role');";
 			$nbLignes2=$this->db->exec($req);
-		//	var_dump($nbLignes2);
-/*
+			var_dump($nbLignes2);
+/*			
 			foreach($role as $value) {
 				$req ="insert into liaisonartisterole values ($id,'$value');";
 				$this->db->exec($req);
 			}
-*/
+*/	
 		}
 
 		function updateArtiste($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$prenom,$role,$groupes) {
 			$req ="update artistes set mail = '$mail' where id=$id;";
-			$this->db->exec($req);
+			$this->db->exec($req);	
 			$req ="update artistes set tel = '$tel'where id=$id;";
 			$this->db->exec($req);
 			$req ="update artistes set siteWeb = '$siteWeb'where id=$id;";
@@ -268,24 +276,24 @@
 			$this->db->exec($req);
 			$nbLignes4=$req="update liaisonartisterole set nomRole='$role' where idArtiste=$id;";
 			$nbLignes4=$this->db->exec($req);
-			//var_dump($nbLignes4);
-
-
+			var_dump($nbLignes4);
+			
+		
 		}
 
 		function insertAutresContact($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$prenom,$metier,$type) {
-			$req ="insert into autresContact values ('$mail','$tel','$siteWeb',$id,'$ville','$adresse','$nom','$prenom','$metier');";
+			$req ="insert into autresContact values ('$mail','$tel','$siteWeb',$id,'$ville','$adresse','$nom','$prenom','$metier');";	
 			$nbLignes=$this->db->exec($req);
-		//	var_dump($req);
+			var_dump($req);
 
 			$req="insert into liaisonautrescontacttype values($id,'$type');";
-
-
+			
+	
 		}
 
 		function updateAutresContact($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$prenom,$metier,$type) {
 			$req ="update autresContact set mail = '$mail' where id=$id;";
-			$this->db->exec($req);
+			$this->db->exec($req);	
 			$req ="update autresContact set tel = '$tel' where id=$id;";
 			$this->db->exec($req);
 			$req ="update autresContact set siteWeb = '$siteWeb' where id=$id;";
@@ -300,22 +308,22 @@
 			$this->db->exec($req);
 			$req ="update autresContact set prenom = '$metier' where id=$id;";
 			$this->db->exec($req);
-
+			
 			$req="update liaisonautrescontacttype set nomtype='$type' where id=$id;";
 			$this->db->exec($req);
-
+		
 		}
 
 		function insertOrganisateur($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$prenom,$nbPlaces) {
-			$req ="insert into organisateurs values ('$mail','$tel','$siteWeb',$id,'$ville','$adresse','$nom','$prenom',$nbPlaces);";
+			$req ="insert into organisateurs values ('$mail','$tel','$siteWeb',$id,'$ville','$adresse','$nom','$prenom',$nbPlaces);";	
 			$nbLignes=$this->db->exec($req);
-		//	var_dump($req);
-		//	var_dump($nbLignes);
+			var_dump($req);
+			var_dump($nbLignes);
 		}
 
 		function updateOrganisateur($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$prenom,$nbPlaces) {
 			$req ="update organisateurs set mail = '$mail' where id=$id;";
-			$this->db->exec($req);
+			$this->db->exec($req);	
 			$req ="update organisateurs set tel = '$tel' where id=$id;";
 			$this->db->exec($req);
 			$req ="update organisateurs set siteWeb = '$siteWeb' where id=$id;";
@@ -332,11 +340,11 @@
 			$this->db->exec($req);
 		}
 
-		function insertGroupe($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$prenom,$genres,$artistes,$contacts) {
-			$req ="insert into groupes values ('$mail','$tel','$siteWeb',$id,'$ville','$adresse','$nom');";
+		function insertGroupe($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$genres,$artistes,$contacts) {
+			$req ="insert into groupes values ('$mail','$tel','$siteWeb',$id,'$ville','$adresse','$nom');";	
 			$nbLignes=$this->db->exec($req);
-		//	var_dump($req);
-		//	var_dump($nbLignes);
+			var_dump($req);
+			var_dump($nbLignes);
 
 			foreach($genres as $value) {
 				$req ="insert into liaisongroupestyle values ($id,'$value');";
@@ -352,9 +360,9 @@
 			}
 		}
 
-		function updateGroupe($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$prenom,$genres,$artistes,$contacts) {
+		function updateGroupe($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$genres,$artistes,$contacts) {
 			$req ="update groupes set mail = '$mail' where id=$id;";
-			$this->db->exec($req);
+			$this->db->exec($req);	
 			$req ="update groupes set tel = '$tel' where id=$id;";
 			$this->db->exec($req);
 			$req ="update groupes set siteWeb = '$siteWeb' where id=$id;";
@@ -378,6 +386,52 @@
 				$req ="update liaisongroupeautrescontact set idautrescontact=$value where idgroupe=$id;";
 				$this->db->exec($req);
 			}
+		}
+
+		function insertEvenement($id,$nom,$datedebut,$datefin,$libelle,$heuredebut,$heurefin,$plages,$organisateurs) {
+			$req ="insert into evenement values ($id,'$nom','$datedebut',$datefin,'$libelle','$heuredebut','$heurefin');";	
+			$nbLignes=$this->db->exec($req);
+			var_dump($req);
+			var_dump($nbLignes);
+
+			foreach($organisateurs as $value) {
+				$req ="insert into liaisonevenementorganisateur values ($id,$value);";
+				$this->db->exec($req);
+			}
+			foreach($plages as $value) {
+				//REQUETE A FAIRE
+			}
+
+		}
+
+		function updateEvenement($id,$nom,$datedebut,$datefin,$libelle,$heuredebut,$heurefin,$plages,$organisateurs) {
+			$req ="update evenement set nom = '$nom' where id=$id;";
+			$this->db->exec($req);	
+			$req ="update evenement set datedebut = '$datedebut' where id=$id;";
+			$this->db->exec($req);
+			$req ="update evenement set datefin = '$datefin' where id=$id;";
+			$this->db->exec($req);
+			$req ="update evenement set libelle = '$libelle' where id=$id;";
+			$this->db->exec($req);
+			$req ="update evenement set heuredebut = '$heuredebut' where id=$id;";
+			$this->db->exec($req);
+			$req ="update evenement set heurefin = '$heurefin' where id=$id;";
+			$this->db->exec($req);
+
+			foreach($organisateurs as $value) {
+				$req ="update liaisonevenementorganisateur set idorganisateur = $value where idevenement=$id;";
+				$this->db->exec($req);
+			}
+			foreach($plages as $value) {
+				//REQUETE A FAIRE
+			}
+		}
+
+		function supprimerOrganisateur($id) {
+			$req ="delete from organisateurs where id=$id;";
+			$this->db->exec($req);
+			$req ="delete from liaisonevenementorganisateur where idorganisateur=$id;";
+			$this->db->exec($req);
 		}
 
         function getEvenement($id) {
