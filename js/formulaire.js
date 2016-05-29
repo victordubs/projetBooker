@@ -1366,17 +1366,18 @@ function enregistrerGroupe() {
 
 			data=data+'&newGenres=' + '["'+newGenres+'"]';
 		}
-// TABLEAU LISTE ARTISTES SELECTIONNER
-		if($('#listeArtiste').val()!=null){
-			 var artistes="";
-			 $('#listeArtiste option').each(function() {
-					if ($(this).is(':selected')) {
-						 if(artistes ==""){artistes='"'+$(this).attr('idp')+'":"'+$(this).val()+'"';}
-							else{artistes= artistes+',"'+$(this).attr('idp')+'":"'+$(this).val()+'"';}
-				 }
-			});
-		data=data+'&artistes=' + '{'+artistes+'}';
-		}
+
+		// TABLEAU LISTE CONTACTS SELECTIONNER
+				if($('#listeArtiste').val()!=null){
+					var artistes="";
+					$('#listeArtiste option').each(function() {
+						 if ($(this).is(':selected')) {
+								if(artistes ==""){artistes=$(this).attr("idp");}
+								 else{artistes= artistes+","+$(this).attr("idp");}
+						}
+				 });
+			 data=data+'&artistes=' + '["'+artistes+'"]';
+				}
 
 // TABLEAU LISTE CONTACTS SELECTIONNER
 		if($('#listeContact').val()!=null){
