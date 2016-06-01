@@ -5,15 +5,18 @@
 
 	// Normalement, ici : insertion ou mise � jour de la base
 
+	$plages = json_decode($_REQUEST["groupes"],true);
+	$organisateurs = json_decode($_REQUEST["groupes"],true);
+
 	if (!isset($_REQUEST['idp'])) {
 		var_dump("Dans le INSERT");
 		$result = $dao->getMaxIdPlus1Evenement();
 		$_REQUEST['idp']=$result;
-		$dao->insertEvenement($_REQUEST['mail'],$_REQUEST['tel'],$_REQUEST['siteWeb'],$_REQUEST['idp'],$_REQUEST['ville'],$_REQUEST['adresse'],$_REQUEST['nom'],$_REQUEST['genres'],$_REQUEST['listeArtiste'],$_REQUEST['listeContact']);
+		$dao->insertEvenement($_REQUEST['idp'],$_REQUEST['nom'],$_REQUEST['dateDeb'],$_REQUEST['DateFin'],$_REQUEST['adresse'],$_REQUEST['heureDebut'],$_REQUEST['heureFin'],$plages,$organisateurs);
 	}
 
 	else {
-		$dao->updateEvenement($_REQUEST['mail'],$_REQUEST['tel'],$_REQUEST['siteWeb'],$_REQUEST['idp'],$_REQUEST['ville'],$_REQUEST['adresse'],$_REQUEST['nom'],$_REQUEST['genres'],$_REQUEST['listeArtiste'],$_REQUEST['listeContact']);
+		$dao->updateEvenement($_REQUEST['idp'],$_REQUEST['nom'],$_REQUEST['dateDeb'],$_REQUEST['DateFin'],$_REQUEST['adresse'],$_REQUEST['heureDebut'],$_REQUEST['heureFin'],$plages,$organisateurs);
 	}
 
 	

@@ -3,22 +3,21 @@
 	$result = array() ;
 	$result["status"] = "success" ;
 
-	$types = json_decode($_REQUEST["artistes"],true);
-//	$newTypes = json_decode($_REQUEST["newTypes"],true);
-	$result["artistes"]=$types["1"];
-	//$result["newTypes"]=$newTypes;
+	$artistes = json_decode($_REQUEST["artistes"],true);
+	$newGenres = json_decode($_REQUEST["newGenres"],true);
+	$contacts = json_decode($_REQUEST["autresContact"],true);
 	// Normalement, ici : insertion ou mise � jour de la base
-/*
+
 	if (!isset($_REQUEST['idp'])) {
 		var_dump("Dans le INSERT");
 		$result = $dao->getMaxIdPlus1Groupe();
 		$_REQUEST['idp']=$result;
-		$dao->insertGroupe($_REQUEST['mail'],$_REQUEST['tel'],$_REQUEST['siteWeb'],$_REQUEST['idp'],$_REQUEST['ville'],$_REQUEST['adresse'],$_REQUEST['nom'],$_REQUEST['genres'],$_REQUEST['listeArtiste'],$_REQUEST['listeContact']);
+		$dao->insertGroupe($_REQUEST['mail'],$_REQUEST['tel'],$_REQUEST['siteWeb'],$_REQUEST['idp'],$_REQUEST['ville'],$_REQUEST['adresse'],$_REQUEST['nom'],$newGenres,$artistes,$contacts);
 	}
 
 	else {
-		$dao->updateGroupe($_REQUEST['mail'],$_REQUEST['tel'],$_REQUEST['siteWeb'],$_REQUEST['idp'],$_REQUEST['ville'],$_REQUEST['adresse'],$_REQUEST['nom'],$_REQUEST['genres'],$_REQUEST['listeArtiste'],$_REQUEST['listeContact']);
-	}*/
+		$dao->updateGroupe($_REQUEST['mail'],$_REQUEST['tel'],$_REQUEST['siteWeb'],$_REQUEST['idp'],$_REQUEST['ville'],$_REQUEST['adresse'],$_REQUEST['nom'],$newGenres,$artistes,$contacts);
+	}
 
 
 

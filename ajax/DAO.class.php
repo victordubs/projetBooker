@@ -251,12 +251,12 @@
 			$req ="insert into liaisonartisterole values ($id,'$role');";
 			$nbLignes2=$this->db->exec($req);
 			var_dump($nbLignes2);
-/*			
+			
 			foreach($role as $value) {
 				$req ="insert into liaisonartisterole values ($id,'$value');";
 				$this->db->exec($req);
 			}
-*/	
+	
 		}
 
 		function updateArtiste($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$prenom,$role,$groupes) {
@@ -274,9 +274,11 @@
 			$this->db->exec($req);
 			$req ="update artistes set prenom = '$prenom'where id=$id;";
 			$this->db->exec($req);
-			$nbLignes4=$req="update liaisonartisterole set nomRole='$role' where idArtiste=$id;";
-			$nbLignes4=$this->db->exec($req);
-			var_dump($nbLignes4);
+			foreach($role as $value) {
+				$req="update liaisonartisterole set nomRole='$value' where idArtiste=$id;";
+				$this->db->exec($req);
+			}
+			
 			
 		
 		}
@@ -398,8 +400,9 @@
 				$req ="insert into liaisonevenementorganisateur values ($id,$value);";
 				$this->db->exec($req);
 			}
-			foreach($plages as $value) {
-				//REQUETE A FAIRE
+			foreach($plages as $key=>$value) {
+				$req ="insert into plagehoraire values ($value,NULL,$id,$key);";
+				$this->db->exec($req);
 			}
 
 		}
@@ -422,8 +425,13 @@
 				$req ="update liaisonevenementorganisateur set idorganisateur = $value where idevenement=$id;";
 				$this->db->exec($req);
 			}
-			foreach($plages as $value) {
-				//REQUETE A FAIRE
+			foreach($plages as $key=>$value) {
+				$req ="update plagehoraire set idGroupe=$key where idEvenement=$id;";
+				$this->db->exec($req);
+
+				$req ="update plagehoraire set heureDebut=$value where idEvenement=$id;";
+				$this->db->exec($req);
+
 			}
 		}
 
