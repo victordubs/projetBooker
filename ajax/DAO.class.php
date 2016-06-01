@@ -205,7 +205,7 @@
 			$req="select MAX(id) from artistes;";
 			$sth = $this->db->query($req);
             $result = $sth->fetchAll(PDO::FETCH_ASSOC);
-			//var_dump($result[0]['max']);
+
 			return (intval($result[0]['max'])+1);
 		}
 
@@ -213,7 +213,7 @@
 			$req="select MAX(id) from autresContact;";
 			$sth = $this->db->query($req);
             $result = $sth->fetchAll(PDO::FETCH_ASSOC);
-			//var_dump($result[0]['max']);
+
 			return (intval($result[0]['max'])+1);
 		}
 
@@ -221,7 +221,7 @@
 			$req="select MAX(id) from organisateurs;";
 			$sth = $this->db->query($req);
             $result = $sth->fetchAll(PDO::FETCH_ASSOC);
-			//var_dump($result[0]['max']);
+
 			return (intval($result[0]['max'])+1);
 		}
 
@@ -229,7 +229,7 @@
 			$req="select MAX(id) from groupes;";
 			$sth = $this->db->query($req);
             $result = $sth->fetchAll(PDO::FETCH_ASSOC);
-			//var_dump($result[0]['max']);
+
 			return (intval($result[0]['max'])+1);
 		}
 		
@@ -237,7 +237,7 @@
 			$req="select MAX(id) from evenement;";
 			$sth = $this->db->query($req);
             $result = $sth->fetchAll(PDO::FETCH_ASSOC);
-			var_dump($result[0]['max']);
+
 			return (intval($result[0]['max'])+1);
 		}
 
@@ -246,11 +246,9 @@
 			$req ="insert into artistes values ('$mail','$tel','$siteWeb',$id,'$ville','$adresse','$nom','$prenom');";	
 			
 			$nbLignes=$this->db->exec($req);
-			var_dump($nbLignes);
 
-			$req ="insert into liaisonartisterole values ($id,'$role');";
-			$nbLignes2=$this->db->exec($req);
-			var_dump($nbLignes2);
+
+
 			
 			foreach($role as $value) {
 				$req ="insert into liaisonartisterole values ($id,'$value');";
@@ -286,7 +284,6 @@
 		function insertAutresContact($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$prenom,$metier,$type) {
 			$req ="insert into autresContact values ('$mail','$tel','$siteWeb',$id,'$ville','$adresse','$nom','$prenom','$metier');";	
 			$nbLignes=$this->db->exec($req);
-			var_dump($req);
 
 			$req="insert into liaisonautrescontacttype values($id,'$type');";
 			
@@ -319,8 +316,6 @@
 		function insertOrganisateur($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$prenom,$nbPlaces) {
 			$req ="insert into organisateurs values ('$mail','$tel','$siteWeb',$id,'$ville','$adresse','$nom','$prenom',$nbPlaces);";	
 			$nbLignes=$this->db->exec($req);
-			var_dump($req);
-			var_dump($nbLignes);
 		}
 
 		function updateOrganisateur($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$prenom,$nbPlaces) {
@@ -345,8 +340,6 @@
 		function insertGroupe($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$genres,$artistes,$contacts) {
 			$req ="insert into groupes values ('$mail','$tel','$siteWeb',$id,'$ville','$adresse','$nom');";	
 			$nbLignes=$this->db->exec($req);
-			var_dump($req);
-			var_dump($nbLignes);
 
 			foreach($genres as $value) {
 				$req ="insert into liaisongroupestyle values ($id,'$value');";
@@ -393,8 +386,6 @@
 		function insertEvenement($id,$nom,$datedebut,$datefin,$libelle,$heuredebut,$heurefin,$plages,$organisateurs) {
 			$req ="insert into evenement values ($id,'$nom','$datedebut',$datefin,'$libelle','$heuredebut','$heurefin');";	
 			$nbLignes=$this->db->exec($req);
-			var_dump($req);
-			var_dump($nbLignes);
 
 			foreach($organisateurs as $value) {
 				$req ="insert into liaisonevenementorganisateur values ($id,$value);";
