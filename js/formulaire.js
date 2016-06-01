@@ -1145,16 +1145,16 @@ return erreur;
 //----------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------INITIALISER LA VARIABLE DATA---------------------------------------------------
 function InitialiserData() {
-
+  var nul=null;
 	var data =	'nom=' + $('#nom').val() +
 							'&prenom=' + $('#prenom').val() +
 							'&tel=' + $('#tel').val() +
 							'&mail=' + $('#mail').val();
 alert($('.formulaire').attr('idp'));
 	if($('.formulaire').attr('idp')!=null) data=data+'&idp=' +$('.formulaire').attr('idp');
-	if($('#adresse').val()!="") data=data+'&adresse=' + $('#adresse').val();
-	if($('#ville').val()!="")   data=data+'&ville=' + $('#ville').val();
-	if($('#siteWeb').val()!="") data=data+'&siteWeb=' + $('#siteWeb').val();
+	if($('#adresse').val()!=""){ data=data+'&adresse=' + $('#adresse').val();}else{data=data+'&adresse='+nul;}
+	if($('#ville').val()!="")  data=data+'&ville=' + $('#ville').val();else{data=data+'&ville='+nul;}
+	if($('#siteWeb').val()!="") data=data+'&siteWeb=' + $('#siteWeb').val();else{data=data+'&siteWeb=='+nul;}
 
 	return data;
 }

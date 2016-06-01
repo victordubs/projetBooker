@@ -232,7 +232,7 @@
 
 			return (intval($result[0]['max'])+1);
 		}
-		
+
 		function getMaxIdPlus1Evenement() {
 			$req="select MAX(id) from evenement;";
 			$sth = $this->db->query($req);
@@ -243,23 +243,22 @@
 
 
 		function insertArtiste($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$prenom,$role,$groupes) {
-			$req ="insert into artistes values ('$mail','$tel','$siteWeb',$id,'$ville','$adresse','$nom','$prenom');";	
-			
+			$req ="insert into artistes values ('$mail','$tel','$siteWeb',$id,'$ville','$adresse','$nom','$prenom');";
+
 			$nbLignes=$this->db->exec($req);
 
-
-
-			
+    if(!empty($role)){
 			foreach($role as $value) {
 				$req ="insert into liaisonartisterole values ($id,'$value');";
 				$this->db->exec($req);
 			}
-	
+    }
+
 		}
 
-		function updateArtiste($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$prenom,$role,$groupes) {
+		function updateArtiste($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$prenom,$role) {
 			$req ="update artistes set mail = '$mail' where id=$id;";
-			$this->db->exec($req);	
+			$this->db->exec($req);
 			$req ="update artistes set tel = '$tel'where id=$id;";
 			$this->db->exec($req);
 			$req ="update artistes set siteWeb = '$siteWeb'where id=$id;";
@@ -272,27 +271,28 @@
 			$this->db->exec($req);
 			$req ="update artistes set prenom = '$prenom'where id=$id;";
 			$this->db->exec($req);
+      if(!empty($role)){
 			foreach($role as $value) {
 				$req="update liaisonartisterole set nomRole='$value' where idArtiste=$id;";
 				$this->db->exec($req);
 			}
-			
-			
-		
+      }
+
+
 		}
 
 		function insertAutresContact($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$prenom,$metier,$type) {
-			$req ="insert into autresContact values ('$mail','$tel','$siteWeb',$id,'$ville','$adresse','$nom','$prenom','$metier');";	
+			$req ="insert into autresContact values ('$mail','$tel','$siteWeb',$id,'$ville','$adresse','$nom','$prenom','$metier');";
 			$nbLignes=$this->db->exec($req);
 
 			$req="insert into liaisonautrescontacttype values($id,'$type');";
-			
-	
+
+
 		}
 
 		function updateAutresContact($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$prenom,$metier,$type) {
 			$req ="update autresContact set mail = '$mail' where id=$id;";
-			$this->db->exec($req);	
+			$this->db->exec($req);
 			$req ="update autresContact set tel = '$tel' where id=$id;";
 			$this->db->exec($req);
 			$req ="update autresContact set siteWeb = '$siteWeb' where id=$id;";
@@ -307,20 +307,20 @@
 			$this->db->exec($req);
 			$req ="update autresContact set prenom = '$metier' where id=$id;";
 			$this->db->exec($req);
-			
+
 			$req="update liaisonautrescontacttype set nomtype='$type' where id=$id;";
 			$this->db->exec($req);
-		
+
 		}
 
 		function insertOrganisateur($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$prenom,$nbPlaces) {
-			$req ="insert into organisateurs values ('$mail','$tel','$siteWeb',$id,'$ville','$adresse','$nom','$prenom',$nbPlaces);";	
+			$req ="insert into organisateurs values ('$mail','$tel','$siteWeb',$id,'$ville','$adresse','$nom','$prenom',$nbPlaces);";
 			$nbLignes=$this->db->exec($req);
 		}
 
 		function updateOrganisateur($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$prenom,$nbPlaces) {
 			$req ="update organisateurs set mail = '$mail' where id=$id;";
-			$this->db->exec($req);	
+			$this->db->exec($req);
 			$req ="update organisateurs set tel = '$tel' where id=$id;";
 			$this->db->exec($req);
 			$req ="update organisateurs set siteWeb = '$siteWeb' where id=$id;";
@@ -338,7 +338,7 @@
 		}
 
 		function insertGroupe($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$genres,$artistes,$contacts) {
-			$req ="insert into groupes values ('$mail','$tel','$siteWeb',$id,'$ville','$adresse','$nom');";	
+			$req ="insert into groupes values ('$mail','$tel','$siteWeb',$id,'$ville','$adresse','$nom');";
 			$nbLignes=$this->db->exec($req);
 
 			foreach($genres as $value) {
@@ -357,7 +357,7 @@
 
 		function updateGroupe($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$genres,$artistes,$contacts) {
 			$req ="update groupes set mail = '$mail' where id=$id;";
-			$this->db->exec($req);	
+			$this->db->exec($req);
 			$req ="update groupes set tel = '$tel' where id=$id;";
 			$this->db->exec($req);
 			$req ="update groupes set siteWeb = '$siteWeb' where id=$id;";
@@ -384,7 +384,7 @@
 		}
 
 		function insertEvenement($id,$nom,$datedebut,$datefin,$libelle,$heuredebut,$heurefin,$plages,$organisateurs) {
-			$req ="insert into evenement values ($id,'$nom','$datedebut',$datefin,'$libelle','$heuredebut','$heurefin');";	
+			$req ="insert into evenement values ($id,'$nom','$datedebut',$datefin,'$libelle','$heuredebut','$heurefin');";
 			$nbLignes=$this->db->exec($req);
 
 			foreach($organisateurs as $value) {
@@ -400,7 +400,7 @@
 
 		function updateEvenement($id,$nom,$datedebut,$datefin,$libelle,$heuredebut,$heurefin,$plages,$organisateurs) {
 			$req ="update evenement set nom = '$nom' where id=$id;";
-			$this->db->exec($req);	
+			$this->db->exec($req);
 			$req ="update evenement set datedebut = '$datedebut' where id=$id;";
 			$this->db->exec($req);
 			$req ="update evenement set datefin = '$datefin' where id=$id;";
