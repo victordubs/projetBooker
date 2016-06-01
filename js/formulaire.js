@@ -1152,7 +1152,7 @@ function InitialiserData() {
 							'&mail=' + $('#mail').val();
 alert($('.formulaire').attr('idp'));
 	if($('.formulaire').attr('idp')!=null) data=data+'&idp=' +$('.formulaire').attr('idp');
-	if($('#adresse').val()!="") data=data+'&addresse=' + $('#adresse').val();
+	if($('#adresse').val()!="") data=data+'&adresse=' + $('#adresse').val();
 	if($('#ville').val()!="")   data=data+'&ville=' + $('#ville').val();
 	if($('#siteWeb').val()!="") data=data+'&siteWeb=' + $('#siteWeb').val();
 
@@ -1268,6 +1268,7 @@ function enregistrerArtiste() {
 							var result = JSON.parse(data) ;
 							if (result.status == 'success') {
 						  		alert('L\'enregistrement de l\'artiste a été effectué');
+									alert(result.msg);
 							}
 							else {
 								alert('erreur lors de l\'enregistrement');
@@ -1418,7 +1419,7 @@ function enregistrerOrganisateur() {
 	if(verifierChampObligatoire()==false){
 		var data=InitialiserData();
 		if($('#nbPlace').val()!="") data=data+'&nbPlace=' + $('#nbPlace').val();
-
+alert(data);
 		$.ajax({	type: "POST",
 				url: "ajax/saveOrganisateur.php",
 				data: data, // On passe les informations saisies � l'�cran
