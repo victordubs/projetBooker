@@ -194,22 +194,21 @@ function ajouterCalendrier(){
 					if (result.status == 'success') {
 							if(result.evenements){
 								for (var id=0; id < result.evenements.length; id++) {
-										$point = $(document.createElement('p'));
-										$point.attr("class","token");
-										$point.html("•");
+
+										$('#je'+result.evenements[id].dateDeb.substr(0,2)).html("•");
 
 										if($('#j'+result.evenements[id].dateDeb.substr(0,2)).attr('nbEvent')==undefined){
 											var i=1;
 											$('#j'+result.evenements[id].dateDeb.substr(0,2)).attr("nbEvent",i);
 											$('#j'+result.evenements[id].dateDeb.substr(0,2)).attr("nom"+i,result.evenements[id].nom);
 											$('#j'+result.evenements[id].dateDeb.substr(0,2)).attr("idp"+i,result.evenements[id].idp);
-											$('#j'+result.evenements[id].dateDeb.substr(0,2)).append($point);
+											$('#j'+result.evenements[id].dateDeb.substr(0,2)).append($('#je'+result.evenements[id].dateDeb.substr(0,2)));
 									}else{
 										var i=i+1
 										$('#j'+result.evenements[id].dateDeb.substr(0,2)).attr("nbEvent",i);
 										$('#j'+result.evenements[id].dateDeb.substr(0,2)).attr("nom"+i,result.evenements[id].nom);
 										$('#j'+result.evenements[id].dateDeb.substr(0,2)).attr("idp"+i,result.evenements[id].idp);
-										$('#j'+result.evenements[id].dateDeb.substr(0,2)).append($point);
+										$('#j'+result.evenements[id].dateDeb.substr(0,2)).append($('#je'+result.evenements[id].dateDeb.substr(0,2)));
 									}
 							  }
 							}
