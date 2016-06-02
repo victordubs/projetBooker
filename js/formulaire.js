@@ -717,11 +717,11 @@ function evenementFormulaireEve() {
 	$('#dateFin').bind('change', function() {
 				$('#info2').show();
 				$('#info3').show();
-				$('#info4').show();
+				//$('#info4').show();
 				getListeGroupesDate(i);
 				 i=i+1;
 				 getListeOrganisateurs();
-				 getListeContacts();
+				// getListeContacts();
 			});
 
 	$('.btnAjouterGroupes').on('click',function() {
@@ -1522,6 +1522,10 @@ function modifierArtiste(idArtiste){
 							if (result.artiste.ville) $('#ville').val(result.artiste.ville);
 							if (result.artiste.siteWeb) $('#siteWeb').val(result.artiste.siteWeb);
 							if (result.artiste.idp) $('.formulaire').attr('idp',result.artiste.idp);
+
+							for (var id=0; id < result.artiste.roles.length; id++) {
+							$("#roles").val([result.artiste.roles[i]]).prop("selected", true);
+						  }
 							evenementFormulaireArt();
 						}
 					}
