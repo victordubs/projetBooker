@@ -707,7 +707,7 @@ function evenementFormulaireEve() {
 
 	$('#info2').hide();
 	$('#info3').hide();
-	$('#info4').hide();
+	//$('#info4').hide();
 
 	$('.btnAjouterContact').on('click',function() {
 			enregistrerEvenement();
@@ -1202,7 +1202,7 @@ function enregistrerEvenement() {
 
 					if($('#adresse').val()!="") data=data+'&adresse=' + $('#adresse').val();
 					if($('#ville').val()!="") data=data+'&ville=' + $('#ville').val();
-					if($('#heureDebut').val()!="") data=data+'&heureDebut=' + $('#heureDebut').val();
+					if($('#heureDebut').val()!="") data=data+'&heureDebut=' + $('#heureDeb').val();
 					if($('#heureFin').val()!="") data=data+'&heureFin=' + $('#heureFin').val();
 
 
@@ -1219,7 +1219,7 @@ function enregistrerEvenement() {
 							}
 
 					// TABLEAU LISTE CONTACTS SELECTIONNER
-									if($('#listeContact').val()!=null){
+			/*						if($('#listeContact').val()!=null){
 										var contacts="";
 										$('#listeContact option').each(function() {
 											 if ($(this).is(':selected')) {
@@ -1228,7 +1228,7 @@ function enregistrerEvenement() {
 											}
 									 });
 								 data=data+'&autresContact=' + '["'+contacts+'"]';
-									}
+							 }*/
 	// TABLEAU LISTE GROUPES SELECTIONNER
 
 							if(nbGroupeEvenement!=0){
