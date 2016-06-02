@@ -404,7 +404,7 @@
 			//var_dump($req);
 
 			foreach($organisateurs as $value) {
-				$req ="insert into liaisonevenementorganisateur values ($id,$value);";
+				$req ="insert into liaisonevenementorganisateur values ($value,$id);";
 				$nbLignes=$this->db->exec($req);
 				var_dump($nbLignes);
 				var_dump($req);
@@ -437,7 +437,6 @@
         		$result = $sth->fetchAll(PDO::FETCH_COLUMN);
         		if(!empty($result)){
 			foreach($organisateurs as $value) {
-				
 				$req ="update liaisonevenementorganisateur set idorganisateur = $value where idevenement=$id;";
 				$this->db->exec($req);
 			}
