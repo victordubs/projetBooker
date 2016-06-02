@@ -4,19 +4,21 @@
 	$result["status"] = "success" ;
 
 	// Normalement, ici : insertion ou mise � jour de la base
-	$roles = json_decode($_REQUEST["roles"],true);
+	include_once("verifierInitialiser.php");
+	if(!empty($_REQUEST["roles"])){$roles = json_decode($_REQUEST["roles"],true);}
+	else{$roles=null;}
 
 	if (!isset($_REQUEST['idp'])) {
-		//var_dump("Dans le INSERT");
-		$result = $dao->getMaxIdPlus1Artiste();
-		$_REQUEST['idp']=$result;
-		$rep=$dao->insertArtiste($_REQUEST['mail'],$_REQUEST['tel'],$_REQUEST['siteWeb'],$_REQUEST['idp'],$_REQUEST['ville'],$_REQUEST['adresse'],$_REQUEST['nom'],$_REQUEST['prenom'],$roles);
-	//	$result["msg"] = "insert effectuer" ;
+
+		$id = $dao->getMaxIdPlus1Artiste();
+		$dao->insertArtiste($_REQUEST['mail'],$_REQUEST['tel'],$_REQUEST['siteWeb'],$id,$_REQUEST['ville'],$_REQUEST['adresse'],$_REQUEST['nom'],$_REQUEST['prenom'],$roles);
+		$result["idp"] =$id;
 	}
 
 	else {
 		$dao->updateArtiste($_REQUEST['mail'],$_REQUEST['tel'],$_REQUEST['siteWeb'],$_REQUEST['idp'],$_REQUEST['ville'],$_REQUEST['adresse'],$_REQUEST['nom'],$_REQUEST['prenom'],$roles);
-	//	$result["msg"] =$_REQUEST['idp'] ;
+			$result["idp"] =$_REQUEST['idp'];
+			$result["r"]=$roles;
 	}
 
 	echo json_encode($result);

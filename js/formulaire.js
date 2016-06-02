@@ -334,6 +334,7 @@ function afficherOrganisateur(idOrganisateur){
 							if (result.organisateur.nom) $('#nom').append(result.organisateur.nom);
 							if (result.organisateur.adresse) $('#adresse').append(result.organisateur.adresse);
 							if (result.organisateur.ville) $('#ville').append(result.organisateur.ville);
+							if (result.organisateur.nombrePlaces) $('#nbPlaces').append(result.organisateur.nombrePlaces);
 
 							if (result.organisateur.evenements){
 								$ulevent = $(document.createElement('ul'));
@@ -429,7 +430,26 @@ function afficherArtiste(idArtiste){
 							if (result.artiste.prenom) $('#prenom').append(result.artiste.prenom);
 							if (result.artiste.nom) $('#nom').append(result.artiste.nom);
 							if (result.artiste.adresse) $('#adresse').append(result.artiste.adresse);
-							if (result.artiste.ville) $('#ville').append(result.artiste.ville);
+							if (result.artiste.roles){
+								for(var i=0;i<=result.artiste.roles.length;i++){
+										$('#role').append(result.artiste.roles[i]);
+										if(i!=(result.artiste.roles.length)-1)$('#role').append("/");
+
+								}
+							}
+							if (result.artiste.groupes){
+								$ulevent = $(document.createElement('ul'));
+								for(var i=0;i<result.artiste.groupes.length;i++){
+
+									$lievent = $(document.createElement('li'));
+									$lievent .append(result.artiste.groupes[i]["nom"]);
+									$lievent.attr("idGroupe",result.artiste.groupes[i]["id"]);
+									$ulevent.append($lievent);
+
+								}
+								$('#infoGroupes').append($ulevent);
+							}
+
 
 								evenementArtiste();
 						}
@@ -1145,16 +1165,16 @@ return erreur;
 //----------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------INITIALISER LA VARIABLE DATA---------------------------------------------------
 function InitialiserData() {
-  var nul=null;
+
 	var data =	'nom=' + $('#nom').val() +
 							'&prenom=' + $('#prenom').val() +
 							'&tel=' + $('#tel').val() +
 							'&mail=' + $('#mail').val();
 alert($('.formulaire').attr('idp'));
 	if($('.formulaire').attr('idp')!=null) data=data+'&idp=' +$('.formulaire').attr('idp');
-	if($('#adresse').val()!=""){ data=data+'&adresse=' + $('#adresse').val();}else{data=data+'&adresse='+nul;}
-	if($('#ville').val()!="")  data=data+'&ville=' + $('#ville').val();else{data=data+'&ville='+nul;}
-	if($('#siteWeb').val()!="") data=data+'&siteWeb=' + $('#siteWeb').val();else{data=data+'&siteWeb=='+nul;}
+	if($('#adresse').val()!=""){ data=data+'&adresse=' + $('#adresse').val();}/*else{data=data+'&adresse='+null;}*/
+	if($('#ville').val()!="")  data=data+'&ville=' + $('#ville').val();/*else{data=data+'&ville='+null;}*/
+	if($('#siteWeb').val()!="") data=data+'&siteWeb=' + $('#siteWeb').val();/*else{data=data+'&siteWeb=='+null;}*/
 
 	return data;
 }
@@ -1268,7 +1288,7 @@ function enregistrerArtiste() {
 							var result = JSON.parse(data) ;
 							if (result.status == 'success') {
 						  		alert('L\'enregistrement de l\'artiste a été effectué');
-									alert(result.msg);
+									$('#content').load('pages/afficherArtiste.html',function(){afficherArtiste(result.idp)});
 							}
 							else {
 								alert('erreur lors de l\'enregistrement');
@@ -1316,8 +1336,9 @@ function enregistrerContact() {
 							var result = JSON.parse(data) ;
 							if (result.status == 'success') {
 								alert("sucess");
-						  		//alert('L\'enregistrement du contact a été effectué');
+						  		alert('L\'enregistrement du contact a été effectué');
 									alert("le result"+result.types);
+									$('#content').load('pages/afficherRep.html',eventMenuRep);
 							}
 							else {
 								alert('erreur lors de l\'enregistrement');
@@ -1418,7 +1439,7 @@ function enregistrerOrganisateur() {
 	// Ici normalement, les contr�les sur les champs requis, les formats, ....
 	if(verifierChampObligatoire()==false){
 		var data=InitialiserData();
-		if($('#nbPlace').val()!="") data=data+'&nbPlace=' + $('#nbPlace').val();
+		if($('#nbPlace').val()!="") data=data+'&nbPlaces=' + $('#nbPlace').val();
 alert(data);
 		$.ajax({	type: "POST",
 				url: "ajax/saveOrganisateur.php",
@@ -1426,7 +1447,8 @@ alert(data);
 				success: function(data, textStatus, jqXHR) {
 					var result = JSON.parse(data) ;
 					if (result.status == 'success') {
-						// A COMPLETER
+						alert("L'organisateur a été ajouté");
+						$('#content').load('pages/afficherOrganisateur.html',function(){afficherOrganisateur(result.idp)});
 					} else {
 						alert('erreur lors de l\'enregistrement');
 					}
@@ -1548,7 +1570,7 @@ function modifierOrganisateur(idOrganisateur){
 							if (result.organisateur.ville) $('#ville').val(result.organisateur.ville);
 							if (result.organisateur.siteWeb) $('#siteWeb').val(result.organisateur.siteWeb);
 							if (result.organisateur.idp) $('.formulaire').attr('idp',result.organisateur.idp);
-							evenementFormulaireContact();
+							eventFormulaireOrganisateur();
 						}
 					}
 				},

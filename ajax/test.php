@@ -11,7 +11,7 @@ $result = array() ;
 //test pour getArtiste
 /*	$result = $dao->getArtiste(1);
 	var_dump($result);*/
-/*
+
 	$reponse=$dao->getArtiste(1);
 	if (isset($reponse)) {
 
@@ -34,7 +34,7 @@ $result = array() ;
 	}
 
 	var_dump($result["artiste"]);
-*/
+
 
 
 //test pour autre contact
@@ -133,7 +133,7 @@ $result = array() ;
 //test de get groupedispoatdate
 /*	$result = $dao->getGroupeDispoAtDate("'2016-05-05'");
 	var_dump($result);*/
-  $_REQUEST['dateDeb']="2016-04-05";
+/*  $_REQUEST['dateDeb']="2016-04-05";
   if (isset($_REQUEST['dateDeb'])) {
 		$reponse=$dao->getGroupeDispoAtDate($_REQUEST['dateDeb']);
 		if (isset($reponse)) {
@@ -151,7 +151,7 @@ $result = array() ;
 		}
  }
 
-	var_dump($result["groupesDispo"]);
+	var_dump($result["groupesDispo"]);*/
 
 
 //test getevenement

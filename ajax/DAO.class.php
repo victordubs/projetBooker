@@ -47,7 +47,7 @@
 
 			$req ="select  R.nomRole from  artistes A,role R,liaisonartisterole Ar where A.id=$id and Ar.idartiste=A.id and Ar.nomrole = r.nomrole;";
             $sth = $this->db->query($req);
-            $result2 = $sth->fetchAll(PDO::FETCH_ASSOC);
+            $result2 = $sth->fetchAll(PDO::FETCH_COLUMN);
             $result[0]->role=$result2;
 
             return $result[0];
@@ -242,7 +242,7 @@
 		}
 
 
-		function insertArtiste($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$prenom,$role,$groupes) {
+		function insertArtiste($mail,$tel,$siteWeb,$id,$ville,$adresse,$nom,$prenom,$role) {
 			$req ="insert into artistes values ('$mail','$tel','$siteWeb',$id,'$ville','$adresse','$nom','$prenom');";
 
 			$nbLignes=$this->db->exec($req);
@@ -272,10 +272,23 @@
 			$req ="update artistes set prenom = '$prenom'where id=$id;";
 			$this->db->exec($req);
       if(!empty($role)){
-			foreach($role as $value) {
-				$req="update liaisonartisterole set nomRole='$value' where idArtiste=$id;";
-				$this->db->exec($req);
-			}
+
+        $req="select idArtiste from liaisonartisterole where idArtiste=$id;";
+        $sth = $this->db->query($req);
+        $result = $sth->fetchAll(PDO::FETCH_COLUMN);
+    
+        if(!empty($result)){
+          foreach($role as $value) {
+                 $req="update liaisonartisterole set nomRole='$value' where idArtiste=$id;";
+                 $this->db->exec($req);
+         }
+       }else{
+         foreach($role as $value) {
+           $req ="insert into liaisonartisterole values ($id,'$value');";
+           $this->db->exec($req);
+         }
+       }
+
       }
 
 
