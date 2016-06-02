@@ -1524,7 +1524,7 @@ getRoles();
 							if (result.artiste.idp) $('.formulaire').attr('idp',result.artiste.idp);
 
 							for (var id=0; id < result.artiste.roles.length; id++) {
-							$("#roles").val([result.artiste.roles[i]]).prop("selected", true);
+							$("#roles").val([result.artiste.roles[id]]).prop("selected", true);
 						  }
 							evenementFormulaireArt();
 						}

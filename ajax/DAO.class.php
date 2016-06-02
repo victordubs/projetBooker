@@ -276,7 +276,7 @@
         $req="select idArtiste from liaisonartisterole where idArtiste=$id;";
         $sth = $this->db->query($req);
         $result = $sth->fetchAll(PDO::FETCH_COLUMN);
-    
+
         if(!empty($result)){
           foreach($role as $value) {
                  $req="update liaisonartisterole set nomRole='$value' where idArtiste=$id;";
@@ -386,7 +386,7 @@
 				$req ="update liaisongroupestyle set style = '$value' where idgroupe=$id;";
 				$this->db->exec($req);
 			}
-			
+
 			foreach($artistes as $value) {
 				$req ="update liaisonartistegroupe set idArtiste=$value where idgroupe=$id;";
 				$this->db->exec($req);
@@ -406,14 +406,12 @@
 			foreach($organisateurs as $value) {
 				$req ="insert into liaisonevenementorganisateur values ($value,$id);";
 				$nbLignes=$this->db->exec($req);
-				var_dump($nbLignes);
-				var_dump($req);
+
 			}
 			foreach($plages as $key=>$value) {
 				$req ="insert into plagehoraire values ('$value',NULL,$id,$key);";
 				$nbLignes2=$this->db->exec($req);
-				var_dump($nbLignes2);
-				var_dump($req);
+
 			}
 
 		}

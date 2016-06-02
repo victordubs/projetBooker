@@ -11,10 +11,8 @@
 	else {$organisateurs=null;}
 
 	if (!isset($_REQUEST['idp'])) {
-		var_dump("Dans le INSERT");
 		$id = $dao->getMaxIdPlus1Evenement();
-		$_REQUEST['idp']=$id;
-		$dao->insertEvenement($_REQUEST['idp'],$_REQUEST['nom'],$_REQUEST['dateDebut'],$_REQUEST['dateFin'],$_REQUEST['adresse'],$_REQUEST['heureDebut'],$_REQUEST['heureFin'],$plages,$organisateurs);
+		$dao->insertEvenement($id,$_REQUEST['nom'],$_REQUEST['dateDebut'],$_REQUEST['dateFin'],$_REQUEST['adresse'],$_REQUEST['heureDebut'],$_REQUEST['heureFin'],$plages,$organisateurs);
 	}
 
 	else {
