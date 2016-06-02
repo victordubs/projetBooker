@@ -60,7 +60,7 @@ function connection(){
 	else if($("#password").val()!="" && $("#login").val()!=""){
 				var data='login='+$("#login").val()+
 									'&password='+$("#password").val();
-alert(data);
+//alert(data);
 				$.ajax({	type: "POST",
 						url: "ajax/connexion.php",
 						data:data,
@@ -1181,7 +1181,7 @@ function InitialiserData() {
 							'&prenom=' + $('#prenom').val() +
 							'&tel=' + $('#tel').val() +
 							'&mail=' + $('#mail').val();
-alert($('.formulaire').attr('idp'));
+//alert($('.formulaire').attr('idp'));
 	if($('.formulaire').attr('idp')!=null) data=data+'&idp=' +$('.formulaire').attr('idp');
 	if($('#adresse').val()!=""){ data=data+'&adresse=' + $('#adresse').val();}/*else{data=data+'&adresse='+null;}*/
 	if($('#ville').val()!="")  data=data+'&ville=' + $('#ville').val();/*else{data=data+'&ville='+null;}*/
@@ -1244,7 +1244,7 @@ function enregistrerEvenement() {
 								 data=data+'&groupes=' + '{'+groupes+'}';
 								}
 
-				alert(data);
+		//		alert(data);
 				$.ajax({	type: "POST",
 					url: "ajax/saveEvenement.php",
 					data: data, // On passe les informations saisies � l'�cran
@@ -1290,7 +1290,7 @@ function enregistrerArtiste() {
 							data=data+'&newRoles=' + '["'+newRoles+'"]';
 						}
 
-						alert(data);
+				//		alert(data);
 
 				$.ajax({	type: "POST",
 						url: "ajax/saveArtiste.php",
@@ -1423,7 +1423,7 @@ function enregistrerGroupe() {
 	 data=data+'&autresContact=' + '["'+Contacts+'"]';
 		}
 
-		alert(data);
+	//	alert(data);
 		$.ajax({	type: "POST",
 				url: "ajax/saveGroupe.php",
 				data: data, // On passe les informations saisies � l'�cran
@@ -1506,7 +1506,7 @@ getListeArtistes();
 //------------------------------------------------------------------------------------------------------
 //-----------------------------------MODIFIER UN ARTISTE------------------------------------------------
 function modifierArtiste(idArtiste){
-
+getRoles();
 	$.ajax({	type: "POST",
 				url: "ajax/getArtiste.php",
 				data: "idp=" + idArtiste, // On passe l'id de la personne que l'on veut voir
@@ -1607,7 +1607,7 @@ function modifierEvenement(idEvent){
 					var result = JSON.parse(data) ;
 					if (result.status == 'success') {
 						if (result.evenement) {
-							if (result.evenement.nomEvenement) $('#nom').val(result.evenement.nomEvenement) ;
+							if (result.evenement.nom) $('#nom').val(result.evenement.nom) ;
 							if (result.evenement.dateDeb) $('#dateDeb').val(result.evenement.dateDeb) ;
 							if (result.evenement.dateFin) $('#dateFin').val(result.evenement.dateFin);
 							if (result.evenement.ville) $('#ville').val(result.evenement.ville);
