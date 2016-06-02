@@ -129,24 +129,26 @@ function afficherRep(personne){
 
 						for (var id=0; id < result.personnes.length; id++) {
 
-								if(document.getElementById(result.personnes[id].nom.substr(0,1))==null){
+							var chaineNom=result.personnes[id].nom.charAt(0).toUpperCase() + result.personnes[id].nom.substring(1).toLowerCase();
+
+								if(document.getElementById(chaineNom.substr(0,1))==null){
 
 													$article = $(document.createElement('article'));
 													$titre = $(document.createElement('h2'));
-													$titre.html(result.personnes[id].nom.substr(0,1).toUpperCase());
+													$titre.html(chaineNom.substr(0,1).toUpperCase());
 													$article.append($titre);
 													$ul = $(document.createElement('ul'));
-													$ul.attr('id',result.personnes[id].nom.substr(0,1));
+													$ul.attr('id',chaineNom.substr(0,1));
 													$article.append($ul);
 													$('#repertoire').append($article);
 								}
 
 										$liContact = $(document.createElement('li')); // On cr�e un li
-										$liContact.append('<p id="'+result.personnes[id].idp+'">'+result.personnes[id].nom+'</p>');
+										$liContact.append('<p id="'+result.personnes[id].idp+'">'+chaineNom+'</p>');
 										$liContact.append('<img id=\'email\' src = "images/emailBtn.svg" />');
 										$liContact.append('<img id=\'sms\' src = "images/smsBtn.svg" />');
 										$liContact.append('<a href="tel:+337388388"><img id=\'call\' src = "images/callBtn.svg" /></a>');
-										$('#'+result.personnes[id].nom.substr(0,1)).append($liContact);
+										$('#'+chaineNom.substr(0,1)).append($liContact);
 
 						}
 						evenementRep(personne);
@@ -329,6 +331,7 @@ function afficherOrganisateur(idOrganisateur){
 							if (result.organisateur.nom) $('.nomPrenom').prepend(result.organisateur.nom);
 							if (result.organisateur.mail) $('#mail').append('<a href="mailto:'+result.organisateur.mail+'">'+result.organisateur.mail+'</a>');
 							if (result.organisateur.tel) $('#tel').append('<a href="tel:'+result.organisateur.tel+'">'+result.organisateur.tel+'</a>');
+							if (result.organisateur.tel) $('#siteWeb').append('<a href="'+result.organisateur.siteWeb+'">'+result.organisateur.siteWeb+'</a>');
 
 							if (result.organisateur.prenom) $('#prenom').append(result.organisateur.prenom);
 							if (result.organisateur.nom) $('#nom').append(result.organisateur.nom);
@@ -430,6 +433,7 @@ function afficherArtiste(idArtiste){
 							if (result.artiste.prenom) $('#prenom').append(result.artiste.prenom);
 							if (result.artiste.nom) $('#nom').append(result.artiste.nom);
 							if (result.artiste.adresse) $('#adresse').append(result.artiste.adresse);
+							if (result.artiste.ville) $('#ville').append(result.artiste.ville);
 							if (result.artiste.roles){
 								for(var i=0;i<=result.artiste.roles.length;i++){
 										$('#role').append(result.artiste.roles[i]);
@@ -904,6 +908,13 @@ function 	evenementOrganisateur(){
 		var param=$('section').attr('id');
 		$('#content').load('pages/formulaireOrganisateur.html',function(){modifierOrganisateur(param)})
 	});
+
+	$('#supprimer').click(function(){
+		var param=$('section').attr('id');
+    supprimerOrganisateur(param);
+	});
+
+
 }
 //------------------------------------------------------------------------------------------------------------------
 //-----------------------------------EVENEMENT SUR ARTISTE----------------------------------------------------------
@@ -1185,7 +1196,7 @@ function enregistrerEvenement() {
 
 				if($('#nom').val()==""){afficherChampObligatoire('#nom',erreurs.erreurEvent);erreurs.erreurEvent++;}
 				if(veriferDates()==false && $('#nom').val()!=""){
-					var data =	'nom=' + $('#nom').val();
+					var data =	'nom=' + $('#nom').val()+
 											'&dateDebut=' + $('#dateDeb').val() +
 											'&dateFin=' + $('#dateFin').val();
 
@@ -1440,7 +1451,7 @@ function enregistrerOrganisateur() {
 	if(verifierChampObligatoire()==false){
 		var data=InitialiserData();
 		if($('#nbPlace').val()!="") data=data+'&nbPlaces=' + $('#nbPlace').val();
-alert(data);
+
 		$.ajax({	type: "POST",
 				url: "ajax/saveOrganisateur.php",
 				data: data, // On passe les informations saisies � l'�cran
@@ -1618,6 +1629,8 @@ function supprimerOrganisateur(idOrganisateur){
 					var result = JSON.parse(data) ;
 					if (result.status == 'success') {
 							alert("L'organisateur a été supprimé");
+							$('#content').load('pages/afficherRep.html',eventMenuRep);
+
 					}
 				},
 				error: function() {

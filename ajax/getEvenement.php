@@ -11,8 +11,13 @@ include_once("DAO.class.php");
 			$result["evenement"]= array() ;
 			$evenement = array() ;
 			$evenement['nom'] = $reponse->nom;
-			$evenement['dateDeb'] = $reponse->datedebut;
-			$evenement['dateFin'] = $reponse->datefin;
+			$date=explode( '-', $reponse->datedebut);
+			$frenchDateDebut=$date[2]."/".$date[1]."/".$date[0];
+			$evenement['dateDeb'] = $frenchDateDebut;
+
+			$date=explode( '-', $reponse->datefin);
+			$frenchDateFin=$date[2]."/".$date[1]."/".$date[0];
+			$evenement['dateFin'] = $frenchDateFin;
 			$evenement['libelle'] = $reponse->libelle;
 			$evenement['heureDeb'] = substr($reponse->heuredebut,0,-3);
 	  	$evenement['heureFin'] = substr($reponse->heurefin,0,-3);
