@@ -386,6 +386,7 @@
 				$req ="update liaisongroupestyle set style = '$value' where idgroupe=$id;";
 				$this->db->exec($req);
 			}
+			
 			foreach($artistes as $value) {
 				$req ="update liaisonartistegroupe set idArtiste=$value where idgroupe=$id;";
 				$this->db->exec($req);
@@ -397,16 +398,22 @@
 		}
 
 		function insertEvenement($id,$nom,$datedebut,$datefin,$libelle,$heuredebut,$heurefin,$plages,$organisateurs) {
-			$req ="insert into evenement values ($id,'$nom','$datedebut',$datefin,'$libelle','$heuredebut','$heurefin');";
+			$req ="insert into evenement values ($id,'$nom','$datedebut','$datefin','$libelle','$heuredebut','$heurefin');";
 			$nbLignes=$this->db->exec($req);
+			//var_dump($nbLignes);
+			//var_dump($req);
 
 			foreach($organisateurs as $value) {
 				$req ="insert into liaisonevenementorganisateur values ($id,$value);";
-				$this->db->exec($req);
+				$nbLignes=$this->db->exec($req);
+				var_dump($nbLignes);
+				var_dump($req);
 			}
 			foreach($plages as $key=>$value) {
-				$req ="insert into plagehoraire values ($value,NULL,$id,$key);";
-				$this->db->exec($req);
+				$req ="insert into plagehoraire values ('$value',NULL,$id,$key);";
+				$nbLignes2=$this->db->exec($req);
+				var_dump($nbLignes2);
+				var_dump($req);
 			}
 
 		}
@@ -425,7 +432,12 @@
 			$req ="update evenement set heurefin = '$heurefin' where id=$id;";
 			$this->db->exec($req);
 
+			$req="select idEvenement from liaisonevenementorganisateur where idArtiste=$id;";
+        		$sth = $this->db->query($req);
+        		$result = $sth->fetchAll(PDO::FETCH_COLUMN);
+        		if(!empty($result)){
 			foreach($organisateurs as $value) {
+				
 				$req ="update liaisonevenementorganisateur set idorganisateur = $value where idevenement=$id;";
 				$this->db->exec($req);
 			}
@@ -436,6 +448,7 @@
 				$req ="update plagehoraire set heureDebut=$value where idEvenement=$id;";
 				$this->db->exec($req);
 
+			}
 			}
 		}
 

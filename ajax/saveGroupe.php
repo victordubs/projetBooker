@@ -10,8 +10,8 @@
 
 	if (!isset($_REQUEST['idp'])) {
 		var_dump("Dans le INSERT");
-		$result = $dao->getMaxIdPlus1Groupe();
-		$_REQUEST['idp']=$result;
+		$id = $dao->getMaxIdPlus1Groupe();
+		$_REQUEST['idp']=$id;
 		$dao->insertGroupe($_REQUEST['mail'],$_REQUEST['tel'],$_REQUEST['siteWeb'],$_REQUEST['idp'],$_REQUEST['ville'],$_REQUEST['adresse'],$_REQUEST['nom'],$newGenres,$artistes,$contacts);
 	}
 

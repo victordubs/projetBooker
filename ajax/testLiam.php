@@ -4,7 +4,7 @@ $id="1";
 include_once("DAO.class.php");
 $result = array() ;
 $result["status"] = "success" ;
-
+/*
 $_REQUEST['mail']="testIU@u.com";
 $_REQUEST['tel']="0111111111";
 $_REQUEST['siteWeb']="www.testChangement66.com";
@@ -18,10 +18,22 @@ $_REQUEST['genres']=array("ROck","classique");
 $_REQUEST['listeArtiste']=3;
 $_REQUEST['listeContact']=2;
 $_REQUEST['nbPlaces']=200;
+*/
+
+$_REQUEST['nom']="Evenement 1";
+$_REQUEST['dateDebut']='2016-06-30';
+$_REQUEST['dateFin']='2016-06-30';
+$_REQUEST['heureDebut']='10:00';
+$_REQUEST['heureFin']='16:00';
+$_REQUEST['plages']='{"1":"12:00"}';
+$_REQUEST['organisateurs']='[2,7]';
+$_REQUEST['adresse']="2 rue de la Paix";
+
+
 
 //if (isset($_REQUEST['idArtiste'])) {
 
-    include_once("saveOrganisateur.php");
+    include_once("saveEvenement.php");
 
   /*if (isset($reponse)) {
 
