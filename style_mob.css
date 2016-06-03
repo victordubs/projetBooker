@@ -14,7 +14,6 @@ h1{
   padding-left: 1%;
   margin-top: 0%;;
   padding-top: 200px;
-
   background-color: #2A88AD;
 
 }
@@ -236,6 +235,7 @@ h1 img{
 
 .profil h1 {
 	margin: 0px;
+	padding: 2%;
 	background-color: #2A88AD;
 
 }
@@ -462,8 +462,7 @@ label *{
   display:inline-block;
   vertical-align: middle;
 }
-input[type="button"],
-.btnAjouterGroupes,
+.formulaire input[type="button"],
 .formulaire input[type="submit"]{
     background: #2A88AD;
     border-radius: 5px;
@@ -473,7 +472,7 @@ input[type="button"],
     padding: 25px 50px;
     margin-left: 5%;
 }
- input[type="button"]:hover,
+.formulaire  input[type="button"]:hover,
 .formulaire input[type="submit"]:hover{
     background: #2A6881;
 }
@@ -683,13 +682,6 @@ text-align: center;
   color: #F2F2F2;
 }
 
-<<<<<<< HEAD
-.btnAjouterEvenement{
-  width: 70%;
-  margin-top: 25px;
-  margin-bottom: 25px;
-
-=======
 .calendrier article ul {
 	border: 2px solid #EAEAEA;
 	border-radius: 15px;
@@ -707,5 +699,4 @@ text-align: center;
 
 .calendrier li:active {
 	background-color: #C6C6C6;
->>>>>>> a3fa2bf859433588dd0d5faf3bf62b698a1b40c9
 }
