@@ -147,7 +147,7 @@ function afficherRep(personne){
 										$liContact.append('<p id="'+result.personnes[id].idp+'">'+chaineNom+'</p>');
 										$liContact.append('<img id=\'email\' src = "images/emailBtn.svg" />');
 										$liContact.append('<img id=\'sms\' src = "images/smsBtn.svg" />');
-										$liContact.append('<a href="tel:+337388388"><img id=\'call\' src = "images/callBtn.svg" /></a>');
+										$liContact.append('<a href="tel:'+result.personnes[id].tel+'"><img id=\'call\' src = "images/callBtn.svg" /></a>');
 										$('#'+chaineNom.substr(0,1)).append($liContact);
 
 						}
@@ -197,7 +197,7 @@ function ajouterCalendrier(){
 							if(result.evenements){
 								for (var id=0; id < result.evenements.length; id++) {
 
-										$('#je'+result.evenements[id].dateDeb.substr(0,2)).html("•");
+										$('#je'+result.evenements[id].dateDeb.substr(0,2)).append("•");
 
 										if($('#j'+result.evenements[id].dateDeb.substr(0,2)).attr('nbEvent')==undefined){
 											var i=1;
@@ -763,7 +763,7 @@ function getListeGroupesDate(i) {
 		if(veriferDates()==false){
 					var data='dateDeb=' + $('#dateDeb').val() +
 								   '&dateFin=' + $('#dateFin').val();
-alert(data);
+//alert(data);
 					$.ajax({	type: "POST",
 								url: "ajax/getGroupeDispoAtDate.php",
 								data:data,
@@ -830,7 +830,7 @@ function veriferDates(){
 					return true;
 			}
 			else if (dateDebInt==dateFinInt){
-					alert("les dates sont les même"+dateDebInt+" "+dateFinInt);
+					//alert("les dates sont les même"+dateDebInt+" "+dateFinInt);
 					return true;
 		  }
 	}
@@ -853,7 +853,7 @@ function eventEvenement(){
 	});
 
 	$('#modifier').click(function(){
-		var param=$('section').attr('idEvent');
+		var param=$('section').attr('idevent');
 		$('#content').load('pages/formulaireEvenement.html',function(){modifierEvenement(param)})
 	});
 }

@@ -13,6 +13,7 @@ if (isset($_REQUEST['personne'])) {
 					$personne = array() ;
 					$personne['nom'] = $pers->nom;
 					$personne['idp'] = $pers->id ;
+					$personne['tel'] = $pers->tel ;
 
 					array_push($result["personnes"], $personne) ;
 	 }
