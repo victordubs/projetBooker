@@ -5,7 +5,7 @@
 
 	// Normalement, ici : insertion ou mise � jour de la base
 	include_once("verifierInitialiserEvenement.php");
-	if(!empty($_REQUEST["plages"])){$plages = json_decode($_REQUEST["plages"],true);}
+	if(!empty($_REQUEST["groupes"])){$plages = json_decode($_REQUEST["groupes"],true);}
 	else {$plages=null;}
 	if(!empty($_REQUEST["organisateurs"])){$organisateurs = json_decode($_REQUEST["organisateurs"],true);}
 	else {$organisateurs=null;}

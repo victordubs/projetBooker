@@ -25,7 +25,7 @@ $_REQUEST['dateDebut']='2016-06-30';
 $_REQUEST['dateFin']='2016-06-30';
 $_REQUEST['heureDebut']='10:00';
 $_REQUEST['heureFin']='16:00';
-$_REQUEST['plages']='{"1":"12:00"}';
+$_REQUEST['groupes']='{"1":"12:00"}';
 $_REQUEST['organisateurs']='[2,7]';
 $_REQUEST['adresse']="2 rue de la Paix";
 

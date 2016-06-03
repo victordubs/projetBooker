@@ -408,11 +408,14 @@
 				$nbLignes=$this->db->exec($req);
 
 			}
-			foreach($plages as $key=>$value) {
-				$req ="insert into plagehoraire values ('$value',NULL,$id,$key);";
-				$nbLignes2=$this->db->exec($req);
+			if (!empty(plages)) {
+				foreach($plages as $key=>$value) {
+					$req ="insert into plagehoraire values ('$value',NULL,$id,$key);";
+					$nbLignes2=$this->db->exec($req);
 
+				}
 			}
+			
 
 		}
 
