@@ -98,7 +98,7 @@
 
 
         function getListeEvenements() {
-            $req = "select nom, datedebut, id from evenement where datedebut>current_date order by datedebut limit 5;";
+            $req = "select nom, datedebut, id from evenement limit 5;";
             $sth = $this->db->query($req);
             $result = $sth->fetchAll(PDO::FETCH_ASSOC);
             return $result;
