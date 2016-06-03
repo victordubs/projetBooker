@@ -763,7 +763,7 @@ function getListeGroupesDate(i) {
 		if(veriferDates()==false){
 					var data='dateDeb=' + $('#dateDeb').val() +
 								   '&dateFin=' + $('#dateFin').val();
-alert(data);
+//alert(data);
 					$.ajax({	type: "POST",
 								url: "ajax/getGroupeDispoAtDate.php",
 								data:data,
