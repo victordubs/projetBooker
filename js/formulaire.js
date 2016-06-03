@@ -1,3 +1,8 @@
+//--------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------PETIT MESSAGE PROFESSEUR---------------------------------------------------------------------
+ // vous me direz ce que vous pensez de mon code Monsieur  =D
+//--------------------------------------------------------------------------------------------------------------------------
+
 var erreurs = {
 	erreurArtiste : 0,
 	erreurEvent : 0,
@@ -245,7 +250,7 @@ function eventCalendrier(){
 							$lievent.append($(this).attr("nom"+i));
 							$lievent.attr("idp",$(this).attr("idp"+i));
 							$ulevent.append($lievent);
-	
+
 			}
 
 				$('#infosEvent').append($ulevent);
