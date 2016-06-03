@@ -683,14 +683,13 @@ text-align: center;
   color: #F2F2F2;
 }
 
-<<<<<<< HEAD
+
 .btnAjouterEvenement{
   width: 70%;
   margin-top: 25px;
   margin-bottom: 25px;
-
-=======
-.calendrier article ul {
+}
+.calendrier article ul{
 	border: 2px solid #EAEAEA;
 	border-radius: 15px;
 	color: #888888;
@@ -700,12 +699,10 @@ text-align: center;
 }
 
 .calendrier article ul li {
-
 	border-bottom: 1px solid grey;
 	padding: 2%;
 }
 
 .calendrier li:active {
 	background-color: #C6C6C6;
->>>>>>> a3fa2bf859433588dd0d5faf3bf62b698a1b40c9
 }

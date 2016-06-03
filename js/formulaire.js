@@ -242,9 +242,10 @@ function eventCalendrier(){
     		for(var i=1;i<=$(this).attr("nbEvent");i++){
 
 							$lievent = $(document.createElement('li'));
-							$lievent.html($(this).attr("nom"+i));
+							$lievent.append($(this).attr("nom"+i));
 							$lievent.attr("idp",$(this).attr("idp"+i));
 							$ulevent.append($lievent);
+	
 			}
 
 				$('#infosEvent').append($ulevent);
