@@ -98,7 +98,7 @@
 
 
         function getListeEvenements() {
-            $req = "select nom, datedebut, id from evenement;";
+            $req = "select nom, datedebut, id from evenement where datedebut>current_date order by datedebut limit 5;";
             $sth = $this->db->query($req);
             $result = $sth->fetchAll(PDO::FETCH_ASSOC);
             return $result;
@@ -382,19 +382,26 @@
 			$req ="update groupes set nom = '$nom' where id=$id;";
 			$this->db->exec($req);
 
+      if(!empty($genres)){
 			foreach($genres as $value) {
 				$req ="update liaisongroupestyle set style = '$value' where idgroupe=$id;";
 				$this->db->exec($req);
 			}
+    }
 
+      if(!empty($artistes)){
 			foreach($artistes as $value) {
 				$req ="update liaisonartistegroupe set idArtiste=$value where idgroupe=$id;";
 				$this->db->exec($req);
 			}
+      }
+
+      if(!empty($contacts)){
 			foreach($contacts as $value) {
 				$req ="update liaisongroupeautrescontact set idautrescontact=$value where idgroupe=$id;";
 				$this->db->exec($req);
 			}
+    }
 		}
 
 		function insertEvenement($id,$nom,$datedebut,$datefin,$libelle,$heuredebut,$heurefin,$plages,$organisateurs) {
@@ -415,7 +422,7 @@
 
 				}
 			}
-			
+
 
 		}
 
